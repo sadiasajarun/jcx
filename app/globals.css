@@ -1,0 +1,458 @@
+@import 'tailwindcss';
+
+/* Class-based dark mode (next-themes attribute="class"). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─────────────────────────────────────────────────────────────
+   Brand tokens — LIGHT MODE (mostly white + brand blue & red)
+   Palette sampled directly from the JCX logo:
+     blue #2050A0 · red #EC1C2D · periwinkle #9AA2DB
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --bg: #ffffff;
+  --surface: #f6f7fa;
+  --ink: #0b0d12;
+  --muted: #5a6472;
+  --brand: #2050a0; /* logo blue */
+  --brand-deep: #173c79;
+  --brand-soft: #9aa2db; /* logo periwinkle — mid chevron */
+  --accent: #d81829; /* logo red, darkened for AA text on white */
+  --accent-strong: #ec1c2d; /* logo red as-is, for fills */
+  /* Gold — used only inside the Landowners transformation, where the brief
+     bans red and calls for navy + gold. Warm enough to read against navy,
+     dark enough to hold AA as text on the same navy. */
+  --gold: #c8a04a;
+  --gold-bright: #e8c073;
+  --line: #e3e6ec;
+
+  /* Derived: translucent surfaces for glass cards and scrims. */
+  --surface-glass: rgb(255 255 255 / 0.78);
+  --scrim-from: rgb(6 8 12 / 0.88);
+  --scrim-to: rgb(6 8 12 / 0.08);
+  --shadow-soft: 0 1px 2px rgb(11 13 18 / 0.05), 0 12px 32px -12px rgb(11 13 18 / 0.16);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Brand tokens — DARK MODE (mostly black + brand blue & red)
+   ───────────────────────────────────────────────────────────── */
+.dark {
+  --bg: #07080a;
+  --surface: #101217;
+  --ink: #f2f4f7;
+  --muted: #98a1ae;
+  --brand: #4e86e8; /* logo blue lifted to read on black */
+  --brand-deep: #2f63c4;
+  --brand-soft: #9aa2db;
+  --accent: #ff4256; /* logo red lifted to read on black */
+  --accent-strong: #ec1c2d;
+  --gold: #d4af6a; /* lifted on black, same family as the light-mode gold */
+  --gold-bright: #f0d095;
+  --line: #1b1e26;
+
+  --surface-glass: rgb(16 18 23 / 0.72);
+  --scrim-from: rgb(0 0 0 / 0.92);
+  --scrim-to: rgb(0 0 0 / 0.12);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.5), 0 12px 32px -12px rgb(0 0 0 / 0.75);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-line: var(--line);
+
+  --font-display: var(--font-display), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: var(--shadow-soft);
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* The sticky header measures ~104px on desktop. */
+    scroll-padding-top: 6.5rem;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 300;
+  }
+
+  /* Brand-blue focus ring, globally. */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--accent-strong);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  /* All-caps tracked eyebrow label in brand red. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.7;
+  }
+
+  /* Display heading defaults — tight leading, slightly negative tracking. */
+  .display {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 80rem; /* 1280px */
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Hairline-bordered card that reads correctly in both themes. */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Red underline that wipes in on hover — used on text links. */
+  .link-underline {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Leaflet: keep the map inside the brand and below sticky UI. */
+.leaflet-container {
+  background: var(--surface);
+  font-family: var(--font-sans), sans-serif;
+  z-index: 0;
+}
+
+.leaflet-control-attribution {
+  background: var(--surface-glass) !important;
+  color: var(--muted) !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--muted) !important;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-radius: 0.9rem !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 240px !important;
+}
+
+.leaflet-popup-close-button {
+  color: var(--muted) !important;
+  padding: 8px 8px 0 0 !important;
+}
+
+/* Dark tiles need a touch of desaturation to sit with the navy. */
+.dark .leaflet-tile {
+  filter: brightness(0.92) saturate(0.85);
+}
+
+/* Embla needs the flex track to not collapse. */
+.embla__viewport {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  backface-visibility: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Hero Ken Burns drift. */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.16) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+.ken-burns {
+  animation: ken-burns 24s ease-in-out infinite alternate;
+}
+
+/* ── About section: per-letter Ken Burns, randomised direction ────── */
+@keyframes kb-a {
+  0% {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.22) translate3d(-3%, -2%, 0);
+  }
+}
+@keyframes kb-b {
+  0% {
+    transform: scale(1.14) translate3d(2%, 1%, 0);
+  }
+  100% {
+    transform: scale(1.04) translate3d(-1%, -2%, 0);
+  }
+}
+@keyframes kb-c {
+  0% {
+    transform: scale(1.06) translate3d(-2%, 2%, 0);
+  }
+  100% {
+    transform: scale(1.2) translate3d(3%, -1%, 0);
+  }
+}
+
+.kb-a {
+  animation: kb-a 22s ease-in-out infinite alternate;
+}
+.kb-b {
+  animation: kb-b 27s ease-in-out infinite alternate;
+}
+.kb-c {
+  animation: kb-c 19s ease-in-out infinite alternate;
+}
+
+/* Ambient dust specks drifting behind the wordmark. */
+@keyframes speck-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(14px, -70px, 0);
+    opacity: 0;
+  }
+}
+
+.speck {
+  animation: speck-drift linear infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* Hide scrollbars on horizontal chip rails without losing scrollability. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .ken-burns,
+  .pulse-ring,
+  .kb-a,
+  .kb-b,
+  .kb-c,
+  .speck,
+  .lo-idle,
+  .lo-dust,
+  .lo-pulse {
+    animation: none !important;
+  }
+
+  /* Specks would otherwise sit frozen mid-drift at opacity 0. */
+  .speck {
+    opacity: 0.35;
+  }
+}
+
+/* ── Landowners: pinned transformation sequence ──────────────────────
+   The scroll timeline itself is driven by framer-motion; these are the
+   ambient loops that keep the frame alive when the visitor stops
+   scrolling, plus the section's cursor treatments.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Slow drift so a paused state never reads as frozen. */
+@keyframes lo-idle {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.045) translate3d(-0.8%, -1.1%, 0);
+  }
+}
+
+.lo-idle {
+  animation: lo-idle 4s ease-in-out infinite alternate;
+}
+
+/* Dust motes around the rising structure. */
+@keyframes lo-dust {
+  0% {
+    transform: translate3d(0, 8px, 0);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(-14px, -46px, 0);
+    opacity: 0;
+  }
+}
+
+.lo-dust {
+  animation-name: lo-dust;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+/* Primary CTA breathing pulse — gold hairline, never a scale jump. */
+@keyframes lo-pulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 1px var(--gold),
+      0 18px 40px -18px rgb(0 0 0 / 0.9);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 1px var(--gold-bright),
+      0 0 0 6px rgb(200 160 74 / 0.16),
+      0 18px 40px -18px rgb(0 0 0 / 0.9);
+  }
+}
+
+.lo-pulse:hover {
+  animation: lo-pulse 1.8s ease-in-out infinite;
+}
+
+/* Inside the sequence the cursor reads as an instruction, not a pointer. */
+.lo-section {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='13' fill='none' stroke='%23e8c073' stroke-opacity='0.85'/%3E%3Cpath d='M20 14v10m0 0l-4-4m4 4l4-4' stroke='%23e8c073' stroke-width='1.5' fill='none'/%3E%3C/svg%3E")
+      20 20,
+    default;
+}
+
+.lo-section a,
+.lo-section button {
+  cursor: pointer;
+}
+
+.lo-cursor-play {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Ccircle cx='22' cy='22' r='15' fill='rgba(11,20,40,0.6)' stroke='%23e8c073'/%3E%3Cpath d='M18 15l11 7-11 7z' fill='%23fff'/%3E%3C/svg%3E")
+      22 22,
+    pointer;
+}

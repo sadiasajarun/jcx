@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img">
+  <rect width="1600" height="1000" fill="#0A1220"/>
+  <g stroke="#2050A0" stroke-opacity="0.28" stroke-width="2">
+    <line x1="0" y1="0" x2="1600" y2="-120"/><line x1="0" y1="74" x2="1600" y2="-46"/><line x1="0" y1="148" x2="1600" y2="28"/><line x1="0" y1="222" x2="1600" y2="102"/><line x1="0" y1="296" x2="1600" y2="176"/><line x1="0" y1="370" x2="1600" y2="250"/><line x1="0" y1="444" x2="1600" y2="324"/><line x1="0" y1="518" x2="1600" y2="398"/><line x1="0" y1="592" x2="1600" y2="472"/><line x1="0" y1="666" x2="1600" y2="546"/><line x1="0" y1="740" x2="1600" y2="620"/><line x1="0" y1="814" x2="1600" y2="694"/><line x1="0" y1="888" x2="1600" y2="768"/><line x1="0" y1="962" x2="1600" y2="842"/>
+    <line x1="0" y1="0" x2="90" y2="1000"/><line x1="84" y1="0" x2="174" y2="1000"/><line x1="168" y1="0" x2="258" y2="1000"/><line x1="252" y1="0" x2="342" y2="1000"/><line x1="336" y1="0" x2="426" y2="1000"/><line x1="420" y1="0" x2="510" y2="1000"/><line x1="504" y1="0" x2="594" y2="1000"/><line x1="588" y1="0" x2="678" y2="1000"/><line x1="672" y1="0" x2="762" y2="1000"/><line x1="756" y1="0" x2="846" y2="1000"/><line x1="840" y1="0" x2="930" y2="1000"/><line x1="924" y1="0" x2="1014" y2="1000"/><line x1="1008" y1="0" x2="1098" y2="1000"/><line x1="1092" y1="0" x2="1182" y2="1000"/><line x1="1176" y1="0" x2="1266" y2="1000"/><line x1="1260" y1="0" x2="1350" y2="1000"/><line x1="1344" y1="0" x2="1434" y2="1000"/><line x1="1428" y1="0" x2="1518" y2="1000"/><line x1="1512" y1="0" x2="1602" y2="1000"/><line x1="1596" y1="0" x2="1686" y2="1000"/>
+  </g>
+  <path d="M-40 620 C 320 560, 620 700, 940 600 S 1500 520, 1660 580 L1660 1000 L-40 1000 Z" fill="#122C4E" opacity="0.85"/>
+  <path d="M-40 700 C 380 660, 700 790, 1020 690 S 1520 640, 1660 690" fill="none" stroke="#EC1C2D" stroke-opacity="0.45" stroke-width="3"/>
+  
+    <g transform="translate(420 380)">
+      <circle r="26" fill="#EC1C2D" opacity="0.18"/>
+      <circle r="10" fill="#EC1C2D"/>
+      <circle r="4" fill="#FFFFFF"/>
+    </g>
+    <g transform="translate(760 300)">
+      <circle r="26" fill="#EC1C2D" opacity="0.18"/>
+      <circle r="10" fill="#EC1C2D"/>
+      <circle r="4" fill="#FFFFFF"/>
+    </g>
+    <g transform="translate(1080 460)">
+      <circle r="26" fill="#EC1C2D" opacity="0.18"/>
+      <circle r="10" fill="#EC1C2D"/>
+      <circle r="4" fill="#FFFFFF"/>
+    </g>
+    <g transform="translate(640 620)">
+      <circle r="26" fill="#EC1C2D" opacity="0.18"/>
+      <circle r="10" fill="#EC1C2D"/>
+      <circle r="4" fill="#FFFFFF"/>
+    </g>
+    <g transform="translate(1240 640)">
+      <circle r="26" fill="#EC1C2D" opacity="0.18"/>
+      <circle r="10" fill="#EC1C2D"/>
+      <circle r="4" fill="#FFFFFF"/>
+    </g>
+</svg>

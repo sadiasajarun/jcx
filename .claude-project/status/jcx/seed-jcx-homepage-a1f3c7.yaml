@@ -1,0 +1,164 @@
+# Seed Specification — JCX Developments Ltd. Homepage
+# Generated: 2026-07-27
+# Ambiguity Score: 0.146 (PASS, threshold <= 0.2)
+# Interview: sess-jcx-p1-a1f3c7 (PRD-aware targeted gap-fill)
+# Source PRD: .claude-project/context/PRD_FULL_CONTENT.md (v1.0, 726 lines)
+
+goal: >-
+  Produce a client-approved static HTML prototype of the JCX Developments homepage —
+  all eleven sections at full motion fidelity, in both light and dark mode — that JCX
+  signs off in writing as the definitive visual and motion specification for a later
+  build phase.
+
+constraints:
+  # ── HARD — violating these fails the phase ──────────────────────────────
+  - "HARD: Deliverable is static HTML/CSS/JS only. No React, JSX, or framework code — this is the PM track, which stops at P3g."
+  - "HARD: All eleven PRD sections must be present at full motion fidelity, including the three heaviest sequences (Projects scroll-hijack strip, Featured four-act sequencer, Landowners plot-to-tower transformation)."
+  - "HARD: Imagery is restricted to assets already present in this repository. No new stock sourcing, no external image CDNs. (Client decision, P1 interview.)"
+  - "HARD: Light and dark mode both fully realised in every section; theme choice persists and respects prefers-color-scheme with no flash of wrong theme."
+  - "HARD: prefers-reduced-motion honoured in every section — scroll-hijack releases to normal flow, custom cursors disabled, Ken Burns/drift/particles off, sections remain complete and legible."
+  - "HARD: AA contrast in both modes on every text-over-media element; every interactive element keyboard-reachable with a visible focus ring."
+  - "HARD: Content is JCX-owned only. No invented awards, statistics, testimonials, project attributions, or dates — unconfirmed values ship as clearly-marked placeholders."
+  - "HARD: Copy voice bans exclamation marks and the words 'luxurious', 'state-of-the-art', 'world-class', 'unparalleled'."
+
+  # ── SOFT — strong defaults, deviation must be justified ─────────────────
+  - "SOFT: Colour palette is deliberately UNRESOLVED at seed time. The PRD specifies navy #003C8C + gold #C6A15B; a later client direction specified logo-derived blue #2050A0 + red #EC1C2D on mostly-white/mostly-black. P3 must test both plus a hybrid across its three variations, and the client picks at P3d."
+  - "SOFT: Typography — elegant serif display (Cormorant Garamond / Fraunces class) + neutral grotesque body (Inter / Geist class); gold-or-accent small-caps eyebrow introduces every section."
+  - "SOFT: Motion easing is [0.22, 1, 0.36, 1] site-wide; slow and weighted, never bouncy."
+  - "SOFT: Max content width ~1280px; most sections min-h-[100svh]; 12-column grid."
+  - "SOFT: Line-weight icons only (Lucide reference set). No filled icons, no real-estate cliché glyphs."
+  - "SOFT: Performance targets carried from PRD §12 — LCP < 2.5s on 4G, TBT < 300ms, hero video <= 8MB desktop / <= 4MB mobile."
+  - "SOFT: Breakpoints 1280 / 768 / below — mobile is a designed experience, not a compressed desktop."
+
+  # ── UNRESOLVED — flagged, not blocking ──────────────────────────────────
+  - "UNRESOLVED: Delivery timeline not specified. Eleven sections at full fidelity is a large scope; if a deadline exists it may force a scope conversation."
+  - "UNRESOLVED: Browser/device support matrix not specified. Assuming current evergreen browsers."
+  - "UNRESOLVED: Whether the eventual production build must remain WordPress-compatible (current site is WP). Affects the build phase, not this prototype."
+  - "UNRESOLVED: Motion library for the static prototype (GSAP+ScrollTrigger via CDN vs. vanilla Web Animations API). To be settled at P3a."
+
+acceptance_criteria:
+  - "Client reviews all eleven sections on desktop in BOTH light and dark mode and gives written approval. This is the single gating criterion for the phase."
+  - "Every one of the eleven PRD sections exists as HTML and is reachable by scrolling the prototype end to end: Hero, Search bar, About, Projects, Featured Projects, Landowners, Map, Testimonials, Awards, Footer, Global overlays."
+  - "No two sections reuse the same layout pattern — PRD design principle 4, 'one voice per section', is verifiable by inspection."
+  - "The three signature motion sequences run in a browser without stutter: Projects horizontal scroll-hijack, Featured four-act sequencer with cinema-bar reel change, Landowners five-state plot-to-tower transformation."
+  - "Hero search bar filter state visibly drives the Projects section — changing Type, Status or Location updates the project set with no page reload."
+  - "Toggling the theme switches every section, including map tiles, image scrims, and floating action buttons; the choice survives a page reload."
+  - "With prefers-reduced-motion enabled, every section still renders complete and legible: no pinned sections trap the scroll, no custom cursor, no drift or particles."
+  - "Automated contrast check reports zero AA failures in either mode; keyboard tab traversal reaches every interactive control with a visible focus ring."
+  - "Every placeholder is machine-findable — each unconfirmed number, date, attribution or stand-in image carries an explicit marker, and a single handoff list enumerates what JCX must still supply."
+
+ontology_schema:
+  name: "JCXHomepage"
+  description: >-
+    Domain model for the JCX homepage prototype. Entities are the content types the
+    eleven sections render; each is defined here because the PRD names them throughout
+    but never defines them with relationships.
+  fields:
+    - name: "Project"
+      type: "object"
+      description: >-
+        A JCX development. The portfolio's atomic unit, rendered by the Projects strip,
+        the Map pins, and (when featured) the Featured sequencer. Fields: slug, name,
+        category (residential|commercial), status (ongoing|completed|upcoming), location
+        (one of five Areas), address, apartmentSize, units, parking, floors, orientation,
+        landSize, lat, lng, image, featured. Approximately 60 exist; 12 are seeded.
+    - name: "Area"
+      type: "string"
+      description: >-
+        A Dhaka neighbourhood grouping Projects for the search filter and the Map's area
+        list. Closed set of five: Bashundhara R/A, Jalshiri Abashon, Niketan (Gulshan-1),
+        Narayanganj, Uttara. Each has a cluster centre coordinate.
+    - name: "Act"
+      type: "object"
+      description: >-
+        One of four scenes a featured Project plays through in Section 5. Keyed
+        approach|facade|interior|detail with constant labels THE ARRIVAL / THE
+        ARCHITECTURE / THE LIVING / THE DETAIL. Each carries an image, a per-project
+        headline, and 2-3 spec chips. A Project with fewer than four Acts degrades
+        gracefully; with one Act it becomes a single-still hero.
+    - name: "Testimonial"
+      type: "object"
+      description: >-
+        A recorded voice, segmented by audience. Fields: id, name, audience
+        (homeowner|landowner), medium (video|text), portrait (required — no name without
+        a face), pullQuote (the one staged line), fullQuote (modal), project, role, date,
+        landownerDetail (katha/location/handoverYear), verified, language. Six exist as
+        text; zero as video.
+    - name: "Award"
+      type: "object"
+      description: >-
+        A third-party recognition rendered in Section 9. Fields: image, name, awarding
+        body, year, citation. Maximum six displayed. None are currently confirmed.
+    - name: "Theme"
+      type: "string"
+      description: >-
+        light|dark. Not a styling detail but a first-class product requirement — every
+        section, image treatment and map tile has a defined appearance in each, and some
+        sections tint further in response to content state.
+    - name: "FilterState"
+      type: "object"
+      description: >-
+        The shared selection {type, status, location} written by the hero Search bar and
+        the Projects command bar, and read by the Projects strip and the Map. Single
+        source of truth — the two controls are two views of one value.
+    - name: "Section"
+      type: "object"
+      description: >-
+        One of eleven ordered page regions, each with a mandated distinct visual
+        signature, an eyebrow label, its own motion vocabulary, and defined reduced-motion
+        and mobile fallbacks.
+
+evaluation_principles:
+  - name: "Section completeness"
+    description: "All eleven sections present, ordered, and content-correct against the PRD."
+    weight: 0.25
+  - name: "Motion fidelity"
+    description: "Signature sequences behave as specified — weighted easing, choreographed stagger, reversible scroll."
+    weight: 0.20
+  - name: "Visual distinctiveness"
+    description: "PRD principle 4 — no two sections share a layout pattern; the page reads as one film, not a template."
+    weight: 0.15
+  - name: "Dual-theme integrity"
+    description: "Both modes fully realised and AA-compliant everywhere, with no flash of wrong theme."
+    weight: 0.15
+  - name: "Accessibility"
+    description: "Reduced-motion fallbacks, keyboard reach, focus rings, ARIA correctness, descriptive alt text."
+    weight: 0.15
+  - name: "Content honesty"
+    description: "Zero invented facts; every placeholder explicitly marked and enumerated for client handoff."
+    weight: 0.10
+
+exit_conditions:
+  - name: "success"
+    description: "Client gives written sign-off after reviewing all eleven sections on desktop in both themes."
+    criteria: "DESIGN_STATUS.md approved:true AND evaluation_score >= 0.8"
+  - name: "blocked_on_assets"
+    description: >-
+      Sections cannot reach full fidelity from in-repo assets alone. Not a failure —
+      the phase completes with marked placeholders and a handoff list.
+    criteria: "placeholder_manifest_written AND client_notified"
+  - name: "max_iterations"
+    description: "Safety valve on the P3 design QA loop."
+    criteria: "iterations > 10"
+  - name: "scope_conflict"
+    description: >-
+      Eleven sections at full fidelity proves incompatible with an emerging deadline —
+      halt and renegotiate scope rather than silently degrade.
+    criteria: "timeline_declared AND estimated_effort > available_time"
+
+metadata:
+  version: "1.0"
+  ambiguity_score: 0.146
+  goal_clarity: 0.92
+  constraint_clarity: 0.80
+  success_clarity: 0.82
+  interview_id: "sess-jcx-p1-a1f3c7"
+  created_at: "2026-07-27"
+  prd_source: ".claude-project/context/PRD_FULL_CONTENT.md"
+  prd_version: "1.0"
+  track: "pm"
+  phase: "P1-spec"
+  notes: >-
+    Palette is intentionally left open — see the SOFT constraint. This is the one seed
+    field the client explicitly deferred to P3 variation testing rather than deciding up
+    front. Do not resolve it before P3d.

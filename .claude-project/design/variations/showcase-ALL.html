@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JCX Homepage — Design Variations A · B · C</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#12141a;color:#eef1f5;font:400 15px/1.6 Inter,system-ui,sans-serif;padding:40px 24px 80px}
+.wrap{max-width:1800px;margin-inline:auto}
+header{text-align:center;margin-bottom:8px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,5vw,54px);letter-spacing:-.02em}
+.sub{color:#9aa3b2;margin-top:10px;max-width:70ch;margin-inline:auto}
+.bar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin:28px 0 40px}
+.bar button{border:1px solid #2a2f3a;background:#181c24;color:#eef1f5;padding:11px 20px;border-radius:999px;font:500 12px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.3s}
+.bar button:hover{border-color:#C6A15B;color:#C6A15B}
+.bar button.on{background:#eef1f5;color:#12141a;border-color:#eef1f5}
+.grid{display:grid;gap:26px;grid-template-columns:1fr}
+@media(min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:#181c24;border:1px solid #262b36;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.card h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:26px;padding:20px 22px 4px}
+.card .tag{padding:0 22px;color:#9aa3b2;font-size:13px;min-height:44px}
+.sw{display:flex;gap:7px;padding:12px 22px 16px}
+.sw i{width:26px;height:26px;border-radius:6px;display:block;border:1px solid rgba(255,255,255,.14)}
+.frame{position:relative;background:#0b0d12;border-top:1px solid #262b36;border-bottom:1px solid #262b36}
+.chrome{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#20252f}
+.chrome i{width:9px;height:9px;border-radius:50%;background:#3a4150}
+.chrome span{margin-left:8px;font-size:10px;color:#6b7484;letter-spacing:.08em}
+iframe{width:100%;height:620px;border:0;display:block;background:#fff}
+.meta{padding:18px 22px 22px;font-size:12.5px;color:#9aa3b2}
+.meta dl{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;margin-top:4px}
+.meta dt{color:#6b7484}
+.meta dd{color:#cbd2dc}
+.open{display:inline-block;margin-top:14px;color:#C6A15B;font:600 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.how{max-width:900px;margin:56px auto 0;background:#181c24;border:1px solid #262b36;border-left:2px solid #C6A15B;border-radius:14px;padding:26px 30px}
+.how h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px}
+.how ol{margin:14px 0 0 20px;color:#9aa3b2}
+.how li{margin-bottom:8px}
+.how code{background:#0e1117;border:1px solid #2a2f3a;border-radius:4px;padding:2px 7px;font-size:12px;color:#e3c489}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>JCX Homepage — three design directions</h1>
+    <p class="sub">Each frame renders the same slice — Hero · Search · About · Projects — with real in-repo
+      assets and real PRD copy. The only variable is the design system, so what you are choosing between
+      is palette, type, shadow, radius and motion character. The winner is then built out to all eleven sections.</p>
+  </header>
+
+  <div class="bar">
+    <button class="on" data-t="light">Light mode</button>
+    <button data-t="dark">Dark mode</button>
+    <button id="reload">Reload all</button>
+  </div>
+
+  <div class="grid">
+    <!-- A -->
+    <div class="card">
+      <h2>A · Editorial Luxe</h2>
+      <p class="tag">The PRD palette exactly as written. Quiet, printed, gallery-like.</p>
+      <div class="sw">
+        <i style="background:#F7F6F3"></i><i style="background:#003C8C"></i><i style="background:#C6A15B"></i><i style="background:#0E1726"></i>
+      </div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i><span>A-01-homepage.html</span></div>
+        <iframe data-src="A-01-homepage.html" title="Variation A"></iframe>
+      </div>
+      <div class="meta">
+        <dl>
+          <dt>Background</dt><dd>Warm cream #F7F6F3</dd>
+          <dt>Shadow</dt><dd>Soft warm diffuse</dd>
+          <dt>Radius</dt><dd>16px</dd>
+          <dt>Display</dt><dd>Serif, weight 300</dd>
+          <dt>Status</dt><dd>6px dot, no label</dd>
+          <dt>Nav</dt><dd>Resolves to cream solid</dd>
+        </dl>
+        <a class="open" href="A-01-homepage.html" target="_blank">Open full page ↗</a>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="card">
+      <h2>B · Brand Modernist</h2>
+      <p class="tag">Palette sampled from the JCX logo. Confident, graphic, current.</p>
+      <div class="sw">
+        <i style="background:#FFFFFF"></i><i style="background:#2050A0"></i><i style="background:#EC1C2D"></i><i style="background:#08090B"></i>
+      </div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i><span>B-01-homepage.html</span></div>
+        <iframe data-src="B-01-homepage.html" title="Variation B"></iframe>
+      </div>
+      <div class="meta">
+        <dl>
+          <dt>Background</dt><dd>Pure white / true black</dd>
+          <dt>Shadow</dt><dd>None — hairline only</dd>
+          <dt>Radius</dt><dd>2px, near-sharp</dd>
+          <dt>Display</dt><dd>Grotesque, weight 600</dd>
+          <dt>Status</dt><dd>Glyph + tracked label</dd>
+          <dt>Nav</dt><dd>Resolves to white solid</dd>
+        </dl>
+        <a class="open" href="B-01-homepage.html" target="_blank">Open full page ↗</a>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="card">
+      <h2>C · Cinematic Noir</h2>
+      <p class="tag">PRD system reconciled with the logo's red. Filmic, dark, weighted.</p>
+      <div class="sw">
+        <i style="background:#F4F2EE"></i><i style="background:#003C8C"></i><i style="background:#C6A15B"></i><i style="background:#EC1C2D"></i>
+      </div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i><span>C-01-homepage.html</span></div>
+        <iframe data-src="C-01-homepage.html" title="Variation C"></iframe>
+      </div>
+      <div class="meta">
+        <dl>
+          <dt>Background</dt><dd>Bone / charcoal-navy</dd>
+          <dt>Shadow</dt><dd>Glow + deep cast</dd>
+          <dt>Radius</dt><dd>10px + full pills</dd>
+          <dt>Display</dt><dd>Serif, weight 700</dd>
+          <dt>Status</dt><dd>Neon dot with glow ring</dd>
+          <dt>Nav</dt><dd>Always dark glass</dd>
+        </dl>
+        <a class="open" href="C-01-homepage.html" target="_blank">Open full page ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="how">
+    <h3>To record your choice</h3>
+    <ol>
+      <li>Compare all three in <strong>both</strong> light and dark using the toggle above.</li>
+      <li>Open any one full-page to scroll it properly — the strip and filters are live.</li>
+      <li>Edit <code>.claude-project/status/jcx/DESIGN_STATUS.md</code>:
+        set <code>selected_variation: A|B|C</code> and <code>approved: true</code>.</li>
+      <li>Re-run <code>/fullstack-pm jcx --phase P3-design --resume</code>.</li>
+    </ol>
+    <p style="margin-top:14px;color:#6b7484;font-size:12px">A Mix is allowed — record it as
+      <code>selected_variation: Mix</code> and note which elements come from which variation.</p>
+  </div>
+</div>
+
+<script>
+// Lazy-mount the iframes so three full pages (each with a hero video) do not
+// all decode at once on open.
+const frames=[...document.querySelectorAll('iframe')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting&&!e.target.src){e.target.src=e.target.dataset.src;io.unobserve(e.target)}
+}),{rootMargin:'250px'});
+frames.forEach(f=>io.observe(f));
+
+// Drive every frame's theme from one control. Each variation persists to the
+// same localStorage key, so we set it and reload the frames.
+const btns=[...document.querySelectorAll('.bar button[data-t]')];
+btns.forEach(b=>b.onclick=()=>{
+  btns.forEach(x=>x.classList.toggle('on',x===b));
+  try{localStorage.setItem('jcx-theme',b.dataset.t)}catch(e){}
+  frames.forEach(f=>{
+    try{f.contentWindow.localStorage.setItem('jcx-theme',b.dataset.t)}catch(e){}
+    if(f.src)f.contentWindow.location.reload();
+  });
+});
+document.getElementById('reload').onclick=()=>frames.forEach(f=>{if(f.src)f.contentWindow.location.reload()});
+</script>
+</body>
+</html>

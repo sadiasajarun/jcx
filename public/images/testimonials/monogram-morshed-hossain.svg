@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img">
+  <defs>
+    <linearGradient id="bg-morshed-hossain" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#141821"/>
+      <stop offset="55%" stop-color="#0C1017"/>
+      <stop offset="100%" stop-color="#05070B"/>
+    </linearGradient>
+    <radialGradient id="glow-morshed-hossain" cx="50%" cy="38%" r="52%">
+      <stop offset="0%" stop-color="#2050A0" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#2050A0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="900" height="1200" fill="url(#bg-morshed-hossain)"/>
+  <rect width="900" height="1200" fill="url(#glow-morshed-hossain)"/>
+
+  <!-- Hairline circle holding the initials -->
+  <circle cx="450" cy="504" r="185" fill="none" stroke="#EC1C2D" stroke-width="1.5" stroke-opacity="0.75"/>
+  <circle cx="450" cy="504" r="205" fill="none" stroke="#EC1C2D" stroke-width="1" stroke-opacity="0.22" stroke-dasharray="3 9"/>
+
+  <text x="450" y="566" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="170" font-weight="400"
+        fill="#F2F4F7" letter-spacing="6">MH</text>
+
+  <!-- Rule + name beneath, so the card reads as a portrait plate -->
+  <line x1="380" y1="792" x2="520" y2="792" stroke="#EC1C2D" stroke-width="1" stroke-opacity="0.6"/>
+  <text x="450" y="864" text-anchor="middle"
+        font-family="Helvetica, Arial, sans-serif" font-size="34" letter-spacing="6"
+        fill="#FFFFFF" fill-opacity="0.72">MORSHED HOSSAIN</text>
+  <text x="450" y="924" text-anchor="middle"
+        font-family="Helvetica, Arial, sans-serif" font-size="20" letter-spacing="5"
+        fill="#FFFFFF" fill-opacity="0.32">PORTRAIT PENDING</text>
+</svg>
