@@ -16,7 +16,7 @@ prd_hash: cd139479977d8d72abdaa59556ca88c7299c18226b0e5d459488755dfc58b293
 last_run: 2026-07-27
 design_selected: "Mix — Variation B base + Variation C shadow"
 design_roles: [app]
-html_bundle_hash: b05f2520cf1144a036b2b7bf3f43d8eda4f14a99e1ac0c8fd00c838952a79a8a
+html_bundle_hash: 128900e27e6c149042ca01456a953cc9644d4ef56121d577cfa7ae676b07eece
 pipeline_score: 0.92
 ```
 
