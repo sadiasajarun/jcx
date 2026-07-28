@@ -133,7 +133,13 @@ section{padding:112px 0}
    X is the SAME film again, unblurred and lifted, clipped to the mark.
    The shape reads as a lens onto a sharper world — and the mark is JCX's
    own X, so the brand IS the hero visual.                               */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;background:#000;color:#fff}
+/* padding:0 is load-bearing — the generic `section{padding:112px 0}` rule also
+   matches .hero and was leaving a band of dead space under the foot.
+   --stage-w is shared: the X uses it for its width, and the headline uses half
+   of it as its centre track, so the flanking words land on the X's waist. */
+.hero{--stage-w:min(46vw,860px);
+  position:relative;min-height:100svh;padding:0;display:flex;flex-direction:column;overflow:hidden;background:#000;color:#fff}
+@media(max-width:900px){.hero{--stage-w:min(78vw,520px)}}
 .hero-bed{position:absolute;inset:-8%;z-index:0}
 .hero-bed video,.hero-bed img{width:100%;height:100%;object-fit:cover;filter:blur(20px) brightness(.40) saturate(.85);transform:scale(1.08)}
 /* Still fallbacks sit behind the video and are revealed by the reduced-motion
@@ -147,8 +153,7 @@ section{padding:112px 0}
    Width is set directly rather than derived from aspect-ratio — flex-resolved
    height does not reliably feed an aspect-ratio back into `width:auto`, which
    is what collapsed the X to a fraction of its intended size. */
-.hero-stage{position:relative;z-index:2;flex:1;min-height:240px;width:min(46vw,860px);margin:0 auto}
-@media(max-width:900px){.hero-stage{width:min(78vw,520px)}}
+.hero-stage{position:relative;z-index:2;flex:1;min-height:240px;width:var(--stage-w);margin:0 auto}
 /* ONE video plane spanning the whole stage, with all four triangles cut out of
    it as a single clip. Previously each half carried its own <video>, each
    cover-fitted to its own box — which showed the film twice, side by side.
@@ -174,21 +179,28 @@ section{padding:112px 0}
 /* Glossy bevel. Four stacked strokes per edge build the thickness:
    a wide soft glow, a broad gradient body, a bright specular core, and a
    pair of dispersion fringes in the two logo colours.                     */
+/* Glass edge, not a line. Five layers read as one chamfered bevel:
+   a wide bloom, a dark inner face that gives the edge depth, a thick
+   gradient body that is dim at the top and blazes along the lower edges,
+   a thin travelling specular, and two colour fringes for dispersion. */
 .bevel{position:absolute;inset:0;z-index:3;width:100%;height:100%;pointer-events:none;overflow:visible}
-.bevel path{fill:none;stroke-linejoin:round;stroke-linecap:round}
-.bevel .glow{stroke:rgba(190,215,255,.30);stroke-width:11;filter:blur(6px)}
-.bevel .body{stroke:url(#bevelGrad);stroke-width:5.5}
-.bevel .spec{stroke:url(#specGrad);stroke-width:1.8}
-.bevel .fr-b{stroke:#2050A0;stroke-width:2.6;opacity:.42;transform:translate(-1.6px,1px);filter:blur(1px)}
-.bevel .fr-r{stroke:#EC1C2D;stroke-width:2.6;opacity:.38;transform:translate(1.6px,-1px);filter:blur(1px)}
+.bevel g{fill:none;stroke-linejoin:round;stroke-linecap:round}
+.bevel .glow{stroke:rgba(170,205,255,.34);stroke-width:18;filter:blur(10px)}
+.bevel .inner{stroke:url(#innerShade);stroke-width:13;filter:blur(2.5px)}
+.bevel .body{stroke:url(#bevelGrad);stroke-width:9.5;filter:blur(.4px)}
+.bevel .spec{stroke:url(#specGrad);stroke-width:2.4}
+.bevel .fr-b{stroke:#2050A0;stroke-width:3.4;opacity:.34;transform:translate(-2px,1.4px);filter:blur(1.6px)}
+.bevel .fr-r{stroke:#EC1C2D;stroke-width:3.4;opacity:.30;transform:translate(2px,-1.4px);filter:blur(1.6px)}
 
 /* flex:1 fills the section; the stage then absorbs whatever is left after the
    nav clearance, the search bar and the foot band. */
 .hero-in{position:relative;z-index:4;flex:1;display:flex;flex-direction:column;
   padding-top:clamp(96px,12vh,124px);padding-bottom:22px}
 /* Headline lies across the waist of the lens and may run wider than the X. */
+/* Wide box, but the inner edges are governed by the centre track below — so
+   widening this only pushes the OUTER ends out, never the inner ones. */
 .tagbox{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;
-  width:min(94vw,1300px);display:grid;place-items:center;pointer-events:none}
+  width:min(96vw,1720px);display:grid;place-items:center;pointer-events:none}
 .tag{display:none;width:100%}
 .tag.on{display:block}
 /* Three columns, not space-between. The middle track is `auto` and the flanks
@@ -197,27 +209,38 @@ section{padding:112px 0}
    Word 1 sits far left, word 3 far right.
    The size cap keeps the longest line — DISCOVER · PERFECTION · IN EVERY
    DETAIL, 33 characters — inside the row. */
-.tag .row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
-  gap:clamp(10px,1.6vw,30px);width:min(84vw,1460px);
-  font:400 clamp(16px,3.4vw,56px)/1 Inter,sans-serif;letter-spacing:.01em;text-transform:uppercase;
+/* The centre track is exactly the X's inner span — waist point to waist point,
+   which is half the stage width. Word 1 right-aligns against it and word 3
+   left-aligns against it, so both sit hard against the X's corners instead of
+   drifting to the outer edges of the box. */
+.tag .row{display:grid;grid-template-columns:1fr calc(var(--stage-w) * .5) 1fr;align-items:center;
+  gap:clamp(8px,1.1vw,24px);width:100%;
+  font:400 clamp(15px,2.9vw,48px)/1 Inter,sans-serif;letter-spacing:.01em;text-transform:uppercase;
   text-shadow:0 4px 30px rgba(0,0,0,.7)}
 .tag .row span{white-space:nowrap;min-width:0}
-.tag .row span:first-child{text-align:left}
-.tag .row .mid{text-align:center;color:#fff}
-.tag .row span:last-child{text-align:right}
+.tag .row span:first-child{text-align:right}
+.tag .row span:last-child{text-align:left}
+/* Centre word steps down so it clears the bevel on both diagonals rather than
+   touching them — the track is only half the stage wide. */
+.tag .row .mid{text-align:center;color:#fff;font-size:.82em}
 @media(max-width:760px){
   .tag .row{grid-template-columns:1fr;gap:6px;font-size:clamp(24px,7.4vw,40px)}
   .tag .row span,.tag .row .mid{text-align:center}
 }
 
-/* Positioning line, top-right under the nav. Out of the bottom band entirely so
-   the X, the filter and the area row own the lower half of the composition. */
-.hero-note{position:absolute;z-index:4;top:clamp(104px,13vh,136px);right:clamp(24px,4vw,64px);
-  max-width:32ch;text-align:right;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.62)}
+/* Positioning line sits in the foot band, immediately right of the scroll cue.
+   margin-right:auto keeps it hugging that left group and pushes the area row
+   to the far right. The width is tuned to break at ~3 lines, not 5. */
+.hero-note{max-width:min(48ch,430px);margin-right:auto;font-size:13px;line-height:1.62;
+  color:rgba(255,255,255,.6);text-wrap:pretty}
 @media(max-width:1024px){.hero-note{display:none}}
 
-/* Bottom band — scroll cue left, area switcher right. */
-.hero-foot{position:relative;z-index:4;margin-top:clamp(22px,3.4vh,44px);display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between}
+/* Bottom band — scroll cue, note, area switcher, all on ONE line.
+   nowrap is deliberate: wrapping dropped the area row onto a second line
+   below the note and pushed it out of the band. */
+.hero-foot{position:relative;z-index:4;margin-top:clamp(22px,3.4vh,44px);display:flex;flex-wrap:nowrap;
+  gap:clamp(20px,2.6vw,44px);align-items:flex-end;justify-content:space-between}
+@media(max-width:1024px){.hero-foot{flex-wrap:wrap}}
 
 /* Scroll affordance: a hairline "wire" with a brand-red charge travelling down
    it. Replaces the old chevron — it reads at a glance, costs one element, and
@@ -229,9 +252,11 @@ section{padding:112px 0}
 .scrollcue .wire i{position:absolute;left:0;width:1px;height:16px;background:var(--accent-strong);
   box-shadow:0 0 8px var(--accent-strong);animation:charge 2.2s var(--ease) infinite}
 @keyframes charge{0%{top:-18px;opacity:0}18%{opacity:1}82%{opacity:1}100%{top:52px;opacity:0}}
-.area-row{display:flex;flex-wrap:wrap;gap:clamp(14px,2.4vw,34px)}
-.area-row button{border:0;background:transparent;cursor:pointer;padding:4px 0;position:relative;
-  font:600 11.5px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);transition:color .4s var(--ease)}
+/* Sized to clear five area names on one line beside the note. */
+.area-row{display:flex;flex-wrap:nowrap;justify-content:flex-end;gap:clamp(12px,1.7vw,26px);flex-shrink:0}
+.area-row button{border:0;background:transparent;cursor:pointer;padding:4px 0;position:relative;white-space:nowrap;
+  font:600 11px Inter,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.38);transition:color .4s var(--ease)}
+@media(max-width:1024px){.area-row{flex-wrap:wrap;justify-content:flex-start}}
 .area-row button:hover{color:rgba(255,255,255,.8)}
 .area-row button[aria-current="true"]{color:#fff}
 .area-row button[aria-current="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--accent-strong)}
@@ -617,16 +642,27 @@ footer a:hover{color:#fff}
             <path d="M0.5258 0.0421Q0.505 0 0.5417 0L0.7876 0Q1 0 0.8793 0.2439L0.7667 0.4713Q0.7525 0.5 0.7383 0.4713Z"/>
             <path d="M0.7383 0.5287Q0.7525 0.5 0.7667 0.5287L0.9792 0.9579Q1 1 0.9633 1L0.5417 1Q0.505 1 0.5258 0.9579Z"/>
           </clipPath>
-          <linearGradient id="bevelGrad" x1="0.1" y1="0" x2="0.4" y2="1">
-            <stop offset="0" stop-color="#dce9ff" stop-opacity=".28"/>
-            <stop offset=".38" stop-color="#ffffff" stop-opacity=".62"/>
-            <stop offset=".72" stop-color="#ffffff" stop-opacity=".95"/>
-            <stop offset="1" stop-color="#cfe0ff" stop-opacity=".70"/>
+          <!-- Dim and cool along the top, blazing along the lower edges —
+               the light direction in the reference. -->
+          <linearGradient id="bevelGrad" x1="0.16" y1="0" x2="0.5" y2="1">
+            <stop offset="0" stop-color="#7f9ec2" stop-opacity=".30"/>
+            <stop offset=".26" stop-color="#cfe0f7" stop-opacity=".58"/>
+            <stop offset=".58" stop-color="#ffffff" stop-opacity=".96"/>
+            <stop offset=".84" stop-color="#ffffff" stop-opacity="1"/>
+            <stop offset="1" stop-color="#a8c6ea" stop-opacity=".62"/>
           </linearGradient>
-          <linearGradient id="specGrad" x1="0" y1="0" x2="0.35" y2="1">
-            <stop offset="0" stop-color="#ffffff" stop-opacity=".35"/>
-            <stop offset=".55" stop-color="#ffffff" stop-opacity=".9"/>
-            <stop offset="1" stop-color="#ffffff" stop-opacity="1"/>
+          <!-- The inner face of the chamfer. Without this the edge reads as a
+               drawn line rather than as glass with thickness. -->
+          <linearGradient id="innerShade" x1="0.5" y1="0" x2="0.2" y2="1">
+            <stop offset="0" stop-color="#060d18" stop-opacity=".72"/>
+            <stop offset=".5" stop-color="#0b1a2e" stop-opacity=".30"/>
+            <stop offset="1" stop-color="#060d18" stop-opacity=".60"/>
+          </linearGradient>
+          <linearGradient id="specGrad" x1="0.1" y1="0" x2="0.45" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset=".34" stop-color="#ffffff" stop-opacity=".28"/>
+            <stop offset=".68" stop-color="#ffffff" stop-opacity=".95"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity=".6"/>
           </linearGradient>
         </defs>
       </svg>
@@ -643,6 +679,12 @@ footer a:hover{color:#fff}
       <!-- Glossy bevel over the same four paths. -->
       <svg class="bevel" viewBox="0 0 600 430" preserveAspectRatio="none" aria-hidden="true">
         <g class="glow">
+          <path d="M12.5 18.1Q0 0 22 0L275 0Q297 0 284.5 18.1L157.02 202.66Q148.5 215 139.98 202.66Z"/>
+          <path d="M139.98 227.34Q148.5 215 157.02 227.34L284.5 411.9Q297 430 275 430L22 430Q0 430 12.5 411.9Z"/>
+          <path d="M315.5 18.1Q303 0 325 0L472.54 0Q600 0 527.56 104.88L460.02 202.66Q451.5 215 442.98 202.66Z"/>
+          <path d="M442.98 227.34Q451.5 215 460.02 227.34L587.5 411.9Q600 430 578 430L325 430Q303 430 315.5 411.9Z"/>
+        </g>
+        <g class="inner">
           <path d="M12.5 18.1Q0 0 22 0L275 0Q297 0 284.5 18.1L157.02 202.66Q148.5 215 139.98 202.66Z"/>
           <path d="M139.98 227.34Q148.5 215 157.02 227.34L284.5 411.9Q297 430 275 430L22 430Q0 430 12.5 411.9Z"/>
           <path d="M315.5 18.1Q303 0 325 0L472.54 0Q600 0 527.56 104.88L460.02 202.66Q451.5 215 442.98 202.66Z"/>
@@ -717,13 +759,10 @@ footer a:hover{color:#fff}
         <span class="lbl">Explore</span>
         <span class="wire" aria-hidden="true"><i></i></span>
       </a>
+      <p class="hero-note">JCX Developments is a real-estate partner building contemporary Residential, Commercial and Condominium addresses across Dhaka &mdash; with Japanese collaboration.</p>
       <div class="area-row" id="areaRow" role="group" aria-label="Filter by area"></div>
     </div>
   </div>
-
-  <!-- Positioning line, top-right under the nav. Moved out of the bottom band
-       so the X, the filter and the area row own the composition. -->
-  <p class="hero-note">JCX Developments is a real-estate partner building contemporary Residential, Commercial and Condominium addresses across Dhaka &mdash; with Japanese collaboration.</p>
 </section>
 
 <!-- ═══ S3 ABOUT ═══ -->
