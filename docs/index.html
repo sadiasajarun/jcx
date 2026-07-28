@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JCX Developments Ltd. — Beyond Bonding</title>
 <meta name="description" content="Contemporary Residential, Commercial and Condominium developments in Bangladesh, delivered with Japanese engineering standards through partnership with Creed Group, Japan.">
-<!-- Favicon is the boot-curtain X: same four fillet paths, same white/red split. -->
+<!-- Favicon is the boot-curtain mark: same three fillet paths, same band colours. -->
 <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="public/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="public/favicon-192.png" sizes="192x192" type="image/png">
@@ -72,7 +72,7 @@
   /* Hero bed — light mode runs the film bright and saturated. The scrim then
      carries the whole contrast budget: a top band for the nav, a foot band for
      the search card, and the radial to hold the white headline over the middle. */
-  --bed-filter:brightness(.96) saturate(1.05);
+  --bed-filter:blur(5px) brightness(1.4) saturate(1.85);
   --vig:linear-gradient(180deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.14) 26%,rgba(0,0,0,.20) 62%,rgba(0,0,0,.58) 100%),
         radial-gradient(ellipse 68% 58% at 50% 46%,rgba(0,0,0,.22) 0%,rgba(0,0,0,.52) 62%,rgba(0,0,0,.90) 100%);
 }
@@ -114,7 +114,7 @@
 
   /* Dark mode dims the film instead — the page around it is already black, so
      the bed only needs the lighter original vignette on top. */
-  --bed-filter:brightness(.66) saturate(1.05);
+  --bed-filter:blur(5px) brightness(.4) saturate(1.85);
   --vig:radial-gradient(ellipse 68% 58% at 50% 46%,rgba(0,0,0,0) 0%,rgba(0,0,0,.45) 62%,rgba(0,0,0,.88) 100%);
 }
 /* ═══════════════════════════════════════════════════════════════════════ */
@@ -336,9 +336,12 @@ section{padding:112px 0}
    of it as its centre track, so the flanking words land on the X's waist. */
 .hero{--stage-w:min(46vw,860px);
   position:relative;min-height:100svh;padding:0;display:flex;flex-direction:column;overflow:hidden;background:#000;color:#fff}
-@media(max-width:900px){.hero{--stage-w:min(78vw,520px)}}
-.hero-bed{position:absolute;inset:0;z-index:0}
-.hero-bed video,.hero-bed img{width:100%;height:100%;object-fit:cover;filter:var(--bed-filter)}
+@media(max-width:900px){.hero{--stage-w:min(78vw,520px)}
+  /* Two concurrent decoders of the same file is a real cost on phones —
+     below 900px the window falls back to the poster. */
+  .lens video{display:none}.lens .still{display:block}}
+.hero-bed{position:absolute;inset:-8%;z-index:0}
+.hero-bed video,.hero-bed img{width:100%;height:100%;object-fit:cover;filter:var(--bed-filter);transform:scale(1.08)}
 /* Still fallbacks sit behind the video and are revealed by the reduced-motion
    and small-screen rules at the foot of this sheet. */
 .hero-bed .still{display:none}
@@ -352,6 +355,35 @@ section{padding:112px 0}
    height does not reliably feed an aspect-ratio back into `width:auto`, which
    is what collapsed the X to a fraction of its intended size. */
 .hero-stage{position:relative;z-index:2;flex:1;min-height:240px;width:var(--stage-w);margin:0 auto}
+
+/* ── the JCX mark as a window ────────────────────────────────────────────
+   The mark beside the wordmark in the logo is three stacked chevron slabs.
+   Here those slabs are cut out of ONE film plane spanning the whole hero, so
+   the bright frame inside them is continuous across all three — a single
+   window in the shape of the mark, not three separately-fitted videos.
+   The clip is authored in objectBoundingBox units (0-1) so the geometry stays
+   exact whatever size the stage resolves to. */
+.lens{position:absolute;inset:0;z-index:3;pointer-events:none;
+  clip-path:url(#clipJcx);-webkit-clip-path:url(#clipJcx)}
+/* Sized to the WHOLE hero, not to the mark, and centred on it — that is what
+   makes the slabs read as apertures onto the bed rather than three crops. */
+.lens video,.lens img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:100vw;height:100svh;object-fit:cover;filter:brightness(1.55) contrast(1.06) saturate(1.12)}
+.lens .still{display:none}
+.lens::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(200deg,rgba(255,255,255,.16),transparent 44%,rgba(0,0,0,.36))}
+/* Glossy bevel over the same three paths: glow, dark chamfer face, bright
+   body, specular top edge. Non-scaling strokes keep the edge weight even
+   while preserveAspectRatio="none" stretches the geometry with the stage. */
+.bevel{position:absolute;inset:0;z-index:4;width:100%;height:100%;pointer-events:none;overflow:visible}
+.bevel g{fill:none;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.bevel .bv-glow path{stroke:rgba(120,170,255,.32);stroke-width:13;filter:blur(7px)}
+.bevel .bv-in path{stroke:rgba(0,0,0,.44);stroke-width:8}
+.bevel .bv-body path{stroke:rgba(255,255,255,.94);stroke-width:4.5}
+.bevel .bv-spec path{stroke:rgba(255,255,255,.5);stroke-width:1.4}
+/* The logo's own band colours, in the logo's own order. */
+.bevel .bv-body path:nth-child(2){stroke:rgba(154,162,219,.96)}
+.bevel .bv-body path:nth-child(3){stroke:var(--accent-strong)}
 /* ONE video plane spanning the whole stage, with all four triangles cut out of
    it as a single clip. Previously each half carried its own <video>, each
    cover-fitted to its own box — which showed the film twice, side by side.
@@ -525,6 +557,15 @@ section{padding:112px 0}
 
 /* Statement row — small label, large claim, reference layout. */
 .ab-head{margin-top:clamp(46px,7vh,84px);display:grid;gap:14px}
+
+/* Stands where the letter build used to, and carries the same weight: the
+   positioning line from PRD §8.2, set large and centred. */
+.ab-claim{margin:clamp(8px,2vh,26px) auto 0;max-width:20ch;text-align:center;
+  font:600 clamp(30px,5.4vw,72px)/1.06 Inter,sans-serif;letter-spacing:-.035em}
+.ab-claim i{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;
+  letter-spacing:-.01em;color:var(--brand)}
+[data-theme="dark"] .ab-claim i{color:var(--accent)}
+.ab-claim+.ab-head{margin-top:clamp(52px,8vh,96px)}
 @media(min-width:900px){.ab-head{grid-template-columns:180px 1fr;gap:36px;align-items:start}}
 .ab-head h3{font:600 clamp(27px,3.5vw,46px)/1.13 Inter,sans-serif;letter-spacing:-.03em;max-width:24ch}
 .ab-head h3 i{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;
@@ -1081,7 +1122,7 @@ footer a:hover{color:#fff}
 @keyframes wa{0%{transform:scale(1);opacity:.6}70%{transform:scale(1.7);opacity:0}100%{opacity:0}}
 
 /* ── boot curtain ───────────────────────────────────────────────────────
-   The X draws itself, fills, the wordmark rises, then the curtain lifts. Driven
+   The mark draws itself, fills, the wordmark rises, then the curtain lifts. Driven
    entirely by CSS animation, deliberately: if the script never runs the curtain
    still leaves on schedule, so a JS failure can never lock the page behind it.
    JS only adds the scroll lock (and therefore can only ever fail open). */
@@ -1102,10 +1143,10 @@ footer a:hover{color:#fff}
 .bx-draw path:nth-child(1){animation-delay:.06s}
 .bx-draw path:nth-child(2){animation-delay:.2s}
 .bx-draw path:nth-child(3){animation-delay:.34s}
-.bx-draw path:nth-child(4){animation-delay:.48s}
 @keyframes bxDraw{to{stroke-dashoffset:0}}
 .bx-fill path{stroke:none;fill:#fff;opacity:0;animation:bxFill .6s var(--ease) 1.02s forwards}
-.bx-fill path:nth-child(2),.bx-fill path:nth-child(3){fill:var(--accent-strong)}
+.bx-fill path:nth-child(2){fill:#9AA2DB}
+.bx-fill path:nth-child(3){fill:var(--accent-strong)}
 @keyframes bxFill{to{opacity:1}}
 .boot-tx{display:grid;justify-items:center;gap:6px;text-align:center;opacity:0;transform:translateY(12px);
   animation:bootUp .66s var(--ease) 1.2s forwards}
@@ -1132,8 +1173,8 @@ html.booting,html.booting body{overflow:hidden}
   .reveal{opacity:1;transform:none}
   /* PRD §S1: under reduced motion the hero film becomes a still. All three
      layers swap, so nothing is left autoplaying. */
-  .hero-bed video{display:none}
-  .hero-bed .still{display:block}
+  .hero-bed video,.lens video{display:none}
+  .hero-bed .still,.lens .still{display:block}
   .p-cover{position:static;transform:none;height:auto;background:transparent;backdrop-filter:none;padding:0}
   .st{position:relative;opacity:1;transform:none;pointer-events:auto}
   .states{min-height:0;display:grid;gap:40px}
@@ -1168,18 +1209,16 @@ html.booting,html.booting body{overflow:hidden}
      hero are literally the same mark. -->
 <div class="boot" id="boot" aria-hidden="true">
   <div class="boot-in">
-    <svg class="boot-x" viewBox="0 0 600 430" aria-hidden="true">
+    <svg class="boot-x" viewBox="0 0 600 570" aria-hidden="true">
       <g class="bx-draw">
-        <path d="M12.5 18.1Q0 0 22 0L275 0Q297 0 284.5 18.1L157.02 202.66Q148.5 215 139.98 202.66Z"/>
-        <path d="M139.98 227.34Q148.5 215 157.02 227.34L284.5 411.9Q297 430 275 430L22 430Q0 430 12.5 411.9Z"/>
-        <path d="M315.5 18.1Q303 0 325 0L472.54 0Q600 0 527.56 104.88L460.02 202.66Q451.5 215 442.98 202.66Z"/>
-        <path d="M442.98 227.34Q451.5 215 460.02 227.34L587.5 411.9Q600 430 578 430L325 430Q303 430 315.5 411.9Z"/>
+        <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
+        <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
+        <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
       </g>
       <g class="bx-fill">
-        <path d="M12.5 18.1Q0 0 22 0L275 0Q297 0 284.5 18.1L157.02 202.66Q148.5 215 139.98 202.66Z"/>
-        <path d="M139.98 227.34Q148.5 215 157.02 227.34L284.5 411.9Q297 430 275 430L22 430Q0 430 12.5 411.9Z"/>
-        <path d="M315.5 18.1Q303 0 325 0L472.54 0Q600 0 527.56 104.88L460.02 202.66Q451.5 215 442.98 202.66Z"/>
-        <path d="M442.98 227.34Q451.5 215 460.02 227.34L587.5 411.9Q600 430 578 430L325 430Q303 430 315.5 411.9Z"/>
+        <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
+        <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
+        <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
       </g>
     </svg>
     <p class="boot-tx"><b>JC<span>X</span></b><small>Developments Ltd.</small></p>
@@ -1292,7 +1331,7 @@ html.booting,html.booting body{overflow:hidden}
 <!-- ═══ S1 HERO + S2 SEARCH ═══ -->
 <section class="hero" id="hero" aria-label="JCX Developments — welcome">
 
-  <!-- Hero film, full bleed. -->
+  <!-- Bed: the film, blurred and dimmed — the mark is the sharp window onto it. -->
   <div class="hero-bed" aria-hidden="true">
     <video id="heroBed" autoplay muted loop playsinline preload="auto" poster="public/images/hero/hero-poster.jpg">
       <source src="public/videos/hero.mp4" type="video/mp4">
@@ -1308,6 +1347,47 @@ html.booting,html.booting body{overflow:hidden}
 
 
 
+
+
+    <!-- Geometry shared by the clip and the bevel. -->
+    <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+      <defs><clipPath id="clipJcx" clipPathUnits="objectBoundingBox">
+        <path d="M0.0276 0.0163Q0 0 0.0317 0L0.685 0Q0.7133 0 0.7389 0.0128L0.9699 0.1282Q1 0.1433 0.9699 0.1583L0.7389 0.2738Q0.7133 0.2865 0.685 0.2865L0.0317 0.2865Q0 0.2865 0.0276 0.2703L0.2172 0.1587Q0.2433 0.1433 0.2172 0.1279Z"/>
+        <path d="M0.0276 0.373Q0 0.3567 0.0317 0.3567L0.685 0.3567Q0.7133 0.3567 0.7389 0.3695L0.9699 0.4849Q1 0.5 0.9699 0.5151L0.7389 0.6305Q0.7133 0.6433 0.685 0.6433L0.0317 0.6433Q0 0.6433 0.0276 0.627L0.2172 0.5154Q0.2433 0.5 0.2172 0.4846Z"/>
+        <path d="M0.0276 0.7297Q0 0.7135 0.0317 0.7135L0.685 0.7135Q0.7133 0.7135 0.7389 0.7262L0.9699 0.8417Q1 0.8567 0.9699 0.8718L0.7389 0.9872Q0.7133 1 0.685 1L0.0317 1Q0 1 0.0276 0.9837L0.2172 0.8721Q0.2433 0.8567 0.2172 0.8413Z"/>
+      </clipPath></defs>
+    </svg>
+
+    <!-- ONE film plane, clipped to the mark: brighter and sharper than the bed. -->
+    <div class="lens" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="auto" poster="public/images/hero/hero-poster.jpg">
+        <source src="public/videos/hero.mp4" type="video/mp4">
+      </video>
+      <img class="still" src="public/images/hero/hero-poster.jpg" alt="">
+    </div>
+
+    <svg class="bevel" viewBox="0 0 600 570" preserveAspectRatio="none" aria-hidden="true">
+      <g class="bv-glow">
+        <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
+        <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
+        <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
+      </g>
+      <g class="bv-in">
+        <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
+        <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
+        <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
+      </g>
+      <g class="bv-body">
+        <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
+        <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
+        <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
+      </g>
+      <g class="bv-spec">
+        <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
+        <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
+        <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
+      </g>
+    </svg>
 
       <!-- Headline, in three parts. -->
       <h1 class="tagbox" id="tagbox">
@@ -1367,6 +1447,8 @@ html.booting,html.booting body{overflow:hidden}
 <section class="about" id="about" aria-labelledby="about-h">
   <div class="about-bg" aria-hidden="true"><img src="public/images/about/about-backdrop.jpg" alt=""></div>
   <div class="shell">
+
+    <h2 class="ab-claim reveal">Two nations.<i>One standard of building.</i></h2>
 
     <div class="ab-head">
       <p class="eyebrow reveal">About Us</p>
@@ -1567,7 +1649,7 @@ html.booting,html.booting body{overflow:hidden}
         <!-- foundation -->
         <rect id="found" x="126" y="316" width="196" height="0" fill="#1b2735"/>
         <!-- tower -->
-        <g id="tower">
+        <g id="skylineTower">
           <rect id="shaft" x="140" y="330" width="168" height="0" fill="#16202e"/>
           <g id="wins"></g>
           <rect id="crown" x="140" y="330" width="168" height="0" fill="#2050A0" opacity=".22"/>
