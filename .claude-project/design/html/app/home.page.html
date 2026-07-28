@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JCX Developments Ltd. — Beyond Bonding</title>
 <meta name="description" content="Contemporary Residential, Commercial and Condominium developments in Bangladesh, delivered with Japanese engineering standards through partnership with Creed Group, Japan.">
+<!-- Favicon is the boot-curtain X: same four fillet paths, same white/red split. -->
+<link rel="icon" href="../../../../public/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../public/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../../../../public/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="../../../../public/apple-touch-icon.png">
+<meta name="theme-color" content="#0B1830">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,6 +37,44 @@
   --ease:cubic-bezier(.22,1,.36,1);
   --nav-solid:rgba(255,255,255,.94);
   --scrim:8,10,14;
+
+  /* Glass family — nav mega panel, search card and dropdowns all share one
+     surface recipe so the three floating layers read as the same material.
+     LIGHT: white, a little transparent, bright rim + top sheen.            */
+  --glass:rgba(255,255,255,.91);
+  --glass-quiet:rgba(255,255,255,.55);
+  --glass-line:rgba(255,255,255,.86);
+  --glass-edge:rgba(11,13,18,.10);
+  --glass-ink:#0B0D12;
+  --glass-mute:#5A6472;
+  --glass-hover:rgba(32,80,160,.08);
+  --glass-sheen:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.30) 40%,rgba(255,255,255,0) 100%);
+  --glass-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 30px 70px -28px rgba(11,13,18,.48), 0 0 30px rgba(32,80,160,.13);
+  --dd-bg:rgba(255,255,255,.90);
+  --drawer:rgba(255,255,255,.84);
+  --sf-knob:var(--brand);
+  --sf-knob-ink:#fff;
+
+  /* Utility strip — solid white band in light mode. */
+  --util-bg:#FFFFFF;
+  --util-ink:var(--ink);
+  --util-line:var(--line);
+
+  /* Project stills behind the site-menu glass. */
+  --menu-bg-op:.10;
+  --menu-veil:linear-gradient(180deg,rgba(255,255,255,.50),rgba(255,255,255,.80));
+
+  /* Testimonials tint by audience — warm for homeowners, cool for landowners.
+     Light mode mirrors the dark pair rather than staying black. */
+  --tst-home:#FBF8F4;
+  --tst-land:#F3F6FC;
+
+  /* Hero bed — light mode runs the film bright and saturated. The scrim then
+     carries the whole contrast budget: a top band for the nav, a foot band for
+     the search card, and the radial to hold the white headline over the middle. */
+  --bed-filter:blur(5px) brightness(1.4) saturate(1.85);
+  --vig:linear-gradient(180deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.14) 26%,rgba(0,0,0,.20) 62%,rgba(0,0,0,.58) 100%),
+        radial-gradient(ellipse 68% 58% at 50% 46%,rgba(0,0,0,.22) 0%,rgba(0,0,0,.52) 62%,rgba(0,0,0,.90) 100%);
 }
 [data-theme="dark"]{
   --bg:#08090B; --surface:#101217; --ink:#F2F4F7; --muted:#98A1AE;
@@ -42,12 +86,45 @@
   --shadow-float: 0 0 34px rgba(78,134,232,.22), 0 40px 90px -30px rgba(0,0,0,.9);
   --nav-solid:rgba(8,9,11,.94);
   --scrim:0,0,0;
+
+  /* DARK: blackish, a little transparent, hairline rim + faint sheen. */
+  --glass:rgba(12,14,19,.74);
+  --glass-quiet:rgba(255,255,255,.05);
+  --glass-line:rgba(255,255,255,.16);
+  --glass-edge:rgba(255,255,255,.14);
+  --glass-ink:#F2F4F7;
+  --glass-mute:#98A1AE;
+  --glass-hover:rgba(255,255,255,.08);
+  --glass-sheen:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.04) 40%,rgba(255,255,255,0) 100%);
+  --glass-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 30px 70px -28px rgba(0,0,0,.85), 0 0 34px rgba(78,134,232,.18);
+  --dd-bg:rgba(10,12,16,.80);
+  --drawer:rgba(10,12,17,.72);
+  --sf-knob:#fff;
+  --sf-knob-ink:#0B0D12;
+
+  --util-bg:transparent;
+  --util-ink:rgba(255,255,255,.82);
+  --util-line:rgba(255,255,255,.14);
+
+  --menu-bg-op:.18;
+  --menu-veil:linear-gradient(180deg,rgba(8,9,11,.68),rgba(8,9,11,.88));
+
+  --tst-home:#0B0907;
+  --tst-land:#070A12;
+
+  /* Dark mode dims the film instead — the page around it is already black, so
+     the bed only needs the lighter original vignette on top. */
+  --bed-filter:blur(5px) brightness(.4) saturate(1.85);
+  --vig:radial-gradient(ellipse 68% 58% at 50% 46%,rgba(0,0,0,0) 0%,rgba(0,0,0,.45) 62%,rgba(0,0,0,.88) 100%);
 }
 /* ═══════════════════════════════════════════════════════════════════════ */
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:88px}
-body{background:var(--bg);color:var(--ink);font:400 17px/1.62 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* overflow-x:clip, not hidden — `hidden` turns body into a scroll container,
+   which breaks position:sticky descendants (the pinned portfolio track). `clip`
+   suppresses the same horizontal overflow without that side effect. */
+body{background:var(--bg);color:var(--ink);font:400 17px/1.62 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
 img,video,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button,select,input{font:inherit;color:inherit}
@@ -72,7 +149,32 @@ section{padding:112px 0}
 .btn.ghost{background:transparent;border:1px solid var(--line);color:inherit}
 .btn.ghost:hover{border-color:var(--brand);color:var(--brand);background:transparent}
 .btn.on-dark{border-color:rgba(255,255,255,.34);color:#fff}
+/* Glossy pill — the nav CTA and the round nav controls share one material with
+   the search card and the drawer, so the whole chrome layer reads as one glass. */
+.btn.glass{position:relative;overflow:hidden;height:44px;padding:0 26px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--glass-line);color:var(--glass-ink);
+  font:600 12.5px Inter,sans-serif;letter-spacing:.06em;
+  backdrop-filter:blur(18px) saturate(1.5);box-shadow:var(--glass-shadow)}
+.btn.glass::before{content:"";position:absolute;inset:0;pointer-events:none;background:var(--glass-sheen)}
+.btn.glass>span{position:relative;z-index:1}
+.btn.glass:hover{background:var(--glass);color:var(--brand);transform:translateY(-2px);box-shadow:var(--glass-shadow),var(--shadow-lift)}
 .icon-btn{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:var(--radius);background:transparent;cursor:pointer;transition:.3s var(--ease)}
+.icon-btn.glass{position:relative;overflow:hidden;width:44px;height:44px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--glass-line);color:var(--glass-ink);
+  backdrop-filter:blur(18px) saturate(1.5);box-shadow:var(--glass-shadow)}
+.icon-btn.glass::before{content:"";position:absolute;inset:0;pointer-events:none;background:var(--glass-sheen)}
+.icon-btn.glass svg{position:relative;z-index:1}
+.icon-btn.glass:hover{color:var(--brand);border-color:var(--glass-line);transform:translateY(-1px)}
+/* Icons — one sprite, sized by class. No glyph characters anywhere. */
+.ic{width:15px;height:15px;fill:currentColor;flex:0 0 auto}
+.ic-md{width:17px;height:17px}
+.ic-lg{width:19px;height:19px}
+[data-theme="light"] .i-sun{display:none}
+[data-theme="dark"] .i-moon{display:none}
+/* Media toggles hold both glyphs; .paused decides which one shows. */
+.i-resume{display:none}
+.paused .i-pause{display:none}
+.paused .i-resume{display:block}
 .icon-btn:hover{border-color:var(--brand);color:var(--brand)}
 .lnk{position:relative;display:inline-flex;align-items:center;gap:8px;font:600 12px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding-bottom:3px}
 .lnk::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
@@ -82,51 +184,146 @@ section{padding:112px 0}
 .reveal.in{opacity:1;transform:none;transition:opacity .45s var(--ease),transform .45s var(--ease)}
 
 /* ── S11 · utility strip + nav ──────────────────────────────────────── */
-.util{display:none;border-bottom:1px solid transparent;transition:.5s var(--ease)}
+/* The strip is its own band, not an inversion of the bar: solid white in light
+   mode, transparent-over-hero in dark. Tokens carry the difference, so it does
+   not need .on-hero / .solid overrides. */
+.util{display:none;background:var(--util-bg);color:var(--util-ink);
+  border-bottom:1px solid var(--util-line);transition:.5s var(--ease)}
 @media(min-width:900px){.util{display:block}}
-.util-in{display:flex;align-items:center;justify-content:space-between;height:38px;font-size:12px}
-.util a{display:inline-flex;align-items:center;gap:7px}
-.util .set{display:flex;align-items:center;gap:20px}
-.socials{display:flex;gap:14px}
-.socials a{opacity:.75;transition:.3s}
-.socials a:hover{opacity:1;color:var(--accent)}
+.util-in{display:flex;align-items:center;justify-content:space-between;height:40px;font-size:12px}
+.util a{display:inline-flex;align-items:center;gap:7px;transition:color .3s var(--ease)}
+.util a:hover{color:var(--accent-strong)}
+.util .set{display:flex;align-items:center;gap:22px}
+.socials{display:flex;align-items:center;gap:14px}
+.socials a{opacity:.72;transition:.3s var(--ease)}
+.socials a:hover{opacity:1;color:var(--accent-strong)}
 
 .var-nav-bar{position:fixed;inset:0 0 auto 0;z-index:70;background:transparent;border-bottom:1px solid transparent;transition:background .5s var(--ease),border-color .5s var(--ease)}
 .var-nav-bar.solid{background:var(--nav-solid);border-bottom-color:var(--line);backdrop-filter:blur(16px)}
-.var-nav-bar.solid .util{border-bottom-color:var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:22px}
-.brand{display:flex;align-items:center;gap:12px}
+.nav-in{position:relative;display:flex;align-items:center;justify-content:space-between;height:72px;gap:22px}
+.brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
 .brand img{width:44px;height:44px;border-radius:var(--radius);object-fit:cover;border:1px solid var(--line)}
 .brand-tx{display:none;flex-direction:column;line-height:1}
 @media(min-width:560px){.brand-tx{display:flex}}
 .brand-tx b{font:700 17px Inter,sans-serif;letter-spacing:.1em}
 .brand-tx b span{color:var(--accent-strong)}
-.brand-tx small{margin-top:4px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;opacity:.62}
-.nav-links{display:none;gap:26px;font:500 12.5px Inter,sans-serif;letter-spacing:.09em;text-transform:uppercase}
-@media(min-width:1180px){.nav-links{display:flex}}
-.nav-links a{position:relative;padding-bottom:4px}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
-.nav-links a:hover::after{transform:scaleX(1)}
+.brand-tx small{margin-top:4px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;opacity:.62;white-space:nowrap}
+/* The link cluster rides in a glass capsule rather than sitting loose on the
+   bar — it gives the row a centre of gravity and lets the mega panel read as
+   dropping out of the pod rather than out of nowhere. */
+.nav-pod{display:none;align-items:center;padding:4px;border-radius:999px;
+  background:var(--glass-quiet);border:1px solid var(--glass-edge);backdrop-filter:blur(14px) saturate(1.3);
+  transition:background .5s var(--ease),border-color .5s var(--ease)}
+@media(min-width:1180px){.nav-pod{display:flex}}
+.nav-links{display:flex;align-items:center;gap:0;font:500 11.5px Inter,sans-serif;letter-spacing:.09em;text-transform:uppercase}
+.nav-links a,.nav-trigger{position:relative;display:inline-flex;align-items:center;gap:8px;
+  padding:9px 13px;border:0;border-radius:999px;background:transparent;color:inherit;font:inherit;
+  letter-spacing:inherit;text-transform:inherit;cursor:pointer;white-space:nowrap;
+  transition:background .3s var(--ease),color .3s var(--ease)}
+.nav-links a:hover,.nav-trigger:hover,.nav-trigger[aria-expanded="true"]{background:var(--glass-hover)}
+/* Plus marker on items that carry a panel; it rotates into a × when open. */
+.nav-trigger .pm{position:relative;width:9px;height:9px;flex:0 0 auto;opacity:.66;transition:transform .4s var(--ease),opacity .3s}
+.nav-trigger .pm::before,.nav-trigger .pm::after{content:"";position:absolute;background:currentColor}
+.nav-trigger .pm::before{left:0;top:4px;width:9px;height:1.3px}
+.nav-trigger .pm::after{left:4px;top:0;width:1.3px;height:9px}
+.nav-trigger[aria-expanded="true"] .pm{opacity:1;transform:rotate(135deg)}
 .nav-act{display:flex;align-items:center;gap:10px}
-/* over-hero inversion */
-.on-hero .util{color:rgba(255,255,255,.82);border-bottom-color:rgba(255,255,255,.14)}
-.on-hero .nav-links a,.on-hero .brand-tx b,.on-hero .brand-tx small{color:#fff}
+/* over-hero inversion — the util strip is deliberately exempt, it owns its band */
+.on-hero .nav-links a,.on-hero .nav-trigger,.on-hero .brand-tx b,.on-hero .brand-tx small{color:#fff}
+.on-hero .nav-pod{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16)}
+.on-hero .nav-links a:hover,.on-hero .nav-trigger:hover,.on-hero .nav-trigger[aria-expanded="true"]{background:rgba(255,255,255,.14)}
 .on-hero .icon-btn{border-color:rgba(255,255,255,.32);color:#fff}
 .on-hero .btn.ghost{border-color:rgba(255,255,255,.34);color:#fff}
+/* .glass keeps its own material over the hero — it is not inverted. */
+.on-hero .icon-btn.glass{border-color:var(--glass-line);color:var(--glass-ink)}
+.on-hero .icon-btn.glass:hover{color:var(--brand)}
+/* While the drawer is open the bar goes solid so the nav stays legible above it. */
+.var-nav-bar.mega-on{background:var(--nav-solid);border-bottom-color:var(--line);backdrop-filter:blur(16px)}
+.var-nav-bar.mega-on.on-hero .nav-links a,.var-nav-bar.mega-on.on-hero .nav-trigger,
+.var-nav-bar.mega-on.on-hero .brand-tx b,.var-nav-bar.mega-on.on-hero .brand-tx small{color:var(--ink)}
+.var-nav-bar.mega-on.on-hero .nav-pod{background:var(--glass-quiet);border-color:var(--glass-edge)}
+.var-nav-bar.mega-on.on-hero .nav-links a:hover,.var-nav-bar.mega-on.on-hero .nav-trigger:hover,
+.var-nav-bar.mega-on.on-hero .nav-trigger[aria-expanded="true"]{background:var(--glass-hover)}
+.var-nav-bar.mega-on.on-hero .icon-btn:not(.glass),.var-nav-bar.mega-on.on-hero .btn.ghost{border-color:var(--line);color:var(--ink)}
 
-/* menu overlay */
-.menu{position:fixed;inset:0;z-index:90;background:#08090B;display:none;overflow-y:auto}
-.menu.open{display:block}
-.menu-bg{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;opacity:.14;pointer-events:none}
+/* ── mega panel — Ruma pattern: item column + live preview card ──────── */
+.mega{display:none}
+@media(min-width:1180px){
+  .mega{display:block;position:absolute;top:100%;left:50%;z-index:60;
+    width:min(940px,calc(100vw - 56px));padding-top:8px;
+    opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-10px);
+    transition:opacity .34s var(--ease),transform .34s var(--ease),visibility 0s linear .34s}
+  .mega.open{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0);
+    transition:opacity .34s var(--ease),transform .34s var(--ease),visibility 0s linear 0s}
+}
+.mega-in{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 348px;gap:14px;
+  padding:14px;border-radius:20px;color:var(--glass-ink);
+  background:var(--glass);border:1px solid var(--glass-line);
+  backdrop-filter:blur(28px) saturate(1.6);box-shadow:var(--glass-shadow)}
+.mega-in::before{content:"";position:absolute;inset:0;pointer-events:none;background:var(--glass-sheen)}
+.mega-col{position:relative;display:flex;flex-direction:column;min-width:0}
+.mega-eyebrow{padding:6px 12px 10px;font:600 10px Inter,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--glass-mute)}
+/* Close button for the site-menu drawer. */
+.drawer-x{width:38px;height:38px;display:grid;place-items:center;border-radius:999px;
+  border:1px solid var(--glass-edge);background:transparent;color:inherit;cursor:pointer;transition:.3s var(--ease)}
+.drawer-x:hover{color:var(--accent-strong);border-color:var(--accent-strong)}
+.mega-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.mega-item{display:flex;align-items:center;gap:14px;width:100%;padding:8px 12px;border:0;border-radius:14px;
+  background:transparent;color:inherit;text-align:left;cursor:pointer;transition:background .28s var(--ease)}
+.mega-item:hover,.mega-item.on{background:var(--glass-hover)}
+.mega-thumb{flex:0 0 auto;width:42px;height:42px;border-radius:11px;overflow:hidden;background:#0b1220;
+  border:1px solid var(--glass-edge)}
+.mega-thumb img{width:100%;height:100%;object-fit:cover}
+.mega-tx{min-width:0}
+.mega-tx b{display:block;font:600 14px Inter,sans-serif;letter-spacing:-.01em;line-height:1.25}
+.mega-tx span{display:block;margin-top:2px;font:400 12px Inter,sans-serif;color:var(--glass-mute);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mega-all{display:inline-flex;align-items:center;gap:9px;margin-top:auto;padding:12px;
+  font:600 11px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.mega-all:hover{color:var(--accent-strong)}
+.mega-card{position:relative;display:block;border-radius:16px;overflow:hidden;background:#0b1220;
+  border:1px solid var(--glass-edge);min-height:308px}
+.mega-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .7s var(--ease),opacity .35s var(--ease)}
+.mega-card:hover img{transform:scale(1.05)}
+.mega-card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(6,8,12,.9),rgba(6,8,12,.06) 58%)}
+.mega-tag{position:absolute;top:12px;left:12px;z-index:2;padding:6px 12px;border-radius:999px;
+  background:rgba(8,10,14,.58);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);
+  font:600 9.5px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#fff}
+.mega-cap{position:absolute;left:16px;right:16px;bottom:15px;z-index:2;color:#fff}
+.mega-cap b{display:block;font:600 20px Inter,sans-serif;letter-spacing:-.025em}
+.mega-cap i{display:block;margin-top:4px;font:400 12px Inter,sans-serif;font-style:normal;color:rgba(255,255,255,.72)}
+
+/* ── site menu — right-half drawer, same material as the projects drawer ──
+   No longer a full-page blackout: it takes the right half from the edge to the
+   page centre, starts below the bar so the nav stays visible, and sits at 65
+   against the header's 70. Project stills sit BEHIND the glass, so the
+   backdrop-filter turns them into a soft wash rather than a picture grid.   */
+.menu{position:fixed;top:var(--navh,110px);right:0;bottom:0;z-index:65;width:50vw;
+  border-radius:26px 0 0 26px;overflow:hidden;
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateX(100%);
+  transition:opacity .45s var(--ease),transform .55s var(--ease),visibility 0s linear .55s}
+.menu.open{opacity:1;visibility:visible;pointer-events:auto;transform:none;
+  transition:opacity .35s var(--ease),transform .55s var(--ease),visibility 0s linear 0s}
+@media(max-width:900px){.menu{width:100vw;border-radius:0}}
+.menu-bg{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;opacity:var(--menu-bg-op);pointer-events:none}
 .menu-bg img{width:100%;height:100%;object-fit:cover}
-.menu-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,11,.72),rgba(8,9,11,.94))}
-.menu-in{position:relative;min-height:100%;display:flex;flex-direction:column;color:#fff}
-.menu-top{display:flex;align-items:center;justify-content:space-between;height:72px}
-.menu-list{list-style:none;flex:1;padding:32px 0}
-.menu-list li{border-bottom:1px solid rgba(255,255,255,.1)}
-.menu-list a{display:block;padding:15px 0;font:600 clamp(22px,3.4vw,34px) Inter,sans-serif;letter-spacing:-.02em;transition:color .3s}
-.menu-list a:hover{color:var(--accent)}
-.menu-foot{border-top:1px solid rgba(255,255,255,.1);padding:22px 0;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;font-size:14px;color:rgba(255,255,255,.75)}
+.menu-veil{position:absolute;inset:0;background:var(--menu-veil)}
+.menu-in{position:relative;height:100%;overflow-y:auto;display:flex;flex-direction:column;
+  padding:22px 30px 26px;color:var(--glass-ink);
+  background:var(--glass-sheen),var(--drawer);
+  border:1px solid var(--glass-line);border-right:0;
+  backdrop-filter:blur(30px) saturate(1.7);box-shadow:var(--glass-shadow)}
+.menu-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex:0 0 auto;height:auto}
+.menu-list{list-style:none;flex:1 1 auto;padding:16px 0 0}
+.menu-list li{border-bottom:1px solid var(--glass-edge)}
+.menu-list a{display:block;padding:11px 4px;font:600 clamp(18px,1.8vw,24px) Inter,sans-serif;letter-spacing:-.02em;
+  transition:color .3s var(--ease),padding-left .3s var(--ease)}
+.menu-list a:hover{color:var(--accent-strong);padding-left:14px}
+.menu-foot{border-top:1px solid var(--glass-edge);padding:18px 4px 0;margin-top:14px;flex:0 0 auto;
+  display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;
+  font-size:13.5px;line-height:1.7;color:var(--glass-mute)}
+.menu-foot a:hover{color:var(--accent-strong)}
 
 /* ── S1 · hero — glass X lens over a blurred film bed ───────────────── */
 /* Reference: Residida. The bed is the hero film blurred and dimmed; the
@@ -141,12 +338,13 @@ section{padding:112px 0}
   position:relative;min-height:100svh;padding:0;display:flex;flex-direction:column;overflow:hidden;background:#000;color:#fff}
 @media(max-width:900px){.hero{--stage-w:min(78vw,520px)}}
 .hero-bed{position:absolute;inset:-8%;z-index:0}
-.hero-bed video,.hero-bed img{width:100%;height:100%;object-fit:cover;filter:blur(20px) brightness(.40) saturate(.85);transform:scale(1.08)}
+.hero-bed video,.hero-bed img{width:100%;height:100%;object-fit:cover;filter:var(--bed-filter);transform:scale(1.08)}
 /* Still fallbacks sit behind the video and are revealed by the reduced-motion
    and small-screen rules at the foot of this sheet. */
 .hero-bed .still,.lens .still{display:none}
-.hero-vig{position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(ellipse 68% 58% at 50% 46%,rgba(0,0,0,0) 0%,rgba(0,0,0,.45) 62%,rgba(0,0,0,.88) 100%)}
+/* Scrim is paired with --bed-filter: light mode already dims the film, dark
+   mode brightens it and needs the heavier gradient. Both live in the token block. */
+.hero-vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--vig)}
 
 /* The stage spreads across the marked area: an explicit width, and `flex:1`
    for the height so it absorbs everything between the nav and the search bar.
@@ -266,31 +464,91 @@ section{padding:112px 0}
 /* Segmented pill above a labelled field card with a solid square submit.
    Aterra's card is opaque white on light; on this hero it becomes frosted
    glass so it sits in the film rather than on top of it.               */
-.search-wrap{position:relative;z-index:4;margin:clamp(20px,3.2vh,38px) auto 0;width:100%;max-width:940px;display:flex;flex-direction:column;align-items:center;gap:14px}
-.segbar{display:inline-flex;padding:4px;border-radius:999px;background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(14px);position:relative;z-index:0}
+/* z-index:8 — above .tagbox (5) and .hero-foot (4), both of which the open
+   dropdown panel overlaps. At the old value of 4 the foot band swallowed the
+   clicks on the lower half of the list. */
+.search-wrap{position:relative;z-index:8;margin:clamp(20px,3.2vh,38px) auto 0;width:100%;max-width:940px;display:flex;flex-direction:column;align-items:center;gap:14px}
+/* Both the pill and the card use the glass family: white and glossy in light
+   mode, blackish in dark — always a little transparent so the film reads
+   through. The hero behind them is dark in BOTH themes, hence the tokens
+   rather than plain white/black. */
+.segbar{display:inline-flex;padding:4px;border-radius:999px;background:var(--glass);
+  border:1px solid var(--glass-line);backdrop-filter:blur(18px) saturate(1.5);position:relative;z-index:0;
+  box-shadow:var(--glass-shadow)}
 .segbar button{position:relative;border:0;background:transparent;padding:9px 20px;border-radius:999px;
-  font:600 11.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);cursor:pointer;transition:color .35s}
-.segbar button[aria-checked="true"]{color:#0B0D12}
-.segbar .knob{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:#fff;z-index:-1;
+  font:600 11.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--glass-mute);cursor:pointer;transition:color .35s}
+.segbar button:hover{color:var(--glass-ink)}
+.segbar button[aria-checked="true"]{color:var(--sf-knob-ink)}
+.segbar .knob{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--sf-knob);z-index:-1;
   box-shadow:0 2px 10px rgba(0,0,0,.28);transition:transform .45s var(--ease),width .45s var(--ease)}
-.search{display:flex;align-items:stretch;gap:0;width:100%;padding:10px;border-radius:14px;
-  background:rgba(12,14,18,.58);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(22px) saturate(1.2);box-shadow:var(--shadow-float)}
-.field{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;padding:10px 18px;position:relative}
-.field+.field::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:56%;background:rgba(255,255,255,.16)}
-.field label{font:500 10.5px Inter,sans-serif;letter-spacing:.06em;color:rgba(255,255,255,.55)}
+
+.search{position:relative;display:flex;align-items:stretch;gap:0;width:100%;padding:10px;border-radius:16px;
+  background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(26px) saturate(1.6);
+  box-shadow:var(--glass-shadow),var(--shadow-float)}
+/* Top sheen — the "glossy" read. Sits over the card, under the fields. */
+.search::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:var(--glass-sheen)}
+.field{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;padding:10px 18px;position:relative;z-index:1}
+/* The field owning an open list has to outrank its later siblings — in the
+   stacked mobile layout they paint over the panel otherwise. */
+.field.lift{z-index:6}
+.field+.field::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:56%;background:var(--glass-edge)}
+.field .lab{font:500 10.5px Inter,sans-serif;letter-spacing:.06em;color:var(--glass-mute)}
+
+/* Custom listbox. The native <select> stays in the DOM as the single source of
+   truth for filter state (all the existing sync code reads/writes .value) but
+   is taken out of sight and out of the a11y tree — option lists cannot be
+   styled, and the panel has to match the hero glass. */
 .sel{position:relative}
-.sel select{appearance:none;width:100%;background:transparent;border:0;font:500 15px Inter,sans-serif;color:#fff;cursor:pointer;padding-right:20px}
-.sel select option{background:#0F1218;color:#fff}
-.sel .chev{position:absolute;right:0;top:50%;transform:translateY(-50%);pointer-events:none;color:rgba(255,255,255,.5);font-size:12px}
-.search-btn{flex:0 0 auto;align-self:stretch;width:56px;display:grid;place-items:center;border:0;border-radius:10px;
+.sel select{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;clip:rect(0 0 0 0)}
+.sel-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:0;
+  border:0;background:transparent;color:var(--glass-ink);font:500 15px Inter,sans-serif;text-align:left;cursor:pointer}
+.sel-val{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Drawn, not typed — the ▾ glyph renders as a hairline dash at this size. */
+.sel .chev{flex:0 0 auto;width:8px;height:8px;border-right:1.6px solid var(--glass-mute);border-bottom:1.6px solid var(--glass-mute);
+  transform:translateY(-3px) rotate(45deg);transition:transform .3s var(--ease),border-color .3s}
+.sel.open .chev{transform:translateY(1px) rotate(225deg);border-color:var(--brand)}
+.sel-list{position:absolute;left:-14px;right:-14px;top:calc(100% + 16px);z-index:30;list-style:none;
+  padding:6px;margin:0;border-radius:16px;max-height:272px;overflow-y:auto;
+  background:var(--glass-sheen),var(--dd-bg);border:1px solid var(--glass-line);
+  backdrop-filter:blur(28px) saturate(1.6);box-shadow:var(--glass-shadow);
+  opacity:0;visibility:hidden;transform:translateY(-8px) scale(.97);transform-origin:top center;
+  /* visibility is stepped, not transitioned: delayed on close so the fade can
+     finish, immediate on open so the panel is focusable in the same tick the
+     class lands — a transitioned visibility still computes as hidden then. */
+  transition:opacity .26s var(--ease),transform .26s var(--ease),visibility 0s linear .26s}
+.sel.open .sel-list{opacity:1;visibility:visible;transform:none;
+  transition:opacity .26s var(--ease),transform .26s var(--ease),visibility 0s linear 0s}
+/* .hero is overflow:hidden and the search card sits near its foot, so a list
+   dropped downward gets guillotined by the section edge. When the room below
+   runs out the panel rises instead; JS sets .up and caps max-height to the
+   space that is actually there. */
+.sel.up .sel-list{top:auto;bottom:calc(100% + 16px);transform-origin:bottom center;transform:translateY(8px) scale(.97)}
+.sel.up.open .sel-list{transform:none}
+.sel-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 13px;border-radius:11px;font:500 14px Inter,sans-serif;color:var(--glass-ink);
+  cursor:pointer;transition:background .2s var(--ease),color .2s}
+.sel-list li::after{content:"";flex:0 0 auto;width:6px;height:6px;border-radius:50%;
+  background:var(--accent-strong);opacity:0;transition:opacity .2s}
+.sel-list li:hover,.sel-list li:focus-visible{background:var(--glass-hover);outline:none}
+.sel-list li[aria-selected="true"]{background:var(--glass-hover);color:var(--brand)}
+.sel-list li[aria-selected="true"]::after{opacity:1}
+
+.search-btn{position:relative;z-index:1;flex:0 0 auto;align-self:stretch;width:56px;display:grid;place-items:center;border:0;border-radius:12px;
   background:var(--brand);color:#fff;font-size:19px;cursor:pointer;transition:.35s var(--ease);box-shadow:inset 0 0 0 1px rgba(236,28,45,.45)}
 .search-btn:hover{background:var(--brand-deep);transform:translateY(-1px)}
 .search-btn.none{width:auto;padding:0 20px;font:600 11px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;
-  background:transparent;color:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);cursor:default}
+  background:transparent;color:var(--glass-mute);box-shadow:inset 0 0 0 1px var(--glass-edge);cursor:default}
+/* Four labels do not fit a 375px row at the desktop padding — tighten rather
+   than let the pill run off the edge. */
+@media(max-width:560px){
+  .segbar{max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .segbar::-webkit-scrollbar{display:none}
+  .segbar button{padding:9px 13px;white-space:nowrap}
+}
 @media(max-width:860px){
   .search{flex-direction:column;gap:2px}
   .field+.field::before{left:18px;right:18px;top:0;transform:none;width:auto;height:1px}
+  .sel-list{left:0;right:0}
   .search-btn{width:100%;height:48px;margin-top:8px}
 }
 
@@ -307,42 +565,174 @@ section{padding:112px 0}
   font:600 11px Inter,sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);
   -webkit-text-fill-color:var(--accent);transition:.45s var(--ease)}
 .ltr.on .cap{opacity:1;transform:translate(-50%,0)}
-.mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(74px,10vw,130px);aspect-ratio:1;
-  border-radius:var(--radius);display:grid;place-items:center;background:var(--brand);border:2px solid var(--accent-strong);
-  box-shadow:var(--shadow-float);z-index:4}
-.mark b{font:700 clamp(17px,2.2vw,28px) Inter,sans-serif;color:#fff;letter-spacing:.03em}
-.mark b i{font-style:normal;color:var(--accent-strong)}
-.copy-card{margin:52px auto 0;max-width:560px;background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--accent-strong);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px}
-@media(min-width:768px){.copy-card{padding:40px}}
-.copy-card h3{margin-top:14px;font:600 clamp(25px,3vw,34px)/1.15 Inter,sans-serif;letter-spacing:-.025em}
-.copy-card p{margin-top:15px;color:var(--muted);font-size:16px}
-.pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+/* Scaffold hairlines behind the word. They draw in left-to-right, the letters
+   rise through them, then they retract — the word reads as going UP rather than
+   fading in. Default opacity:0 so they never show without the animation. */
+.jcx-wrap{position:relative}
+.rig{position:absolute;inset:-4% 0;pointer-events:none;z-index:1}
+.rig i{position:absolute;left:0;right:0;height:1px;opacity:0;transform-origin:left center;background:var(--brand)}
+.rig i:nth-child(1){top:16%}
+.rig i:nth-child(2){top:42%;background:var(--accent-strong)}
+.rig i:nth-child(3){top:68%}
+.rig i:nth-child(4){top:94%;background:var(--accent-strong)}
+.jcx{position:relative;z-index:2}
+
+/* Statement row — small label, large claim, reference layout. */
+.ab-head{margin-top:clamp(46px,7vh,84px);display:grid;gap:14px}
+@media(min-width:900px){.ab-head{grid-template-columns:180px 1fr;gap:36px;align-items:start}}
+.ab-head h3{font:600 clamp(27px,3.5vw,46px)/1.13 Inter,sans-serif;letter-spacing:-.03em;max-width:24ch}
+.ab-head h3 i{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;
+  letter-spacing:-.01em;color:var(--brand)}
+[data-theme="dark"] .ab-head h3 i{color:var(--accent)}
+
+/* ── plate collage. Overlapping grid items, each drifting at its own rate on
+   scroll, so the composition shears apart and re-forms as it passes. Any plate
+   can hold a <video> instead of an <img> — .is-video only adds the pip.     */
+.plates{position:relative;margin-top:clamp(34px,5vh,60px);display:grid;gap:16px}
+.plate{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:4px;background:#0b1220;
+  border:1px solid var(--glass-line);box-shadow:var(--shadow);will-change:transform}
+.plate.tall{aspect-ratio:3/4}
+.plate>img,.plate>video{width:100%;height:100%;object-fit:cover}
+.plate figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:34px 16px 13px;color:#fff;
+  background:linear-gradient(to top,rgba(6,8,12,.88),rgba(6,8,12,0));
+  font:600 9.5px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.plate.is-video::before{content:"";position:absolute;top:12px;left:12px;z-index:3;width:26px;height:26px;
+  border-radius:999px;background:rgba(8,10,14,.55);border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px)}
+.plate.is-video::after{content:"";position:absolute;top:20px;left:22px;z-index:4;
+  border-left:7px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.pc{font-size:14.5px;line-height:1.74;color:var(--muted)}
+.pc p+p{margin-top:13px}
+.circle-lnk{display:inline-flex;align-items:center;gap:13px;margin-top:20px;
+  font:600 11.5px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.circle-lnk span{width:42px;height:42px;flex:0 0 auto;display:grid;place-items:center;border-radius:999px;
+  border:1px solid var(--line);transition:.35s var(--ease)}
+.circle-lnk:hover{color:var(--brand)}
+.circle-lnk:hover span{background:var(--brand);border-color:var(--brand);color:#fff;transform:translateX(4px)}
+@media(min-width:1024px){
+  /* 12 columns, fixed row rhythm. Plates deliberately share rows and columns —
+     the overlap between PLATES is the composition. The two copy blocks are the
+     exception: their tracks are kept clear of every plate, because parallax
+     also drifts plates up to ~74px off their cell. */
+  .plates{grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(76px,8.4vw,106px);gap:22px}
+  .plate{aspect-ratio:auto;height:100%}
+  .plate.tall{aspect-ratio:auto}
+  /* Each copy block gets a full empty row between it and the nearest plate —
+     the drift is up to ±74px and would otherwise cross a 22px gutter. */
+  .pc-l{grid-column:1/4;grid-row:1/3}
+  .p1{grid-column:4/10;grid-row:1/5;z-index:1}
+  .p3{grid-column:10/13;grid-row:1/4;z-index:1}
+  .p2{grid-column:1/5;grid-row:4/7;z-index:2}
+  .p4{grid-column:4/8;grid-row:4/8;z-index:4}
+  .p5{grid-column:6/10;grid-row:5/8;z-index:3}
+  .pc-r{grid-column:10/13;grid-row:5/8;align-self:center}
+  /* Guard: copy outranks every plate, so a future placement change degrades to
+     "text over image" rather than "text buried under image". */
+  .pc{position:relative;z-index:6}
+}
+.pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:clamp(34px,5vh,58px)}
 .pill-stat{border:1px solid var(--line);border-radius:var(--radius);padding:9px 18px;font:600 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ── S3b · stats — the tower rises while the numbers grow ───────────────
+   The reveal is SCRUBBED to scroll position rather than played on entry, so the
+   building literally grows as the reader moves down the page. Counters fire
+   once. Two stats flank the tower on desktop; they stack into a 2×2 below. */
+/* padding-bottom:0 is load-bearing — the skyline has to sit ON the section floor
+   for the rise to read as coming up out of the ground rather than floating. */
+.stats{position:relative;padding-bottom:0;border-top:1px solid var(--line);
+  background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 100%)}
+.stats::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 62% 48% at 50% 100%,rgba(32,80,160,.10),transparent 72%)}
+[data-theme="dark"] .stats::before{background:radial-gradient(ellipse 62% 48% at 50% 100%,rgba(78,134,232,.14),transparent 72%)}
+.stats>*{position:relative;z-index:1}
+/* Reference layout: centred headline, figures flanking left and right, one tall
+   mass rising up the middle. Below 900px it stacks — 2×2 of figures, then the
+   tower — because a 250px-wide centre column would leave nothing readable. */
+.stat-grid{margin-top:clamp(30px,4.4vh,56px);display:grid;gap:clamp(22px,4vw,40px);align-items:end}
+@media(min-width:900px){.stat-grid{grid-template-columns:1fr minmax(230px,380px) 1fr;gap:clamp(24px,3.4vw,56px)}}
+.stat-col{display:grid;gap:clamp(26px,5vh,58px);align-content:end}
+@media(max-width:899px){.stat-col{grid-template-columns:1fr 1fr;gap:18px}}
+.stat{padding:18px 20px;border-radius:16px;background:var(--glass);border:1px solid var(--glass-line);
+  backdrop-filter:blur(18px) saturate(1.5);box-shadow:var(--glass-shadow)}
+/* Once they flank the tower the glass frames read as clutter, so the cells lose
+   them and the figures sit as plain type facing the building. */
+@media(min-width:900px){
+  .stat{padding:0;background:transparent;border:0;backdrop-filter:none;box-shadow:none}
+  .stat-col:first-child{text-align:right}
+  .stat-col:first-child .stat span{margin-left:auto}
+}
+.stat b{display:block;font:600 clamp(36px,4.4vw,60px)/1 Inter,sans-serif;letter-spacing:-.04em;
+  color:var(--brand);font-variant-numeric:tabular-nums}
+[data-theme="dark"] .stat b{color:var(--accent)}
+.stat span{display:block;margin-top:8px;max-width:22ch;font:500 12.5px/1.52 Inter,sans-serif;
+  letter-spacing:.03em;color:var(--muted)}
+/* Transparent cutout, no frame — the tower stands on the band rather than
+   sitting inside a photo card. Bottom-anchored and running to the section floor,
+   so the scrubbed clip reads as it rising out of the ground. */
+.tower{position:relative;line-height:0;align-self:end}
+.tower img{display:block;width:100%;height:auto;max-height:clamp(320px,62vh,660px);
+  object-fit:contain;object-position:center bottom;margin-inline:auto}
+
+/* Section kicker — one display word that arrives letter by letter, with the
+   count on a quiet line beneath it. Serif italic, the same voice as .h2 i. */
+.sec-kick{display:flex;flex-direction:column;gap:12px}
+.kick-word{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;
+  font-size:clamp(40px,5.8vw,84px);line-height:.94;letter-spacing:-.02em;color:var(--brand)}
+[data-theme="dark"] .kick-word{color:var(--accent)}
+.kick-word span{display:inline-block}
+.kick-sub{display:flex;align-items:center;gap:13px;font:600 11.5px Inter,sans-serif;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.kick-sub b{font-size:13.5px;letter-spacing:.08em;color:var(--ink);font-variant-numeric:tabular-nums}
+.k-rule{flex:0 0 auto;width:clamp(30px,3.6vw,52px);height:2px;border-radius:999px;
+  background:var(--accent);transform-origin:left center}
 
 /* ── S4 · projects ──────────────────────────────────────────────────── */
 .cmd{display:flex;flex-direction:column;gap:28px}
 @media(min-width:1024px){.cmd{flex-direction:row;justify-content:space-between;align-items:flex-end}}
 .ctrl{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
 @media(min-width:1024px){.ctrl{align-items:flex-end}}
-.seg{position:relative;z-index:0;display:inline-flex;padding:4px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
-.seg button{position:relative;border:0;background:transparent;padding:9px 20px;border-radius:var(--radius);font:600 11.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .3s}
+/* Portfolio surface — same glass family as the nav pod and the search card.
+   NO overflow:hidden here: an overflow ancestor kills position:sticky, and the
+   pinned track below depends on it. The ::before glow is inset:0 so it cannot
+   spill anyway. */
+.portfolio{position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 46%,var(--surface) 100%)}
+.portfolio::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 66% 42% at 50% 0%,rgba(32,80,160,.10),transparent 72%)}
+[data-theme="dark"] .portfolio::before{background:radial-gradient(ellipse 66% 42% at 50% 0%,rgba(78,134,232,.13),transparent 72%)}
+.portfolio>*{position:relative;z-index:1}
+
+.seg{position:relative;z-index:0;display:inline-flex;padding:4px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(18px) saturate(1.5);
+  box-shadow:var(--glass-shadow)}
+.seg button{position:relative;border:0;background:transparent;padding:9px 20px;border-radius:999px;font:600 11.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--glass-mute);cursor:pointer;transition:color .3s}
+.seg button:hover{color:var(--glass-ink)}
 .seg button[aria-checked="true"]{color:#fff}
-.seg .pill{position:absolute;top:4px;bottom:4px;left:4px;border-radius:var(--radius);background:var(--brand);z-index:-1;transition:transform .45s var(--ease),width .45s var(--ease)}
-.strow{display:flex;flex-wrap:wrap;gap:20px;font:600 11.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase}
-.strow button{position:relative;border:0;background:transparent;color:var(--muted);cursor:pointer;padding:0 0 6px}
-.strow button[aria-checked="true"]{color:var(--ink)}
-.strow button[aria-checked="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent)}
-.count{display:flex;align-items:baseline;gap:9px;color:var(--muted);font:400 11px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase}
-.count b{font:600 clamp(30px,3.4vw,44px)/1 Inter,sans-serif;letter-spacing:-.03em;color:var(--brand)}
+.seg .pill{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--brand);z-index:-1;transition:transform .45s var(--ease),width .45s var(--ease)}
+.strow{display:flex;flex-wrap:wrap;gap:8px;font:600 11px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.strow button{position:relative;padding:8px 15px;border-radius:999px;border:1px solid var(--glass-edge);
+  background:var(--glass-quiet);color:var(--muted);cursor:pointer;backdrop-filter:blur(10px);transition:.3s var(--ease)}
+.strow button:hover{color:var(--ink);border-color:var(--glass-line)}
+.strow button[aria-checked="true"]{background:var(--glass);color:var(--ink);border-color:var(--glass-line);box-shadow:var(--glass-shadow)}
+.count{display:inline-flex;align-items:baseline;gap:9px;padding:9px 18px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(18px) saturate(1.5);
+  box-shadow:var(--glass-shadow);color:var(--muted);font:400 11px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.count b{font:600 clamp(26px,3vw,38px)/1 Inter,sans-serif;letter-spacing:-.03em;color:var(--brand)}
 [data-theme="dark"] .count b{color:var(--accent)}
 
-.strip{margin-top:48px;display:flex;gap:48px;overflow-x:auto;padding:10px 24px 26px;scroll-snap-type:x mandatory;scrollbar-width:none}
+/* scroll-behavior:auto is load-bearing — .strip inherits `smooth` from html,
+   which turns every programmatic scrollLeft into an animation and makes the
+   scroll-driven track lag behind the wheel. */
+.strip{margin-top:48px;position:relative;display:flex;gap:48px;overflow-x:auto;padding:10px 24px 26px;
+  scroll-snap-type:x mandatory;scroll-behavior:auto;scrollbar-width:none}
 .strip::-webkit-scrollbar{display:none}
 @media(min-width:768px){.strip{padding-inline:40px}}
-.poster{position:relative;flex:0 0 auto;width:min(84vw,420px);height:530px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#0b1220;scroll-snap-align:center;box-shadow:var(--shadow);transition:box-shadow .45s var(--ease),transform .45s var(--ease)}
+.poster{position:relative;flex:0 0 auto;width:min(84vw,420px);height:530px;border:1px solid var(--glass-line);border-radius:18px;overflow:hidden;background:#0b1220;scroll-snap-align:center;box-shadow:var(--glass-shadow),var(--shadow);transition:box-shadow .45s var(--ease),transform .45s var(--ease)}
+/* Gloss rim over the art, so the card reads as glass rather than a flat crop. */
+.poster::before{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 0 0 1px rgba(255,255,255,.09)}
 @media(min-width:1280px){.poster{width:500px;height:640px}.poster.wide{width:900px}}
 .poster:nth-child(even){margin-top:40px}
-.poster:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+.poster:hover{box-shadow:var(--glass-shadow),var(--shadow-lift);transform:translateY(-2px)}
 .poster>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
 .poster:hover>img{transform:scale(1.06)}
 .poster::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(6,8,12,.93) 0%,rgba(6,8,12,.34) 44%,rgba(6,8,12,0) 74%)}
@@ -361,50 +751,91 @@ section{padding:112px 0}
 .p-specs{margin-top:13px;display:flex;flex-wrap:wrap;gap:9px;font:400 11px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.66)}
 .p-specs span+span::before{content:"|";margin-right:9px;opacity:.4}
 .ph{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:3;font:600 8.5px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;background:rgba(0,0,0,.62);color:#fff;padding:4px 9px;border-radius:var(--radius)}
-.p-cover{position:absolute;left:0;right:0;bottom:0;height:58%;z-index:3;background:rgba(8,10,14,.88);backdrop-filter:blur(10px);padding:24px;display:flex;flex-direction:column;justify-content:flex-end;gap:9px;transform:translateY(101%);transition:transform .5s var(--ease) .18s;color:#fff}
+/* Height is content-driven, not a fixed 58% — that percentage swallowed over
+   half the card regardless of how little text it held. */
+.p-cover{position:absolute;left:0;right:0;bottom:0;z-index:3;background:rgba(8,10,14,.9);backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,.14);padding:22px 24px 24px;display:flex;flex-direction:column;gap:8px;
+  transform:translateY(101%);transition:transform .5s var(--ease) .18s;color:#fff}
 .poster:hover .p-cover{transform:translateY(0)}
 .p-cover p{font-size:14px;color:rgba(255,255,255,.72)}
 .rail{margin-top:24px;display:flex;align-items:center;gap:24px}
-.rail .track{flex:1;height:1px;background:var(--line);position:relative}
-.rail .fill{position:absolute;inset:0 auto 0 0;width:12%;background:var(--accent)}
+.rail .track{flex:1;height:3px;border-radius:999px;background:var(--glass-edge);position:relative;overflow:hidden}
+.rail .fill{position:absolute;inset:0 auto 0 0;width:12%;border-radius:999px;background:var(--accent)}
+
+/* Pinned mode. Only from 1024px up: below that the strip stays a plain swipe
+   rail, so touch users are never trapped in a hijacked section. */
+@media(min-width:1024px){
+  .hstick{position:sticky;top:var(--navh,110px);height:calc(100svh - var(--navh,110px));display:flex;align-items:center}
+  /* Snap and programmatic scrollLeft fight each other — the snap keeps pulling
+     the strip back to the nearest card mid-scrub. */
+  .strip{margin-top:0;scroll-snap-type:none}
+  .poster{height:min(640px,calc(100svh - var(--navh,110px) - 140px))}
+  .poster:nth-child(even){margin-top:clamp(18px,3.4vh,48px)}
+}
 .empty{margin:48px auto 0;max-width:520px;text-align:center;padding:64px 24px;border:1px dashed var(--line);border-radius:var(--radius)}
 
-/* ── S5 · featured ──────────────────────────────────────────────────── */
-.feat{background:#08090B;color:#fff;position:relative;overflow:hidden}
+/* ── S5 · featured ──────────────────────────────────────────────────────
+   The section chrome follows the theme; only the overlays that sit ON the
+   render stay white, because they are always over a dark photographic scrim.
+   Previously .feat was hardcoded #08090B/#fff, so light mode showed a black
+   band mid-page. Surface matches the portfolio so the two read as one run. */
+.feat{position:relative;overflow:hidden;color:var(--ink);
+  background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 46%,var(--surface) 100%)}
+.feat::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 66% 42% at 50% 0%,rgba(32,80,160,.10),transparent 72%)}
+[data-theme="dark"] .feat::before{background:radial-gradient(ellipse 66% 42% at 50% 0%,rgba(78,134,232,.13),transparent 72%)}
+.feat>*{position:relative;z-index:1}
 .feat .eyebrow{color:var(--accent-strong)}
-.canvas{position:relative;height:clamp(460px,64vh,660px);margin-top:36px;border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-float)}
+.canvas{position:relative;height:clamp(460px,64vh,660px);margin-top:36px;border:1px solid var(--glass-line);border-radius:20px;overflow:hidden;box-shadow:var(--glass-shadow),var(--shadow-float)}
+/* Gloss rim, same treatment as the portfolio posters. */
+.canvas::before{content:"";position:absolute;inset:0;z-index:9;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 0 0 1px rgba(255,255,255,.09)}
 .act{position:absolute;inset:0;opacity:0;transition:opacity .5s var(--ease)}
 .act.on{opacity:1}
 .act img{width:100%;height:100%;object-fit:cover}
 .canvas::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(6,8,12,.9),rgba(6,8,12,.15) 55%,rgba(6,8,12,.35))}
 .wipe{position:absolute;top:0;bottom:0;width:26px;z-index:5;pointer-events:none;opacity:0;
   background:linear-gradient(90deg,transparent,rgba(236,28,45,.75),rgba(255,255,255,.9),rgba(236,28,45,.75),transparent);filter:blur(2px)}
-.ov{position:absolute;left:0;bottom:0;z-index:6;padding:28px;max-width:660px}
+/* Everything inside .canvas sits ON the render, so it is white in BOTH themes
+   and states that explicitly — it used to inherit from .feat{color:#fff}, and
+   removing that for light mode left this text dark-on-dark. */
+.ov{position:absolute;left:0;bottom:0;z-index:6;padding:28px;max-width:660px;color:#fff}
 .ov .lab{font:600 11px Inter,sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-strong)}
-.ov h3{margin-top:12px;font:600 clamp(24px,3vw,40px)/1.1 Inter,sans-serif;letter-spacing:-.03em}
+.ov h3{margin-top:12px;font:600 clamp(24px,3vw,40px)/1.1 Inter,sans-serif;letter-spacing:-.03em;color:#fff;
+  text-shadow:0 2px 22px rgba(0,0,0,.6)}
 .chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid rgba(255,255,255,.24);border-radius:var(--radius);padding:6px 12px;font:600 10px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
-.spec-col{position:absolute;right:0;top:0;z-index:6;padding:28px;text-align:right;display:none}
+.chip{border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 13px;font:600 10px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(8,10,14,.4);backdrop-filter:blur(8px)}
+.spec-col{position:absolute;right:0;top:0;z-index:6;padding:28px;text-align:right;display:none;color:#fff}
 @media(min-width:1024px){.spec-col{display:block}}
-.spec-col dt{font:400 9.5px Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-.spec-col dd{margin:3px 0 14px;font:600 15px Inter,sans-serif}
+.spec-col dt{font:400 9.5px Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.spec-col dd{margin:3px 0 14px;font:600 15px Inter,sans-serif;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.55)}
 .actrail{display:flex;gap:10px;margin-top:18px}
-.actrail button{flex:1;height:2px;border:0;padding:0;background:rgba(255,255,255,.18);cursor:pointer;position:relative;overflow:hidden}
+.actrail button{flex:1;height:3px;border:0;padding:0;border-radius:999px;background:var(--glass-edge);cursor:pointer;position:relative;overflow:hidden}
 .actrail button .f{position:absolute;inset:0 100% 0 0;background:var(--accent-strong)}
 .actrail button[aria-current="true"]{box-shadow:0 0 12px rgba(236,28,45,.6)}
 .markers{display:flex;gap:8px;flex-wrap:wrap}
-.markers button{width:3px;height:30px;border:0;padding:0;background:rgba(255,255,255,.2);cursor:pointer;transition:.4s var(--ease)}
+.markers button{width:3px;height:30px;border:0;padding:0;border-radius:999px;background:var(--glass-edge);cursor:pointer;transition:.4s var(--ease)}
 .markers button[aria-current="true"]{background:var(--accent-strong);height:38px}
 .reel{position:absolute;inset:0;z-index:8;pointer-events:none}
-.reel span{position:absolute;left:0;right:0;height:0;background:#08090B;transition:height .5s var(--ease)}
+/* Shutter closes to the section surface, not to black. */
+.reel span{position:absolute;left:0;right:0;height:0;background:var(--bg);transition:height .5s var(--ease)}
 .reel span:first-child{top:0}.reel span:last-child{bottom:0}
 .reel.on span{height:50%}
 
 /* ── S6 · landowners ────────────────────────────────────────────────── */
-.land{position:relative;background:var(--surface);overflow:hidden}
+.land{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%)}
+.land::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 46% at 50% 0%,rgba(32,80,160,.10),transparent 72%)}
+[data-theme="dark"] .land::before{background:radial-gradient(ellipse 60% 46% at 50% 0%,rgba(78,134,232,.13),transparent 72%)}
+.land>*{position:relative;z-index:1}
 .land-grid{display:grid;gap:40px}
 @media(min-width:1024px){.land-grid{grid-template-columns:1fr 1fr;align-items:center}}
-.stage-svg{width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#0d1b33,#050a12);box-shadow:var(--shadow)}
+.stage-wrap{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--glass-line);
+  box-shadow:var(--glass-shadow),var(--shadow-float)}
+/* Gloss rim — the same treatment as the posters, the canvas and the tower. */
+.stage-wrap::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 0 0 1px rgba(255,255,255,.09)}
+.stage-svg{display:block;width:100%;height:auto;background:linear-gradient(180deg,#0d1b33,#050a12)}
 .states{position:relative;min-height:280px}
 .st{position:absolute;inset:0;opacity:0;transform:translateY(14px);transition:.5s var(--ease);pointer-events:none}
 .st.on{opacity:1;transform:none;pointer-events:auto}
@@ -413,106 +844,340 @@ section{padding:112px 0}
 .st p{margin-top:14px;color:var(--muted);max-width:46ch}
 .st .trust{margin-top:16px;display:inline-block;border-left:2px solid var(--accent-strong);padding-left:12px;font-size:14px;color:var(--muted)}
 .steprail{display:flex;gap:10px;margin-top:26px}
-.steprail button{width:34px;height:2px;border:0;padding:0;background:var(--line);cursor:pointer;transition:.4s var(--ease)}
+.steprail button{width:34px;height:3px;border:0;padding:0;border-radius:999px;background:var(--glass-edge);cursor:pointer;transition:.4s var(--ease)}
 .steprail button[aria-current="true"]{background:var(--accent);width:56px}
 .land-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 
 /* ── S7 · map ───────────────────────────────────────────────────────── */
+.map{position:relative;overflow:hidden}
+.map::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(32,80,160,.10),transparent 72%)}
+[data-theme="dark"] .map::before{background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(78,134,232,.13),transparent 72%)}
+.map>*{position:relative;z-index:1}
 .map-grid{display:grid;gap:24px;margin-top:44px}
-@media(min-width:1024px){.map-grid{grid-template-columns:minmax(260px,30%) 1fr}}
-.areas{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
-.areas button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border:0;border-bottom:1px solid var(--line);background:transparent;text-align:left;cursor:pointer;transition:.3s}
+@media(min-width:1024px){.map-grid{grid-template-columns:minmax(268px,30%) 1fr;align-items:start}}
+/* Area list as a glass panel — same material as the nav pod and search card. */
+.areas{border:1px solid var(--glass-line);border-radius:18px;overflow:hidden;background:var(--glass);
+  backdrop-filter:blur(22px) saturate(1.5);box-shadow:var(--glass-shadow)}
+.areas button{position:relative;width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:16px 20px;border:0;border-bottom:1px solid var(--glass-edge);background:transparent;text-align:left;
+  cursor:pointer;font:inherit;transition:background .3s var(--ease),padding-left .3s var(--ease),color .3s}
 .areas button:last-child{border-bottom:0}
-.areas button:hover{background:rgba(32,80,160,.05)}
-.areas button[aria-current="true"]{color:var(--accent);box-shadow:inset 2px 0 0 var(--accent-strong)}
-.areas .n{font:400 11px Inter,sans-serif;color:var(--muted);font-variant-numeric:tabular-nums}
-.map-box{position:relative;min-height:420px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-#mapCanvas{position:absolute;inset:0}
+.areas button:hover{background:var(--glass-hover);padding-left:26px}
+.areas button[aria-current="true"]{color:var(--brand);background:var(--glass-hover);box-shadow:inset 3px 0 0 var(--accent-strong)}
+[data-theme="dark"] .areas button[aria-current="true"]{color:var(--accent)}
+/* Count reads as a chip, so the list scans as "pick an area, see the number". */
+.areas .n{flex:0 0 auto;min-width:30px;text-align:center;padding:4px 9px;border-radius:999px;
+  background:var(--glass-quiet);border:1px solid var(--glass-edge);
+  font:600 11px Inter,sans-serif;color:var(--muted);font-variant-numeric:tabular-nums}
+.areas button[aria-current="true"] .n{border-color:var(--accent-strong);color:var(--accent-strong)}
+.map-box{position:relative;min-height:460px;border:1px solid var(--glass-line);border-radius:20px;overflow:hidden;
+  box-shadow:var(--glass-shadow),var(--shadow-float)}
+/* z-index:0 gives the canvas its own stacking context, so Leaflet's internal
+   pane z-indexes (200–700) stay contained and cannot paint over the rim or the
+   cover button sitting above it. */
+#mapCanvas{position:absolute;inset:0;z-index:0}
+.map-box::after{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 0 0 1px rgba(255,255,255,.09)}
 .map-cover{position:absolute;inset:0;z-index:5;border:0;padding:0;cursor:pointer;background:none}
 .map-cover img{width:100%;height:100%;object-fit:cover}
-.map-cover span{position:absolute;inset:0;display:grid;place-content:center;gap:12px;justify-items:center;background:rgba(8,10,14,.5);color:#fff;font:600 12px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.map-cover span{position:absolute;inset:0;display:grid;place-content:center;gap:16px;justify-items:center;
+  background:linear-gradient(180deg,rgba(8,10,14,.34),rgba(8,10,14,.62));color:#fff}
+/* Glass CTA on the cover — the invitation to open the map reads as a control. */
+.map-cover .go{display:inline-flex;align-items:center;gap:11px;padding:13px 24px;border-radius:999px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 18px 44px -18px rgba(0,0,0,.6);font:600 11.5px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;
+  transition:.35s var(--ease)}
+.map-cover:hover .go{background:rgba(255,255,255,.24);transform:translateY(-2px)}
+.map-cover .sub{font:400 12px Inter,sans-serif;letter-spacing:.1em;color:rgba(255,255,255,.78)}
 .jcx-pin{display:grid;place-items:center}
-.leaflet-popup-content-wrapper{border-radius:var(--radius)!important}
+.leaflet-popup-content-wrapper{border-radius:14px!important;overflow:hidden}
 
-/* ── S8 · testimonials ──────────────────────────────────────────────── */
-.tst{position:relative;overflow:hidden;transition:background 1.2s ease}
-.tst.homeowner{background:#0B0907}
-.tst.landowner{background:#070A12}
-.tst,.tst *{color:#fff}
+/* ── S8 · testimonials ──────────────────────────────────────────────────
+   Was hardcoded #0B0907/#070A12 with a blanket `color:#fff`, so light mode got
+   a black band and white-on-white text. The audience tint now comes from tokens
+   that flip with the theme, and only overlays that sit ON a photo stay white. */
+.tst{position:relative;overflow:hidden;transition:background 1.2s ease;color:var(--ink)}
+.tst.homeowner{background:var(--tst-home)}
+.tst.landowner{background:var(--tst-land)}
+.tst::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(32,80,160,.09),transparent 72%)}
+[data-theme="dark"] .tst::before{background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(78,134,232,.12),transparent 72%)}
+.tst>*{position:relative;z-index:1}
 .tst .eyebrow{color:var(--accent-strong)}
 .tst .h2 i{color:var(--accent-strong)}
-.aud{display:inline-flex;padding:4px;border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);background:rgba(255,255,255,.04);position:relative;z-index:0}
-.aud button{position:relative;border:0;background:transparent;padding:9px 18px;border-radius:var(--radius);font:600 11.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);cursor:pointer}
+.aud{display:inline-flex;padding:4px;border-radius:999px;position:relative;z-index:0;
+  background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(18px) saturate(1.5);
+  box-shadow:var(--glass-shadow)}
+.aud button{position:relative;border:0;background:transparent;padding:9px 18px;border-radius:999px;font:600 11.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--glass-mute);cursor:pointer;transition:color .3s}
+.aud button:hover{color:var(--glass-ink)}
 .aud button[aria-checked="true"]{color:#fff}
-.aud .pill{position:absolute;top:4px;bottom:4px;left:4px;background:var(--brand);border-radius:var(--radius);z-index:-1;transition:transform .45s var(--ease),width .45s var(--ease)}
+.aud .pill{position:absolute;top:4px;bottom:4px;left:4px;background:var(--brand);border-radius:999px;z-index:-1;transition:transform .45s var(--ease),width .45s var(--ease)}
 .stage{display:grid;gap:36px;margin-top:48px;position:relative;z-index:2}
 @media(min-width:1024px){.stage{grid-template-columns:minmax(0,380px) 1fr;gap:56px;align-items:center}}
-.portrait{position:relative;aspect-ratio:3/4;border:1px solid rgba(236,28,45,.4);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-float);max-width:380px}
+.portrait{position:relative;aspect-ratio:3/4;border:1px solid var(--glass-line);border-radius:18px;overflow:hidden;box-shadow:var(--glass-shadow),var(--shadow-float);max-width:380px}
+.portrait::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 0 0 1px rgba(255,255,255,.09)}
 .portrait img{width:100%;height:100%;object-fit:cover}
 .quote{position:relative}
-.quote .mk{position:absolute;left:-8px;top:-58px;font:400 150px 'Cormorant Garamond',serif;color:rgba(255,255,255,.07);pointer-events:none}
+.quote .mk{position:absolute;left:-8px;top:-58px;font:400 150px 'Cormorant Garamond',serif;color:var(--glass-edge);pointer-events:none}
 .quote blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:clamp(26px,3.6vw,50px);line-height:1.14}
 .quote .who{margin-top:26px}
 .quote .who b{font:600 20px Inter,sans-serif;letter-spacing:-.02em}
 .quote .who span{display:block;margin-top:6px;font:600 10.5px Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-strong)}
 .wall{display:flex;gap:12px;overflow-x:auto;margin-top:40px;padding-bottom:8px;scrollbar-width:none}
 .wall::-webkit-scrollbar{display:none}
-.wall button{flex:0 0 auto;width:78px;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);overflow:hidden;background:none;padding:0;cursor:pointer;opacity:.5;transition:.4s var(--ease)}
+.wall button{flex:0 0 auto;width:78px;border:1px solid var(--glass-edge);border-radius:12px;overflow:hidden;background:none;padding:0;cursor:pointer;opacity:.55;transition:.4s var(--ease)}
 .wall button[aria-current="true"],.wall button:hover{opacity:1;border-color:var(--accent-strong);transform:translateY(-3px)}
 .wall img{aspect-ratio:3/4;object-fit:cover;width:100%}
-.tst-foot{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between;margin-top:44px;font-size:12px;color:rgba(255,255,255,.5)}
+.tst-foot{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between;margin-top:44px;font-size:12px;color:var(--muted)}
 .tdots{display:flex;gap:9px;align-items:center}
-.tdots button{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.4s}
+.tdots button{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:var(--glass-edge);cursor:pointer;transition:.4s}
 .tdots button[aria-current="true"]{background:var(--accent-strong);transform:scale(1.5)}
-.modal{position:fixed;inset:0;z-index:95;display:none;place-items:center;background:rgba(0,0,0,.86);backdrop-filter:blur(4px);padding:20px}
+.modal{position:fixed;inset:0;z-index:95;display:none;place-items:center;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);padding:20px}
 .modal.open{display:grid}
-.modal-in{background:#0B0D12;border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);max-width:880px;width:100%;max-height:88svh;overflow:auto;padding:28px;display:grid;gap:26px}
+.modal-in{background:var(--glass-sheen),var(--drawer);border:1px solid var(--glass-line);border-radius:22px;
+  backdrop-filter:blur(30px) saturate(1.7);box-shadow:var(--glass-shadow);color:var(--glass-ink);
+  max-width:880px;width:100%;max-height:88svh;overflow:auto;padding:28px;display:grid;gap:26px}
 @media(min-width:768px){.modal-in{grid-template-columns:280px 1fr;padding:36px}}
 
-/* ── S9 · awards ────────────────────────────────────────────────────── */
-.awards{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:48px;grid-template-columns:repeat(2,1fr)}
+/* ── S8b · film ─────────────────────────────────────────────────────────
+   One card, one control. preload="none" means nothing downloads until the play
+   button is pressed — the section costs a poster image until then. */
+.vid{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%)}
+.vid::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(32,80,160,.10),transparent 72%)}
+[data-theme="dark"] .vid::before{background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(78,134,232,.13),transparent 72%)}
+.vid>*{position:relative;z-index:1}
+.vid-h{text-align:center;font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;
+  font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.015em;margin-top:16px}
+.film{position:relative;margin:clamp(28px,4.4vh,52px) auto 0;max-width:1080px;aspect-ratio:16/9;
+  border-radius:22px;overflow:hidden;background:#0b1220;border:1px solid var(--glass-line);
+  box-shadow:var(--glass-shadow),var(--shadow-float)}
+.film video{width:100%;height:100%;object-fit:cover}
+.film::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 0 0 1px rgba(255,255,255,.09)}
+.film-play{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:3;
+  width:clamp(62px,6.6vw,86px);aspect-ratio:1;display:grid;place-items:center;border-radius:999px;cursor:pointer;
+  color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.44);
+  backdrop-filter:blur(14px) saturate(1.4);box-shadow:0 22px 52px -18px rgba(0,0,0,.65);
+  transition:background .35s var(--ease),scale .35s var(--ease)}
+.film-play:hover{background:rgba(255,255,255,.26);scale:1.07}
+/* Halo pulse — the one bit of motion, and the reason the card reads as playable. */
+.film-play::before{content:"";position:absolute;inset:-1px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.5);animation:halo 2.6s var(--ease) infinite}
+@keyframes halo{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.55);opacity:0}100%{opacity:0}}
+.film-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:44px 22px 18px;color:#fff;
+  background:linear-gradient(to top,rgba(6,8,12,.82),transparent);
+  font:600 10px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;transition:opacity .4s var(--ease)}
+.film.playing .film-play,.film.playing .film-cap{opacity:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.film-play::before{animation:none}}
+
+/* ── S9 · awards ────────────────────────────────────────────────────────
+   The emblems are dark navy on transparent, so on the near-black dark surface
+   they disappeared. Two fixes: each cell is now a lifted glass plate rather
+   than a hairline division of the page colour, and the emblem sits on a light
+   medallion with a brightness lift in dark mode so it separates either way. */
+.aw{position:relative;overflow:hidden}
+.aw::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(32,80,160,.10),transparent 72%)}
+[data-theme="dark"] .aw::before{background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(78,134,232,.13),transparent 72%)}
+.aw>*{position:relative;z-index:1}
+.awards{display:grid;gap:14px;margin-top:48px;grid-template-columns:repeat(2,1fr)}
 @media(min-width:900px){.awards{grid-template-columns:repeat(4,1fr)}}
-.award{position:relative;background:var(--bg);padding:34px 22px;display:flex;flex-direction:column;align-items:center;gap:16px;overflow:hidden;transition:.4s var(--ease)}
-.award:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift);z-index:2}
-.award img{width:112px;height:112px;object-fit:contain}
+.award{position:relative;overflow:hidden;padding:30px 20px;border-radius:18px;
+  background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(18px) saturate(1.5);
+  box-shadow:var(--glass-shadow);display:flex;flex-direction:column;align-items:center;gap:16px;transition:.4s var(--ease)}
+.award:hover{transform:translateY(-4px);box-shadow:var(--glass-shadow),var(--shadow-lift);z-index:2}
+.award-disc{width:clamp(104px,10vw,126px);aspect-ratio:1;border-radius:999px;display:grid;place-items:center;
+  background:radial-gradient(circle at 34% 24%,rgba(255,255,255,.96),rgba(255,255,255,.55) 58%,rgba(255,255,255,.2));
+  border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 14px 30px -14px rgba(11,13,18,.4)}
+[data-theme="dark"] .award-disc{
+  background:radial-gradient(circle at 34% 24%,rgba(226,236,255,.22),rgba(120,170,255,.10) 58%,rgba(255,255,255,.04));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 14px 30px -14px rgba(0,0,0,.7)}
+.award img{width:78%;height:78%;object-fit:contain}
+[data-theme="dark"] .award img{filter:brightness(1.85) saturate(1.1)}
 .award figcaption{text-align:center;font:400 11px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .award .cite{display:block;margin-top:6px;font-size:10px;opacity:0;max-height:0;transition:.4s var(--ease)}
 .award:hover .cite{opacity:1;max-height:40px}
 .shine{position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(105deg,transparent,rgba(255,255,255,.55),transparent);pointer-events:none}
 [data-theme="dark"] .shine{background:linear-gradient(105deg,transparent,rgba(255,255,255,.14),transparent)}
 
-/* ── S10 · footer ───────────────────────────────────────────────────── */
-footer{background:var(--brand-deep);color:#fff}
+/* ── S9c · news / events / blogs ────────────────────────────────────────
+   Three glass cards on the shared glow surface. The arrow is the site's #i-arrow
+   rotated 45° so it reads up-and-out like the reference, rather than shipping a
+   second arrow glyph for one use. */
+.nws{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 100%)}
+.nws::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(32,80,160,.09),transparent 72%)}
+[data-theme="dark"] .nws::before{background:radial-gradient(ellipse 62% 44% at 50% 0%,rgba(78,134,232,.12),transparent 72%)}
+.nws>*{position:relative;z-index:1}
+.nws-h{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(34px,5.4vw,74px);
+  line-height:1;letter-spacing:-.02em}
+.nws-h em{font-style:italic;color:var(--brand)}
+[data-theme="dark"] .nws-h em{color:var(--accent)}
+.news-grid{display:grid;gap:22px;margin-top:clamp(30px,4.4vh,52px);grid-template-columns:1fr}
+@media(min-width:700px){.news-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.news-grid{grid-template-columns:repeat(3,1fr)}}
+.ncard{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;
+  background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(18px) saturate(1.5);
+  box-shadow:var(--glass-shadow);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.ncard:hover{transform:translateY(-4px);box-shadow:var(--glass-shadow),var(--shadow-lift)}
+.ncard-media{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#0b1220}
+.ncard-media img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.ncard:hover .ncard-media img{transform:scale(1.06)}
+.ncard-media::after{content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34)}
+.ncard-chip{position:absolute;top:14px;right:14px;z-index:2;padding:7px 14px;border-radius:999px;
+  background:rgba(8,10,14,.5);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(10px);
+  font:600 9.5px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#fff}
+.ncard-body{flex:1;display:flex;flex-direction:column;gap:16px;padding:22px}
+.ncard-t{font:600 17px/1.4 Inter,sans-serif;letter-spacing:-.015em;color:var(--glass-ink)}
+.ncard-t a{transition:color .3s var(--ease)}
+.ncard:hover .ncard-t a{color:var(--brand)}
+.ncard-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.ncard-d{font:400 12px Inter,sans-serif;letter-spacing:.06em;color:var(--glass-mute)}
+.ncard-go{flex:0 0 auto;width:40px;height:40px;display:grid;place-items:center;border-radius:999px;
+  border:1px solid var(--glass-edge);color:var(--brand);transition:.35s var(--ease)}
+.ncard-go svg{rotate:-45deg}
+.ncard:hover .ncard-go{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* ── S9b · get in touch ─────────────────────────────────────────────────
+   The card is pulled up out of the footer so it straddles the boundary: half on
+   the awards band, half on the dark plate. It is glass, so backdrop-filter
+   samples BOTH surfaces and the card genuinely blends the two rather than
+   picking one. #awards carries the matching bottom room. */
+/* flow-root is load-bearing: without a block formatting context here the card's
+   negative margin collapses through to <footer> and drags the whole dark plate
+   up with it, so the card never actually crosses the boundary. */
+.touch-wrap{display:flow-root}
+.touch{position:relative;z-index:2;margin-top:calc(-1 * clamp(80px,10vw,128px));
+  padding:clamp(28px,4vw,50px);border-radius:24px;color:var(--glass-ink);
+  background:var(--glass-sheen),var(--drawer);border:1px solid var(--glass-line);
+  backdrop-filter:blur(30px) saturate(1.7);box-shadow:var(--glass-shadow)}
+.touch-h{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;
+  font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:-.015em}
+.touch-form{margin-top:clamp(20px,2.8vw,30px);display:grid;gap:12px}
+@media(min-width:900px){.touch-form{grid-template-columns:1fr 1fr 1fr auto;align-items:center}}
+.pill-in{min-width:0;padding:15px 22px;border-radius:999px;border:1px solid var(--glass-edge);
+  background:var(--glass-quiet);color:var(--glass-ink);font:400 14.5px Inter,sans-serif;outline:none;
+  transition:border-color .3s var(--ease),background .3s var(--ease)}
+.pill-in::placeholder{color:var(--glass-mute)}
+.pill-in:focus{border-color:var(--brand);background:var(--glass)}
+.touch-go{height:52px;flex:0 0 auto}
+.touch-ok{display:none;margin-top:14px;font-size:13px;color:var(--brand)}
+.touch-ok.on{display:block}
+
+/* ── S10 · footer ───────────────────────────────────────────────────────
+   Stays a dark plate in both themes — it is the page's closing block, not a
+   content surface — but the chrome inside it is now the same glass as the nav:
+   a brand glow, a top sheen, glass link pods and a glass subscribe field. */
+footer{position:relative;background:var(--brand-deep);color:#fff}
 [data-theme="dark"] footer{background:#0A0B0E}
+footer::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,0) 34%),
+    radial-gradient(ellipse 70% 52% at 50% 0%,rgba(120,170,255,.18),transparent 70%)}
+[data-theme="dark"] footer::before{background:
+    linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0) 34%),
+    radial-gradient(ellipse 70% 52% at 50% 0%,rgba(78,134,232,.20),transparent 70%)}
+footer>*{position:relative;z-index:1}
 .f-grid{display:grid;gap:40px;padding:72px 0}
 @media(min-width:768px){.f-grid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1100px){.f-grid{grid-template-columns:2fr 1fr 1.2fr 1.4fr}}
 footer h4{font:600 10.5px Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-strong)}
-footer ul{list-style:none;margin-top:18px;display:grid;gap:10px}
+footer ul{list-style:none;margin-top:18px;display:grid;gap:4px}
+footer li a{display:inline-flex;align-items:center;padding:5px 12px;margin-left:-12px;border-radius:999px;
+  transition:background .3s var(--ease),color .3s var(--ease)}
+footer li a:hover{background:rgba(255,255,255,.12)}
 footer a{color:rgba(255,255,255,.74);font-size:14.5px;transition:color .3s}
 footer a:hover{color:#fff}
-.f-hot{font:600 30px Inter,sans-serif;letter-spacing:-.02em;color:#fff;display:inline-block;margin-top:6px}
-.news{display:flex;gap:0;margin-top:16px;border-bottom:1px solid rgba(255,255,255,.28);transition:border-color .4s}
-.news:focus-within{border-color:var(--accent-strong)}
-.news input{flex:1;background:transparent;border:0;padding:10px 0;color:#fff;outline:none}
-.news input::placeholder{color:rgba(255,255,255,.4)}
-.news button{border:0;background:transparent;color:var(--accent-strong);font:600 11px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;padding:0 4px}
+/* Hotline sits in a glass pill — the one thing in the footer worth pressing. */
+.f-hot{display:inline-flex;align-items:center;gap:11px;margin-top:10px;padding:12px 22px;border-radius:999px;
+  font:600 26px Inter,sans-serif;letter-spacing:-.02em;color:#fff;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.30);backdrop-filter:blur(16px) saturate(1.4);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 18px 40px -20px rgba(0,0,0,.6);transition:.35s var(--ease)}
+.f-hot:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.news{display:flex;align-items:center;gap:6px;margin-top:16px;padding:5px 6px 5px 18px;border-radius:999px;
+  background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.26);backdrop-filter:blur(16px) saturate(1.4);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);transition:border-color .4s,background .4s}
+.news:focus-within{border-color:var(--accent-strong);background:rgba(255,255,255,.15)}
+.news input{flex:1;min-width:0;background:transparent;border:0;padding:10px 0;color:#fff;outline:none}
+.news input::placeholder{color:rgba(255,255,255,.5)}
+.news button{flex:0 0 auto;border:0;border-radius:999px;padding:11px 18px;cursor:pointer;
+  background:var(--accent-strong);color:#fff;font:600 11px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;
+  transition:.3s var(--ease)}
+.news button:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .f-ok{margin-top:10px;font-size:12.5px;color:#9BE7A8;display:none}
-.f-bot{border-top:1px solid rgba(255,255,255,.12);padding:22px 0;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.5)}
+.f-bot{border-top:1px solid rgba(255,255,255,.14);padding:22px 0;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.55)}
 
 /* ── S11 · floating actions ─────────────────────────────────────────── */
 .fabs{position:fixed;right:16px;bottom:16px;z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
 @media(min-width:768px){.fabs{right:24px;bottom:24px}}
-.fab-top{width:44px;height:44px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);color:var(--ink);display:none;place-items:center;cursor:pointer;box-shadow:var(--shadow)}
+/* Glass disc, same material as the nav controls. The arrow is #i-arrow rotated,
+   so there is one arrow glyph in the sprite serving every direction. */
+.fab-top{position:relative;overflow:hidden;width:48px;height:48px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--glass-line);color:var(--glass-ink);
+  backdrop-filter:blur(18px) saturate(1.5);box-shadow:var(--glass-shadow);
+  display:none;place-items:center;cursor:pointer;transition:.35s var(--ease)}
+.fab-top::before{content:"";position:absolute;inset:0;pointer-events:none;background:var(--glass-sheen)}
+.fab-top svg{position:relative;z-index:1;rotate:-90deg;transition:translate .35s var(--ease)}
+.fab-top:hover{color:var(--brand);box-shadow:var(--glass-shadow),var(--shadow-lift)}
+.fab-top:hover svg{translate:0 -2px}
 .fab-top.on{display:grid}
-.wa-tip{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-float);padding:14px 16px;max-width:230px;font-size:14px;display:none}
+.wa-tip{background:var(--glass-sheen),var(--drawer);border:1px solid var(--glass-line);border-radius:16px;
+  backdrop-filter:blur(24px) saturate(1.6);box-shadow:var(--glass-shadow);color:var(--glass-ink);
+  padding:14px 16px;max-width:230px;font-size:14px;display:none}
 .wa-tip.on{display:block}
 .fab-wa{position:relative;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:var(--shadow-float);transition:transform .3s var(--ease)}
 .fab-wa:hover{transform:scale(1.06)}
 .fab-wa::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(37,211,102,.45);animation:wa 2.4s var(--ease) infinite;z-index:-1}
 @keyframes wa{0%{transform:scale(1);opacity:.6}70%{transform:scale(1.7);opacity:0}100%{opacity:0}}
 
+/* ── boot curtain ───────────────────────────────────────────────────────
+   The X draws itself, fills, the wordmark rises, then the curtain lifts. Driven
+   entirely by CSS animation, deliberately: if the script never runs the curtain
+   still leaves on schedule, so a JS failure can never lock the page behind it.
+   JS only adds the scroll lock (and therefore can only ever fail open). */
+.boot{position:fixed;inset:0;z-index:200;display:grid;place-items:center;
+  background:
+    radial-gradient(ellipse 62% 54% at 50% 44%,rgba(32,80,160,.42),transparent 70%),
+    linear-gradient(158deg,#0B1830 0%,#08090B 100%);
+  animation:bootOut .78s var(--ease) 2.15s forwards}
+@keyframes bootOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+.boot.gone{display:none}
+.boot-in{display:grid;justify-items:center;gap:26px;padding:24px}
+.boot-x{width:clamp(122px,17vw,208px);height:auto;overflow:visible}
+.boot-x g{fill:none;stroke-linejoin:round;stroke-linecap:round}
+/* 1400 is a generous over-estimate of each subpath's length — it lets the draw
+   work without measuring getTotalLength() per path. */
+.bx-draw path{fill:none;stroke:#fff;stroke-width:9;stroke-dasharray:1400;stroke-dashoffset:1400;
+  filter:drop-shadow(0 0 12px rgba(120,170,255,.55));animation:bxDraw 1s var(--ease) forwards}
+.bx-draw path:nth-child(1){animation-delay:.06s}
+.bx-draw path:nth-child(2){animation-delay:.2s}
+.bx-draw path:nth-child(3){animation-delay:.34s}
+.bx-draw path:nth-child(4){animation-delay:.48s}
+@keyframes bxDraw{to{stroke-dashoffset:0}}
+.bx-fill path{stroke:none;fill:#fff;opacity:0;animation:bxFill .6s var(--ease) 1.02s forwards}
+.bx-fill path:nth-child(2),.bx-fill path:nth-child(3){fill:var(--accent-strong)}
+@keyframes bxFill{to{opacity:1}}
+.boot-tx{display:grid;justify-items:center;gap:6px;text-align:center;opacity:0;transform:translateY(12px);
+  animation:bootUp .66s var(--ease) 1.2s forwards}
+.boot-tx b{font:700 clamp(19px,2.2vw,26px) Inter,sans-serif;letter-spacing:.16em;color:#fff}
+.boot-tx b span{color:var(--accent-strong)}
+.boot-tx small{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.56)}
+@keyframes bootUp{to{opacity:1;transform:none}}
+.boot-bar{width:clamp(120px,16vw,190px);height:2px;border-radius:999px;overflow:hidden;
+  background:rgba(255,255,255,.16)}
+.boot-bar i{display:block;width:100%;height:100%;border-radius:999px;background:var(--accent-strong);
+  transform-origin:left center;scale:0 1;animation:bootBar 1.9s var(--ease) .1s forwards}
+@keyframes bootBar{to{scale:1 1}}
+html.booting,html.booting body{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.boot{display:none}}
+
 .note{margin-top:44px;padding:16px 20px;border:1px dashed var(--line);border-radius:var(--radius);font-size:12.5px;color:var(--muted)}
+/* Visually hidden — labels that exist for screen readers only. */
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* Three concurrent decoders of the same file is too much for the stated
    support floor (mid-range Android / iOS 15). Below 900px the lens falls back
@@ -541,21 +1206,63 @@ footer a:hover{color:#fff}
 </head>
 <body>
 
+<!-- ═══ ICON SPRITE ═══ Referenced with <use>. Brand marks are filled paths;
+     UI affordances are stroked, 1.7 round, so the two families stay distinct. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.03 1.02-1.03 2.48s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.28-.2-.57-.34M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89a9.82 9.82 0 0 1 6.99 2.9 9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path d="M13.5 21v-7.7h2.6l.4-3h-3V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.26c-.28-.04-1.24-.12-2.35-.12-2.33 0-3.92 1.42-3.92 4.03v2.13H7.7v3h2.63V21z"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1-.02 5 2.5 2.5 0 0 1 .02-5M3.2 9h3.6v12H3.2zm6.1 0h3.45v1.64h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.39 4.3 5.5V21h-3.6v-5.63c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.15 1.46-2.15 2.97V21H9.3z"/></symbol>
+  <symbol id="i-yt" viewBox="0 0 24 24"><path d="M22.6 7.3a2.68 2.68 0 0 0-1.9-1.9C19.1 5 12 5 12 5s-7.1 0-8.7.4a2.68 2.68 0 0 0-1.9 1.9C1 8.9 1 12 1 12s0 3.1.4 4.7a2.68 2.68 0 0 0 1.9 1.9C4.9 19 12 19 12 19s7.1 0 8.7-.4a2.68 2.68 0 0 0 1.9-1.9c.4-1.6.4-4.7.4-4.7s0-3.1-.4-4.7M9.75 15.5v-7l6.02 3.5z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.43.4.6.24 1.04.52 1.5.98.46.46.74.9.98 1.5.18.46.36 1.26.42 2.43.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.24 1.97-.42 2.43a4.1 4.1 0 0 1-.98 1.5c-.46.46-.9.74-1.5.98-.46.18-1.26.36-2.43.42-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.06-1.97-.24-2.43-.42a4.1 4.1 0 0 1-1.5-.98 4.1 4.1 0 0 1-.98-1.5c-.18-.46-.36-1.26-.42-2.43C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.06-1.17.24-1.97.42-2.43.24-.6.52-1.04.98-1.5a4.1 4.1 0 0 1 1.5-.98c.46-.16 1.26-.35 2.43-.4C8.42 2.17 8.8 2.16 12 2.16m0 1.98c-3.14 0-3.5.01-4.73.07-1.03.05-1.55.21-1.9.35-.42.16-.7.35-1 .65-.3.3-.49.58-.65 1-.14.35-.3.87-.35 1.9-.06 1.23-.07 1.59-.07 4.73s.01 3.5.07 4.73c.05 1.03.21 1.55.35 1.9.16.42.35.7.65 1 .3.3.58.49 1 .65.35.14.87.3 1.9.35 1.23.06 1.59.07 4.73.07s3.5-.01 4.73-.07c1.03-.05 1.55-.21 1.9-.35.42-.16.7-.35 1-.65.3-.3.49-.58.65-1 .14-.35.3-.87.35-1.9.06-1.23.07-1.59.07-4.73s-.01-3.5-.07-4.73c-.05-1.03-.21-1.55-.35-1.9a2.7 2.7 0 0 0-.65-1 2.7 2.7 0 0 0-1-.65c-.35-.14-.87-.3-1.9-.35-1.23-.06-1.59-.07-4.73-.07m0 3.37a4.49 4.49 0 1 1 0 8.98 4.49 4.49 0 0 1 0-8.98m0 7.4a2.91 2.91 0 1 0 0-5.82 2.91 2.91 0 0 0 0 5.82m5.72-7.6a1.05 1.05 0 1 1-2.1 0 1.05 1.05 0 0 1 2.1 0"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.3M12 19.1v2.3M2.6 12h2.3M19.1 12h2.3M5.4 5.4 7 7M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/></g></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M20.6 13.6A8.7 8.7 0 1 1 10.4 3.4a6.9 6.9 0 0 0 10.2 10.2Z"/></g></symbol>
+  <symbol id="i-bars" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3.6 7.2h16.8M3.6 12h11.2M3.6 16.8h16.8"/></g></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6.2 6.2 17.8 17.8M17.8 6.2 6.2 17.8"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h15M13.2 5.7 19.5 12l-6.3 6.3"/></g></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 5.2v13.6L19 12z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7.5 5h3.2v14H7.5zm5.8 0h3.2v14h-3.2z"/></symbol>
+</defs></svg>
+
+<!-- ═══ BOOT CURTAIN ═══ The brand X draws itself in, fills, then the curtain
+     lifts. Same four fillet paths as the hero lens, so the load screen and the
+     hero are literally the same mark. -->
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot-in">
+    <svg class="boot-x" viewBox="0 0 600 430" aria-hidden="true">
+      <g class="bx-draw">
+        <path d="M12.5 18.1Q0 0 22 0L275 0Q297 0 284.5 18.1L157.02 202.66Q148.5 215 139.98 202.66Z"/>
+        <path d="M139.98 227.34Q148.5 215 157.02 227.34L284.5 411.9Q297 430 275 430L22 430Q0 430 12.5 411.9Z"/>
+        <path d="M315.5 18.1Q303 0 325 0L472.54 0Q600 0 527.56 104.88L460.02 202.66Q451.5 215 442.98 202.66Z"/>
+        <path d="M442.98 227.34Q451.5 215 460.02 227.34L587.5 411.9Q600 430 578 430L325 430Q303 430 315.5 411.9Z"/>
+      </g>
+      <g class="bx-fill">
+        <path d="M12.5 18.1Q0 0 22 0L275 0Q297 0 284.5 18.1L157.02 202.66Q148.5 215 139.98 202.66Z"/>
+        <path d="M139.98 227.34Q148.5 215 157.02 227.34L284.5 411.9Q297 430 275 430L22 430Q0 430 12.5 411.9Z"/>
+        <path d="M315.5 18.1Q303 0 325 0L472.54 0Q600 0 527.56 104.88L460.02 202.66Q451.5 215 442.98 202.66Z"/>
+        <path d="M442.98 227.34Q451.5 215 460.02 227.34L587.5 411.9Q600 430 578 430L325 430Q303 430 315.5 411.9Z"/>
+      </g>
+    </svg>
+    <p class="boot-tx"><b>JC<span>X</span></b><small>Developments Ltd.</small></p>
+    <span class="boot-bar" aria-hidden="true"><i></i></span>
+  </div>
+</div>
+
 <!-- ═══ NAV + UTILITY (S11) ═══ -->
 <header class="var-nav-bar on-hero" id="nav">
   <div class="util">
     <div class="shell util-in">
       <div class="set">
-        <a href="tel:16777"><span aria-hidden="true">✆</span> Hotline <strong>16777</strong></a>
-        <a href="https://web.whatsapp.com/send?phone=+8801324437947&amp;text=" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="tel:16777"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Hotline <strong>16777</strong></a>
+        <a href="https://web.whatsapp.com/send?phone=+8801324437947&amp;text=" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> WhatsApp</a>
       </div>
       <div class="set">
         <span style="letter-spacing:.22em;text-transform:uppercase">Beyond Bonding</span>
         <nav class="socials" aria-label="Social">
-          <a href="https://www.facebook.com/JCXBD" target="_blank" rel="noopener" aria-label="JCX on Facebook">Fb</a>
-          <a href="https://www.linkedin.com/company/jcx-developments-limited/" target="_blank" rel="noopener" aria-label="JCX on LinkedIn">In</a>
-          <a href="https://www.youtube.com/channel/UCTm39QNanD7ScTT_anGndAw" target="_blank" rel="noopener" aria-label="JCX on YouTube">Yt</a>
-          <a href="https://www.instagram.com/jcxbd/" target="_blank" rel="noopener" aria-label="JCX on Instagram">Ig</a>
+          <a href="https://www.facebook.com/JCXBD" target="_blank" rel="noopener" aria-label="JCX on Facebook"><svg class="ic ic-md" aria-hidden="true"><use href="#i-fb"/></svg></a>
+          <a href="https://www.linkedin.com/company/jcx-developments-limited/" target="_blank" rel="noopener" aria-label="JCX on LinkedIn"><svg class="ic ic-md" aria-hidden="true"><use href="#i-in"/></svg></a>
+          <a href="https://www.youtube.com/channel/UCTm39QNanD7ScTT_anGndAw" target="_blank" rel="noopener" aria-label="JCX on YouTube"><svg class="ic ic-md" aria-hidden="true"><use href="#i-yt"/></svg></a>
+          <a href="https://www.instagram.com/jcxbd/" target="_blank" rel="noopener" aria-label="JCX on Instagram"><svg class="ic ic-md" aria-hidden="true"><use href="#i-ig"/></svg></a>
         </nav>
       </div>
     </div>
@@ -565,32 +1272,61 @@ footer a:hover{color:#fff}
       <img src="../../../../public/logo-jcx.jpg" alt="">
       <span class="brand-tx"><b>JC<span>X</span></b><small>Developments Ltd.</small></span>
     </a>
-    <nav class="nav-links" aria-label="Primary">
-      <a href="#about">About</a><a href="#projects">Projects</a><a href="#featured">Featured</a>
-      <a href="#landowners">Landowners</a><a href="#map">Locations</a>
-      <a href="#testimonials">Testimonials</a><a href="#awards">Awards</a>
-    </nav>
+    <div class="nav-pod">
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <button class="nav-trigger" id="megaBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="mega">Projects <span class="pm" aria-hidden="true"></span></button>
+        <a href="#featured">Featured</a>
+        <a href="#landowners">Landowners</a><a href="#map">Locations</a>
+        <a href="#testimonials">Testimonials</a><a href="#awards">Awards</a>
+      </nav>
+    </div>
     <div class="nav-act">
-      <button class="icon-btn" id="theme" aria-label="Switch colour theme">☾</button>
-      <a class="btn ghost" href="#contact">Contact</a>
-      <button class="icon-btn" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">☰</button>
+      <button class="icon-btn glass" id="theme" aria-label="Switch to dark theme">
+        <svg class="ic ic-md i-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        <svg class="ic ic-md i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+      </button>
+      <a class="btn glass" href="#contact"><span>Contact</span></a>
+      <button class="icon-btn glass" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <svg class="ic ic-lg" aria-hidden="true"><use href="#i-bars"/></svg>
+      </button>
+    </div>
+
+    <!-- Projects panel — rows on the left drive the preview card on the right.
+         Both columns are painted from PROJECTS, so the menu can never drift
+         from the strip below it. -->
+    <div class="mega" id="mega" role="region" aria-label="Projects" aria-hidden="true">
+      <div class="mega-in">
+        <div class="mega-col">
+          <p class="mega-eyebrow">Selected developments</p>
+          <ul class="mega-list" id="megaList"></ul>
+          <a class="mega-all" href="#projects" id="megaAll">View all projects <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <a class="mega-card" href="#featured" id="megaCard">
+          <img id="megaImg" alt="">
+          <span class="mega-tag" id="megaTag"></span>
+          <span class="mega-cap"><b id="megaName"></b><i id="megaLoc"></i></span>
+        </a>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- menu overlay -->
-<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site menu">
+<!-- Site menu — right-half drawer, opens from the right edge to the page centre.
+     The top bar stays visible above it (z-index 65 vs 70), so it is a panel, not
+     a blackout. Non-modal by design: no scroll lock, no aria-modal. -->
+<div class="menu" id="menu" role="dialog" aria-label="Site menu" aria-hidden="true">
   <div class="menu-bg" aria-hidden="true">
-    <img src="../../../../public/images/projects/grand-residences.svg" alt="">
-    <img src="../../../../public/images/projects/icon-100.svg" alt="">
-    <img src="../../../../public/images/projects/lakewood.svg" alt="">
+    <img src="../../../../public/images/projects/president-park/approach.jpg" alt="">
+    <img src="../../../../public/images/projects/president-park/interior.jpg" alt="">
+    <img src="../../../../public/images/projects/president-park/detail.jpg" alt="">
     <img src="../../../../public/images/projects/president-park/facade.jpg" alt="">
   </div>
   <div class="menu-veil" aria-hidden="true"></div>
-  <div class="shell menu-in">
+  <div class="menu-in">
     <div class="menu-top">
-      <span class="brand-tx" style="display:flex;color:#fff"><b>JC<span>X</span></b><small>Developments Ltd.</small></span>
-      <button class="icon-btn" id="closeMenu" aria-label="Close menu" style="border-color:rgba(255,255,255,.3);color:#fff">✕</button>
+      <span class="brand-tx" style="display:flex"><b>JC<span>X</span></b><small>Developments Ltd.</small></span>
+      <button class="drawer-x" id="closeMenu" type="button" aria-label="Close menu"><svg class="ic ic-md" aria-hidden="true"><use href="#i-x"/></svg></button>
     </div>
     <ul class="menu-list">
       <li><a href="#hero">Home</a></li><li><a href="#about">About</a></li>
@@ -602,11 +1338,11 @@ footer a:hover{color:#fff}
     </ul>
     <div class="menu-foot">
       <div><a href="tel:16777">Hotline 16777</a><br><a href="https://web.whatsapp.com/send?phone=+8801324437947&amp;text=" target="_blank" rel="noopener">+880 1324 437 947</a></div>
-      <div class="socials" style="color:#fff">
-        <a href="https://www.facebook.com/JCXBD" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.linkedin.com/company/jcx-developments-limited/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.youtube.com/channel/UCTm39QNanD7ScTT_anGndAw" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://www.instagram.com/jcxbd/" target="_blank" rel="noopener">Instagram</a>
+      <div class="socials" style="gap:18px">
+        <a href="https://www.facebook.com/JCXBD" target="_blank" rel="noopener" aria-label="JCX on Facebook"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-fb"/></svg></a>
+        <a href="https://www.linkedin.com/company/jcx-developments-limited/" target="_blank" rel="noopener" aria-label="JCX on LinkedIn"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-in"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCTm39QNanD7ScTT_anGndAw" target="_blank" rel="noopener" aria-label="JCX on YouTube"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-yt"/></svg></a>
+        <a href="https://www.instagram.com/jcxbd/" target="_blank" rel="noopener" aria-label="JCX on Instagram"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-ig"/></svg></a>
       </div>
     </div>
   </div>
@@ -738,16 +1474,28 @@ footer a:hover{color:#fff}
 
       <form class="search" id="search" aria-label="Find a JCX project" onsubmit="return false">
         <div class="field">
-          <label for="f-loc">Location</label>
-          <div class="sel"><select id="f-loc"><option value="all">All locations</option><option>Bashundhara R/A</option><option>Jalshiri Abashon</option><option>Niketan (Gulshan-1)</option><option>Narayanganj</option><option>Uttara</option></select><span class="chev" aria-hidden="true">&#9662;</span></div>
+          <span class="lab" id="lb-loc">Location</span>
+          <div class="sel">
+            <select id="f-loc" tabindex="-1" aria-hidden="true"><option value="all">All locations</option><option>Bashundhara R/A</option><option>Jalshiri Abashon</option><option>Niketan (Gulshan-1)</option><option>Narayanganj</option><option>Uttara</option></select>
+            <button class="sel-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lb-loc v-loc"><span class="sel-val" id="v-loc">All locations</span><span class="chev" aria-hidden="true"></span></button>
+            <ul class="sel-list" role="listbox" aria-labelledby="lb-loc"></ul>
+          </div>
         </div>
         <div class="field">
-          <label for="f-status">Status</label>
-          <div class="sel"><select id="f-status"><option value="all">Any status</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option><option value="upcoming">Upcoming</option></select><span class="chev" aria-hidden="true">&#9662;</span></div>
+          <span class="lab" id="lb-status">Status</span>
+          <div class="sel">
+            <select id="f-status" tabindex="-1" aria-hidden="true"><option value="all">Any status</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option><option value="upcoming">Upcoming</option></select>
+            <button class="sel-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lb-status v-status"><span class="sel-val" id="v-status">Any status</span><span class="chev" aria-hidden="true"></span></button>
+            <ul class="sel-list" role="listbox" aria-labelledby="lb-status"></ul>
+          </div>
         </div>
         <div class="field">
-          <label for="f-type">Project type</label>
-          <div class="sel"><select id="f-type"><option value="all">All types</option><option value="residential">Residential</option><option value="commercial">Commercial</option><option value="condominium">Condominium</option></select><span class="chev" aria-hidden="true">&#9662;</span></div>
+          <span class="lab" id="lb-type">Project type</span>
+          <div class="sel">
+            <select id="f-type" tabindex="-1" aria-hidden="true"><option value="all">All types</option><option value="residential">Residential</option><option value="commercial">Commercial</option><option value="condominium">Condominium</option></select>
+            <button class="sel-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lb-type v-type"><span class="sel-val" id="v-type">All types</span><span class="chev" aria-hidden="true"></span></button>
+            <ul class="sel-list" role="listbox" aria-labelledby="lb-type"></ul>
+          </div>
         </div>
         <button class="search-btn" id="go" type="submit" aria-label="Search projects"><span aria-hidden="true">&#8594;</span></button>
       </form>
@@ -769,21 +1517,62 @@ footer a:hover{color:#fff}
 <section class="about" id="about" aria-labelledby="about-h">
   <div class="about-bg" aria-hidden="true"><img src="../../../../public/images/about/about-backdrop.jpg" alt=""></div>
   <div class="shell">
-    <div class="reveal">
+    <!-- The word builds: scaffold lines draw in, the letters rise through them. -->
+    <div class="jcx-wrap">
+      <span class="rig" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <div class="jcx" id="jcx" role="img" aria-label="JCX — the craft, the community, the skyline">
         <span class="ltr" style="background-image:url('../../../../public/images/about/letter-craft.svg')">J<span class="cap">The Craft</span></span>
         <span class="ltr" style="background-image:url('../../../../public/images/about/letter-community.svg')">C<span class="cap">The Community</span></span>
         <span class="ltr" style="background-image:url('../../../../public/images/about/letter-skyline.svg')">X<span class="cap">The Skyline</span></span>
-        <span class="mark"><b>JC<i>X</i></b></span>
       </div>
     </div>
 
-    <div class="copy-card reveal">
-      <p class="eyebrow">Beyond Bonding</p>
-      <h3 id="about-h">Not every home carries 20 years of Japanese precision.</h3>
-      <p>Since 2004, JCX has partnered with Japan&rsquo;s Creed Group to build residences and towers that honor detail, sustainability, and trust — across Dhaka&rsquo;s most sought-after addresses.</p>
-      <a class="lnk" href="#projects" style="margin-top:24px">Discover JCX <span aria-hidden="true">→</span></a>
+    <div class="ab-head">
+      <p class="eyebrow reveal">About Us</p>
+      <h3 id="about-h" class="reveal">Not every home carries<i>20 years of Japanese precision.</i></h3>
     </div>
+
+    <!-- Any .plate can hold a <video> instead of an <img>; .is-video adds the pip. -->
+    <div class="plates" id="plates">
+      <div class="pc pc-l reveal">
+        <p>Since 2004, JCX has partnered with Japan&rsquo;s Creed Group to build residences and towers that honor detail, sustainability, and trust — across Dhaka&rsquo;s most sought-after addresses.</p>
+      </div>
+
+      <figure class="plate p1">
+        <img src="../../../../public/images/projects/president-park/interior.jpg" alt="A JCX interior — President Park, Bashundhara R/A">
+        <figcaption>President Park — Interior</figcaption>
+      </figure>
+
+      <figure class="plate p3 tall">
+        <img src="../../../../public/images/projects/president-park/facade.jpg" alt="President Park facade, thirteen storeys">
+        <figcaption>President Park — Facade</figcaption>
+      </figure>
+
+      <figure class="plate p2 is-video">
+        <video autoplay muted loop playsinline preload="metadata" poster="../../../../public/images/hero/hero-poster.jpg">
+          <source src="../../../../public/videos/hero.mp4" type="video/mp4">
+        </video>
+        <figcaption>Beyond Bonding — in motion</figcaption>
+      </figure>
+
+      <figure class="plate p4 tall is-video">
+        <video id="plateVid2" autoplay muted loop playsinline preload="metadata" poster="../../../../public/images/projects/president-park/approach.jpg">
+          <source src="../../../../public/videos/hero.mp4" type="video/mp4">
+        </video>
+        <figcaption>The craft, up close</figcaption>
+      </figure>
+
+      <figure class="plate p5">
+        <img src="../../../../public/images/projects/president-park/detail.jpg" alt="Water, deck and shade at the heart of the plan">
+        <figcaption>President Park — Detail</figcaption>
+      </figure>
+
+      <div class="pc pc-r reveal">
+        <p>Three letters, three commitments: the craft of Japanese engineering, the community every address creates, and the skyline it adds to. Residential, Commercial and Condominium — from Bashundhara R/A to Jalshiri Abashon.</p>
+        <a class="circle-lnk" href="#projects"><span aria-hidden="true"><svg class="ic ic-md"><use href="#i-arrow"/></svg></span>Discover JCX</a>
+      </div>
+    </div>
+
     <div class="pills reveal">
       <span class="pill-stat">60+ Projects</span>
       <span class="pill-stat">Japanese JV — Creed Group</span>
@@ -791,12 +1580,43 @@ footer a:hover{color:#fff}
   </div>
 </section>
 
+<!-- ═══ S3b STATS ═══ The tower's reveal is scrubbed to scroll, so it rises as
+     the counters climb. The last two figures are wired to PROJECTS and AREAS in
+     script, so they can never drift from the data the rest of the page uses. -->
+<section class="stats" id="stats" aria-labelledby="stats-h">
+  <div class="shell">
+    <p class="eyebrow reveal" style="display:block;text-align:center">By the numbers</p>
+    <h2 class="h2 reveal" id="stats-h" style="max-width:22ch;margin-inline:auto;text-align:center">Two decades,<i>measured in addresses.</i></h2>
+
+    <div class="stat-grid">
+      <div class="stat-col">
+        <div class="stat reveal"><b data-count="20" data-suffix="+">0+</b><span>Years building with Creed Group, Japan</span></div>
+        <div class="stat reveal"><b data-count="60" data-suffix="+">0+</b><span>Projects delivered across Dhaka</span></div>
+      </div>
+
+      <!-- Keeps id="tower" so the scrubbed bottom-up clip already wired in
+           script drives it unchanged. -->
+      <figure class="tower" id="tower">
+        <img src="../../../../public/images/stats/tower.webp" alt="A JCX tower rising over Dhaka" width="733" height="1401">
+      </figure>
+
+      <div class="stat-col">
+        <div class="stat reveal"><b data-count="12" id="statProjects">0</b><span>Developments in the current portfolio</span></div>
+        <div class="stat reveal"><b data-count="5" id="statAreas">0</b><span>Locations across Dhaka</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ S4 PROJECTS ═══ -->
-<section id="projects" aria-labelledby="proj-h" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)">
+<section class="portfolio" id="projects" aria-labelledby="proj-h">
   <div class="shell">
     <div class="cmd">
       <div class="reveal">
-        <p class="eyebrow">Our Portfolio — 60+ Projects</p>
+        <div class="sec-kick" id="projKick">
+          <p class="kick-word" id="kickWord">Projects</p>
+          <p class="kick-sub"><i class="k-rule" aria-hidden="true"></i><b data-count="60" data-suffix="+">0+</b> Projects</p>
+        </div>
         <h2 class="h2" id="proj-h">Addresses that hold<i>their value.</i></h2>
         <p class="lede">Residential and commercial developments across Dhaka&rsquo;s most sought-after neighborhoods.</p>
       </div>
@@ -819,7 +1639,15 @@ footer a:hover{color:#fff}
     </div>
   </div>
 
-  <div class="strip" id="strip" role="region" aria-label="JCX portfolio — scroll horizontally" tabindex="0"></div>
+  <!-- Scroll-driven track: .hscroll is a spacer whose extra height equals the
+       strip's horizontal overflow, and .hstick holds the viewport while that
+       height is consumed. So vertical scroll runs the strip through all 12
+       projects, then releases to the next section — 1:1, no wheel hijacking. -->
+  <div class="hscroll" id="hscroll">
+    <div class="hstick" id="hstick">
+      <div class="strip" id="strip" role="region" aria-label="JCX portfolio — scroll horizontally" tabindex="0"></div>
+    </div>
+  </div>
 
   <div class="shell">
     <div class="rail">
@@ -835,7 +1663,7 @@ footer a:hover{color:#fff}
     <div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-end">
       <div class="reveal">
         <p class="eyebrow">Featured Projects</p>
-        <h2 class="h2" id="feat-h" style="color:#fff">Four acts.<i style="color:var(--accent-strong)">One address.</i></h2>
+        <h2 class="h2" id="feat-h">Four acts.<i>One address.</i></h2>
       </div>
       <div class="markers reveal" id="markers" role="tablist" aria-label="Featured projects"></div>
     </div>
@@ -854,10 +1682,13 @@ footer a:hover{color:#fff}
 
     <div class="actrail" id="actRail" role="tablist" aria-label="Acts"></div>
 
-    <div style="display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;margin-top:22px;font-size:12.5px;color:rgba(255,255,255,.55)">
+    <div style="display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;margin-top:22px;font-size:12.5px;color:var(--muted)">
       <span id="featCounter">Currently viewing 1 of 5 featured projects</span>
-      <a class="lnk" href="#contact" style="color:#fff">Explore this project <span aria-hidden="true">→</span></a>
-      <button class="icon-btn" id="featPlay" aria-label="Pause the featured sequence" style="border-color:rgba(255,255,255,.28);color:#fff">❚❚</button>
+      <a class="lnk" href="#contact">Explore this project <span aria-hidden="true">→</span></a>
+      <button class="icon-btn glass" id="featPlay" aria-label="Pause the featured sequence">
+        <svg class="ic ic-md i-pause" aria-hidden="true"><use href="#i-pause"/></svg>
+        <svg class="ic ic-md i-resume" aria-hidden="true"><use href="#i-play"/></svg>
+      </button>
     </div>
   </div>
 </section>
@@ -868,7 +1699,7 @@ footer a:hover{color:#fff}
     <div class="reveal">
       <!-- Layered SVG + motion timeline, per PRD build path. Swap for the
            architectural visualization video when the client supplies one. -->
-      <svg class="stage-svg" viewBox="0 0 520 420" role="img" aria-label="A plot of land transforming into a completed JCX tower">
+      <div class="stage-wrap"><svg class="stage-svg" viewBox="0 0 520 420" role="img" aria-label="A plot of land transforming into a completed JCX tower">
         <defs>
           <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#16355f"/><stop offset="100%" stop-color="#050a12"/>
@@ -905,7 +1736,7 @@ footer a:hover{color:#fff}
           <rect x="196" y="300" width="56" height="16" rx="1" fill="#EC1C2D"/>
           <text x="224" y="311" fill="#fff" font-size="7.5" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="1">LANDOWNER</text>
         </g>
-      </svg>
+      </svg></div>
     </div>
 
     <div>
@@ -947,7 +1778,7 @@ footer a:hover{color:#fff}
       <div class="steprail" id="stepRail" role="tablist" aria-label="Joint venture stages"></div>
       <div class="land-cta">
         <a class="btn red" href="#contact">Start your joint venture <span aria-hidden="true">→</span></a>
-        <a class="btn ghost" href="tel:16777"><span aria-hidden="true">✆</span> Talk to us · 16777</a>
+        <a class="btn ghost" href="tel:16777"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> Talk to us · 16777</a>
       </div>
     </div>
   </div>
@@ -965,11 +1796,15 @@ footer a:hover{color:#fff}
         <div id="mapCanvas"></div>
         <button class="map-cover" id="mapCover" aria-label="Load the interactive map of JCX projects">
           <img src="../../../../public/images/map/map-cover.svg" alt="">
-          <span><span aria-hidden="true">▶</span>Load map</span>
+          <span>
+            <span class="go"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Open the map</span>
+            <span class="sub">12 developments across 5 Dhaka locations</span>
+          </span>
         </button>
       </div>
     </div>
-    <p class="note">Pin positions are approximate area cluster points. Exact coordinates per project are on the client handoff list.</p>
+    <!-- Handoff caveat — hidden for presentation. Restore before client walkthrough.
+         <p class="note">Pin positions are approximate area cluster points. Exact coordinates per project are on the client handoff list.</p> -->
   </div>
 </section>
 
@@ -990,12 +1825,12 @@ footer a:hover{color:#fff}
     </div>
 
     <div class="stage">
-      <div class="portrait"><img id="tImg" src="" alt=""></div>
+      <div class="portrait"><img id="tImg" alt=""></div>
       <div class="quote">
         <span class="mk" aria-hidden="true">&ldquo;</span>
         <blockquote id="tQuote"></blockquote>
         <div class="who"><b id="tName"></b><span id="tRole"></span></div>
-        <button class="lnk" id="tMore" style="margin-top:22px;background:none;border:0;cursor:pointer;color:#fff">Read the full story</button>
+        <button class="lnk" id="tMore" style="margin-top:22px;background:none;border:0;cursor:pointer;color:inherit">Read the full story</button>
       </div>
     </div>
 
@@ -1005,8 +1840,8 @@ footer a:hover{color:#fff}
       <span id="tStats"></span>
       <div class="tdots" id="tDots" role="tablist" aria-label="Testimonial position"></div>
       <div style="display:flex;gap:18px;align-items:center">
-        <button class="icon-btn" id="tPlay" aria-label="Pause testimonial autoplay" style="border-color:rgba(255,255,255,.28);color:#fff">❚❚</button>
-        <a class="lnk" href="#contact" style="color:#fff">Read all testimonials <span aria-hidden="true">→</span></a>
+        <button class="icon-btn glass" id="tPlay" aria-label="Pause testimonial autoplay"><svg class="ic ic-md i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic-md i-resume" aria-hidden="true"><use href="#i-play"/></svg></button>
+        <a class="lnk" href="#contact">Read all testimonials <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
@@ -1014,33 +1849,84 @@ footer a:hover{color:#fff}
 
 <div class="modal" id="tModal" role="dialog" aria-modal="true" aria-label="Full testimonial">
   <div class="modal-in">
-    <div class="portrait" style="max-width:none"><img id="mImg" src="" alt=""></div>
+    <div class="portrait" style="max-width:none"><img id="mImg" alt=""></div>
     <div>
       <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start">
         <p class="eyebrow" id="mRole"></p>
-        <button class="icon-btn" id="mClose" aria-label="Close" style="border-color:rgba(255,255,255,.2);color:#fff">✕</button>
+        <button class="drawer-x" id="mClose" aria-label="Close"><svg class="ic ic-md" aria-hidden="true"><use href="#i-x"/></svg></button>
       </div>
-      <blockquote id="mQuote" style="margin-top:18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,2.4vw,30px);line-height:1.2;color:#fff"></blockquote>
-      <dl id="mMeta" style="margin-top:26px;border-top:1px solid rgba(255,255,255,.12)"></dl>
+      <blockquote id="mQuote" style="margin-top:18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,2.4vw,30px);line-height:1.2"></blockquote>
+      <dl id="mMeta" style="margin-top:26px;border-top:1px solid var(--glass-edge)"></dl>
       <a class="lnk" href="#projects" id="mLink" style="margin-top:20px;color:var(--accent-strong)">More from this project <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </div>
 
+<!-- ═══ S8b FILM ═══ One card, one control. The video is preload="none", so the
+     section costs only a poster until someone presses play. -->
+<section class="vid" id="film" aria-labelledby="film-h">
+  <div class="shell">
+    <p class="eyebrow reveal" style="display:block;text-align:center">Film</p>
+    <h2 class="vid-h reveal" id="film-h">Explore our landmark projects</h2>
+
+    <figure class="film reveal" id="filmCard">
+      <video id="filmVid" playsinline preload="none" poster="../../../../public/images/projects/president-park/facade.jpg">
+        <source src="../../../../public/videos/hero.mp4" type="video/mp4">
+      </video>
+      <button class="film-play" id="filmPlay" type="button" aria-label="Play the JCX project film">
+        <svg class="ic ic-lg" aria-hidden="true"><use href="#i-play"/></svg>
+      </button>
+      <figcaption class="film-cap">JCX President Park — Bashundhara R/A</figcaption>
+    </figure>
+  </div>
+</section>
+
 <!-- ═══ S9 AWARDS ═══ -->
-<section id="awards" aria-labelledby="aw-h">
+<section class="aw" id="awards" aria-labelledby="aw-h">
   <div class="shell" style="text-align:center">
     <p class="eyebrow reveal">Awards &amp; Recognition</p>
     <h2 class="h2 reveal" id="aw-h" style="max-width:20ch;margin-inline:auto">Your trust is our<i>greatest award.</i></h2>
     <div class="awards reveal" id="awardsGrid"></div>
-    <p class="note" style="text-align:left">Award emblems are in-repo stand-ins. Name, awarding body, year and citation for each are on the client handoff list.</p>
+    <!-- Handoff caveat — hidden for presentation. Restore before client walkthrough.
+         <p class="note" style="text-align:left">Award emblems are in-repo stand-ins. Name, awarding body, year and citation for each are on the client handoff list.</p> -->
   </div>
+</section>
+
+<!-- ═══ S9c NEWS / EVENTS / BLOGS ═══ Painted from the NEWS array so the client
+     can swap copy in one place. Headlines and dates are stand-ins. -->
+<section class="nws" id="news" aria-labelledby="news-h">
+  <div class="shell">
+    <h2 class="nws-h" id="news-h">News <em>/</em> Events <em>/</em> Blogs</h2>
+    <div class="news-grid" id="newsGrid"></div>
+    <!-- Handoff caveat — hidden for presentation. Restore before client walkthrough.
+         <p class="note">Headlines, categories and dates are stand-ins, and the card art reuses project photography. Real posts, dates and thumbnails are on the client handoff list.</p> -->
+  </div>
+  <!-- Bottom room for the get-in-touch card, which is pulled up over this band. -->
+  <div style="height:clamp(80px,10vw,128px)" aria-hidden="true"></div>
 </section>
 
 </main>
 
 <!-- ═══ S10 FOOTER ═══ -->
 <footer id="contact">
+  <!-- Straddles the boundary: glass, so it samples the light band above AND the
+       dark plate below instead of belonging to either. -->
+  <div class="shell touch-wrap">
+    <section class="touch" aria-labelledby="touch-h">
+      <h2 class="touch-h" id="touch-h">Get in touch</h2>
+      <form class="touch-form" id="touchForm" novalidate>
+        <label class="vh" for="t-name">Your name</label>
+        <input class="pill-in" id="t-name" name="name" type="text" autocomplete="name" placeholder="Write your name*" required>
+        <label class="vh" for="t-phone">Your phone</label>
+        <input class="pill-in" id="t-phone" name="phone" type="tel" autocomplete="tel" placeholder="Write your phone*" required>
+        <label class="vh" for="t-email">Your email</label>
+        <input class="pill-in" id="t-email" name="email" type="email" autocomplete="email" placeholder="Write your email*" required>
+        <button class="btn glass touch-go" type="submit"><span>Submit</span><span aria-hidden="true" style="position:relative;z-index:1;display:grid"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+      </form>
+      <p class="touch-ok" id="touchOk" role="status">Thanks — we&rsquo;ll be in touch within one business day.</p>
+    </section>
+  </div>
+
   <div class="shell f-grid">
     <div>
       <span class="brand-tx" style="display:flex"><b style="font-size:26px;color:#fff">JC<span>X</span></b><small style="color:rgba(255,255,255,.6)">Developments Ltd.</small></span>
@@ -1071,10 +1957,10 @@ footer a:hover{color:#fff}
       </form>
       <p class="f-ok" id="fOk">✓ Thanks — you&rsquo;re on the list.</p>
       <nav class="socials" aria-label="Social" style="margin-top:22px;gap:18px">
-        <a href="https://www.facebook.com/JCXBD" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.linkedin.com/company/jcx-developments-limited/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.youtube.com/channel/UCTm39QNanD7ScTT_anGndAw" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://www.instagram.com/jcxbd/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/JCXBD" target="_blank" rel="noopener" aria-label="JCX on Facebook"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-fb"/></svg></a>
+        <a href="https://www.linkedin.com/company/jcx-developments-limited/" target="_blank" rel="noopener" aria-label="JCX on LinkedIn"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-in"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCTm39QNanD7ScTT_anGndAw" target="_blank" rel="noopener" aria-label="JCX on YouTube"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-yt"/></svg></a>
+        <a href="https://www.instagram.com/jcxbd/" target="_blank" rel="noopener" aria-label="JCX on Instagram"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-ig"/></svg></a>
       </nav>
     </div>
   </div>
@@ -1086,7 +1972,7 @@ footer a:hover{color:#fff}
 
 <!-- ═══ S11 FLOATING ACTIONS ═══ -->
 <div class="fabs" id="fabs">
-  <button class="fab-top" id="toTop" aria-label="Scroll back to top">↑</button>
+  <button class="fab-top" id="toTop" aria-label="Scroll back to top"><svg class="ic ic-md" aria-hidden="true"><use href="#i-arrow"/></svg></button>
   <div class="wa-tip" id="waTip" role="status">Hi! How can JCX help you today?</div>
   <a class="fab-wa" id="wa" href="https://web.whatsapp.com/send?phone=+8801324437947&amp;text=" target="_blank" rel="noopener" aria-label="Chat with JCX on WhatsApp">
     <svg viewBox="0 0 24 24" width="27" height="27" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.03 1.02-1.03 2.48s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.28-.2-.57-.34M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89a9.82 9.82 0 0 1 6.99 2.9 9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></svg>
@@ -1101,17 +1987,17 @@ footer a:hover{color:#fff}
 const A='../../../../public/';
 const PROJECTS=[
  {n:'JCX President Park',c:'residential',s:'ongoing',l:'Bashundhara R/A',ad:'Block I, Bashundhara R/A',a:'4395 sq ft',u:'26 units',p:'30+ parking',f:'B1+B2+G+13',img:A+'images/projects/president-park/facade.jpg',real:1,lat:23.8202,lng:90.4321,wide:1},
- {n:'JCX Grand Residences',c:'residential',s:'ongoing',l:'Bashundhara R/A',ad:'Block I, Bashundhara R/A',a:'3242–8370 sq ft',u:'122+ units',p:'150+ parking',f:'2B+G+M+19',img:A+'images/projects/grand-residences.svg',lat:23.8175,lng:90.4287},
- {n:'JCX Olympus',c:'residential',s:'completed',l:'Bashundhara R/A',ad:'Block G, Bashundhara R/A',a:'1790–2210 sq ft',u:'30 units',p:'32 parking',f:'B+G+11',img:A+'images/projects/olympus.svg',lat:23.8151,lng:90.4344},
- {n:'ICON 100',c:'commercial',s:'ongoing',l:'Bashundhara R/A',ad:'Block I, Bashundhara R/A',a:'6900–15300 sq ft',u:'—',p:'200+ parking',f:'3B+G+24',img:A+'images/projects/icon-100.svg',lat:23.8221,lng:90.4269},
- {n:'JCX Business Tower',c:'commercial',s:'completed',l:'Bashundhara R/A',ad:'Plot 1136/A, Japan Street',a:'19,722 sq ft',u:'—',p:'80+ parking',f:'3B+G+12',img:A+'images/projects/business-tower.svg',lat:23.8188,lng:90.4308},
- {n:'JCX Lakewood Residences',c:'residential',s:'upcoming',l:'Jalshiri Abashon',ad:'Jalshiri Abashon',a:'2850 sq ft',u:'8 units',p:'10 parking',f:'G+8',img:A+'images/projects/lakewood.svg',lat:23.8462,lng:90.4903},
- {n:'JCX Atlantis',c:'residential',s:'ongoing',l:'Bashundhara R/A',ad:'Block J, Bashundhara R/A',a:'2257–3977 sq ft',u:'50 units',p:'55 parking',f:'B+G+M+13',img:A+'images/projects/atlantis.svg',lat:23.8233,lng:90.4351},
- {n:'JCX N71 Lake Condos',c:'residential',s:'ongoing',l:'Bashundhara R/A',ad:'Block N, Bashundhara R/A',a:'3051–3204 sq ft',u:'70 units',p:'75 parking',f:'2B+G+M+18',img:A+'images/projects/n71-lake-condos.svg',lat:23.8264,lng:90.4295},
- {n:'JCX Serenity',c:'residential',s:'completed',l:'Bashundhara R/A',ad:'Block C, Bashundhara R/A',a:'1715–2282 sq ft',u:'39 units',p:'40 parking',f:'B+G+13',img:A+'images/projects/serenity.svg',lat:23.8129,lng:90.4256},
- {n:'JCX Signature',c:'residential',s:'upcoming',l:'Bashundhara R/A',ad:'Block K, Bashundhara R/A',a:'2900–3080 sq ft',u:'25 units',p:'28 parking',f:'B+G+13',img:A+'images/projects/signature.svg',lat:23.8246,lng:90.4372},
- {n:'JCX Crystal Oasis',c:'residential',s:'upcoming',l:'Jalshiri Abashon',ad:'Jalshiri Abashon',a:'2575 sq ft',u:'8 units',p:'10 parking',f:'G+8',img:A+'images/projects/crystal-oasis.svg',lat:23.8431,lng:90.4858},
- {n:'JCX Cascade',c:'residential',s:'ongoing',l:'Niketan (Gulshan-1)',ad:'Niketan, Gulshan-1',a:'3000 sq ft',u:'9 units',p:'10 parking',f:'G+9',img:A+'images/projects/cascade.svg',lat:23.7768,lng:90.4121}
+ {n:'JCX Grand Residences',c:'residential',s:'ongoing',l:'Bashundhara R/A',ad:'Block I, Bashundhara R/A',a:'3242–8370 sq ft',u:'122+ units',p:'150+ parking',f:'2B+G+M+19',img:A+'images/projects/president-park/approach.jpg',lat:23.8175,lng:90.4287},
+ {n:'JCX Olympus',c:'residential',s:'completed',l:'Bashundhara R/A',ad:'Block G, Bashundhara R/A',a:'1790–2210 sq ft',u:'30 units',p:'32 parking',f:'B+G+11',img:A+'images/beliefs/backdrop.jpg',lat:23.8151,lng:90.4344},
+ {n:'ICON 100',c:'commercial',s:'ongoing',l:'Bashundhara R/A',ad:'Block I, Bashundhara R/A',a:'6900–15300 sq ft',u:'—',p:'200+ parking',f:'3B+G+24',img:A+'images/projects/president-park/interior.jpg',lat:23.8221,lng:90.4269},
+ {n:'JCX Business Tower',c:'commercial',s:'completed',l:'Bashundhara R/A',ad:'Plot 1136/A, Japan Street',a:'19,722 sq ft',u:'—',p:'80+ parking',f:'3B+G+12',img:A+'images/about/about-backdrop.jpg',lat:23.8188,lng:90.4308},
+ {n:'JCX Lakewood Residences',c:'residential',s:'upcoming',l:'Jalshiri Abashon',ad:'Jalshiri Abashon',a:'2850 sq ft',u:'8 units',p:'10 parking',f:'G+8',img:A+'images/projects/president-park/detail.jpg',lat:23.8462,lng:90.4903},
+ {n:'JCX Atlantis',c:'residential',s:'ongoing',l:'Bashundhara R/A',ad:'Block J, Bashundhara R/A',a:'2257–3977 sq ft',u:'50 units',p:'55 parking',f:'B+G+M+13',img:A+'images/projects/president-park/approach.jpg',lat:23.8233,lng:90.4351},
+ {n:'JCX N71 Lake Condos',c:'residential',s:'ongoing',l:'Bashundhara R/A',ad:'Block N, Bashundhara R/A',a:'3051–3204 sq ft',u:'70 units',p:'75 parking',f:'2B+G+M+18',img:A+'images/projects/president-park/facade.jpg',lat:23.8264,lng:90.4295},
+ {n:'JCX Serenity',c:'residential',s:'completed',l:'Bashundhara R/A',ad:'Block C, Bashundhara R/A',a:'1715–2282 sq ft',u:'39 units',p:'40 parking',f:'B+G+13',img:A+'images/projects/president-park/interior.jpg',lat:23.8129,lng:90.4256},
+ {n:'JCX Signature',c:'residential',s:'upcoming',l:'Bashundhara R/A',ad:'Block K, Bashundhara R/A',a:'2900–3080 sq ft',u:'25 units',p:'28 parking',f:'B+G+13',img:A+'images/beliefs/backdrop.jpg',lat:23.8246,lng:90.4372},
+ {n:'JCX Crystal Oasis',c:'residential',s:'upcoming',l:'Jalshiri Abashon',ad:'Jalshiri Abashon',a:'2575 sq ft',u:'8 units',p:'10 parking',f:'G+8',img:A+'images/projects/president-park/detail.jpg',lat:23.8431,lng:90.4858},
+ {n:'JCX Cascade',c:'residential',s:'ongoing',l:'Niketan (Gulshan-1)',ad:'Niketan, Gulshan-1',a:'3000 sq ft',u:'9 units',p:'10 parking',f:'G+9',img:A+'images/about/about-backdrop.jpg',lat:23.7768,lng:90.4121}
 ];
 const AREAS={'Bashundhara R/A':[23.8188,90.4308],'Jalshiri Abashon':[23.8449,90.4881],'Niketan (Gulshan-1)':[23.7761,90.4109],'Narayanganj':[23.6238,90.5],'Uttara':[23.8759,90.3795]};
 
@@ -1125,31 +2011,46 @@ const FEATURED=[
    {k:'The Living',img:A+'images/projects/president-park/interior.jpg',h:'Twenty-six homes of 4,395 square feet.',chips:['4395 sqft','26 Units','30+ Parking']},
    {k:'The Detail',img:A+'images/projects/president-park/detail.jpg',h:'Water, deck and shade at the heart of the plan.',chips:['Japanese Collaboration','Creed Group']}]},
  {n:'JCX Grand Residences',loc:'Bashundhara R/A',land:'60 katha',floors:'2B+G+M+19',
-  acts:[{k:'The Arrival',img:A+'images/projects/grand-residences.svg',h:'Sixty katha. One hundred and twenty-two homes.',chips:['60 Katha','122+ Units'],ph:1}]},
+  acts:[{k:'The Arrival',img:A+'images/projects/president-park/approach.jpg',h:'Sixty katha. One hundred and twenty-two homes.',chips:['60 Katha','122+ Units'],ph:1}]},
  {n:'JCX Olympus',loc:'Bashundhara R/A',land:'—',floors:'B+G+11',
-  acts:[{k:'The Arrival',img:A+'images/projects/olympus.svg',h:'Thirty homes. Eleven floors.',chips:['1790–2210 sqft','30 Units'],ph:1}]},
+  acts:[{k:'The Arrival',img:A+'images/beliefs/backdrop.jpg',h:'Thirty homes. Eleven floors.',chips:['1790–2210 sqft','30 Units'],ph:1}]},
  {n:'ICON 100',loc:'Bashundhara R/A',land:'—',floors:'3B+G+24',
-  acts:[{k:'The Arrival',img:A+'images/projects/icon-100.svg',h:'Twenty-four floors of business address.',chips:['6900–15300 sqft','3B+G+24'],ph:1}]},
+  acts:[{k:'The Arrival',img:A+'images/projects/president-park/interior.jpg',h:'Twenty-four floors of business address.',chips:['6900–15300 sqft','3B+G+24'],ph:1}]},
  {n:'JCX Lakewood Residences',loc:'Jalshiri Abashon',land:'—',floors:'G+8',
-  acts:[{k:'The Arrival',img:A+'images/projects/lakewood.svg',h:'Eight homes. One lake. Nothing between.',chips:['2850 sqft','8 Units'],ph:1}]}
+  acts:[{k:'The Arrival',img:A+'images/projects/president-park/detail.jpg',h:'Eight homes. One lake. Nothing between.',chips:['2850 sqft','8 Units'],ph:1}]}
 ];
 
 const TST=[
- {id:'imran',n:'Imran Mahmudul',aud:'homeowner',role:'Homeowner',pq:'They made buying a home stress-free.',fq:'The team was responsive, supportive, and transparent throughout the entire journey. They made buying a home stress-free.',img:A+'images/testimonials/monogram-imran-mahmudul.svg'},
- {id:'nakib',n:'Nakib Khan',aud:'landowner',role:'Landowner',pq:'As a landowner, I value trust above all.',fq:'As a landowner, I value trust above all. This developer delivered exactly what was promised, with exceptional quality and integrity.',img:A+'images/testimonials/monogram-nakib-khan.svg'},
- {id:'yang',n:'Yang Huan Huan',aud:'homeowner',role:'Homeowner',pq:'People across the globe trust us for quality construction.',fq:'People across the globe trust us for quality construction & world-class materials selection!',img:A+'images/testimonials/monogram-yang-huan-huan.svg'},
- {id:'morshed',n:'Morshed Hossain',aud:'homeowner',role:'Homeowner',pq:'The consultant helped us choose the perfect apartment.',fq:'I must praise the consultant who worked with us and helped us choose the perfect apartment. Great team!',img:A+'images/testimonials/monogram-morshed-hossain.svg'},
- {id:'dina',n:'Dina Akhter',aud:'homeowner',role:'Homeowner',pq:'We found the perfect home, exactly as we imagined.',fq:'JCX has made it very easy for us to find and buy the perfect home as we imagined.',img:A+'images/testimonials/monogram-dina-akhter.svg'}
+ {id:'imran',n:'Imran Mahmudul',aud:'homeowner',role:'Homeowner',pq:'They made buying a home stress-free.',fq:'The team was responsive, supportive, and transparent throughout the entire journey. They made buying a home stress-free.',img:A+'images/projects/president-park/interior.jpg'},
+ {id:'nakib',n:'Nakib Khan',aud:'landowner',role:'Landowner',pq:'As a landowner, I value trust above all.',fq:'As a landowner, I value trust above all. This developer delivered exactly what was promised, with exceptional quality and integrity.',img:A+'images/beliefs/backdrop.jpg'},
+ {id:'yang',n:'Yang Huan Huan',aud:'homeowner',role:'Homeowner',pq:'People across the globe trust us for quality construction.',fq:'People across the globe trust us for quality construction & world-class materials selection!',img:A+'images/projects/president-park/facade.jpg'},
+ {id:'morshed',n:'Morshed Hossain',aud:'homeowner',role:'Homeowner',pq:'The consultant helped us choose the perfect apartment.',fq:'I must praise the consultant who worked with us and helped us choose the perfect apartment. Great team!',img:A+'images/projects/president-park/detail.jpg'},
+ {id:'dina',n:'Dina Akhter',aud:'homeowner',role:'Homeowner',pq:'We found the perfect home, exactly as we imagined.',fq:'JCX has made it very easy for us to find and buy the perfect home as we imagined.',img:A+'images/projects/president-park/approach.jpg'}
 ];
 const AWARDS=[1,2,3,4].map(i=>({img:A+'images/awards/award-'+i+'.svg',cap:'Recognition '+i,cite:'Awarding body and year — client to confirm.'}));
 
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
+/* ═══ BOOT CURTAIN ═══
+   The curtain's exit is pure CSS, so this can only ever fail open: the lock is
+   released on a plain timer rather than an animation event, and the hard removal
+   is a backstop in case the animation is dropped mid-flight. */
+const boot=$('#boot'),htmlEl=document.documentElement;
+if(boot&&!RM){
+  htmlEl.classList.add('booting');
+  setTimeout(()=>htmlEl.classList.remove('booting'),2300);
+  setTimeout(()=>boot.classList.add('gone'),4000);
+}else if(boot){boot.classList.add('gone')}
+
 /* ═══ THEME ═══ */
 const root=document.documentElement,tb=$('#theme');
 setTheme(localStorage.getItem('jcx-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
-function setTheme(t){root.dataset.theme=t;tb.textContent=t==='dark'?'☀':'☾';try{localStorage.setItem('jcx-theme',t)}catch(e){}}
+/* The icons themselves are swapped by CSS off [data-theme]; JS only owns the
+   label, so the button always announces the state it switches TO. */
+function setTheme(t){root.dataset.theme=t;
+  tb.setAttribute('aria-label',t==='dark'?'Switch to light theme':'Switch to dark theme');
+  try{localStorage.setItem('jcx-theme',t)}catch(e){}}
 tb.onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
 
 /* ═══ NAV ═══ */
@@ -1157,12 +2058,132 @@ const nav=$('#nav');
 addEventListener('scroll',()=>{const s=scrollY>40;nav.classList.toggle('solid',s);nav.classList.toggle('on-hero',!s);
   $('#toTop').classList.toggle('on',scrollY>600)},{passive:true});
 const menu=$('#menu');
-$('#burger').onclick=()=>{menu.classList.add('open');document.body.style.overflow='hidden';$('#burger').setAttribute('aria-expanded','true')};
+/* The site menu is a right-half drawer now, not a blackout: the bar stays
+   visible above it, so no scroll lock, the burger toggles, and a click on the
+   uncovered half dismisses it. Opening it closes the projects panel. */
+const burger=$('#burger');
+function openMenu(){setNavH();closeMega();menu.classList.add('open');
+  menu.setAttribute('aria-hidden','false');burger.setAttribute('aria-expanded','true');burger.setAttribute('aria-label','Close menu')}
+function closeMenu(){menu.classList.remove('open');
+  menu.setAttribute('aria-hidden','true');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label','Open menu')}
+burger.onclick=()=>menu.classList.contains('open')?closeMenu():openMenu();
 $('#closeMenu').onclick=closeMenu;
-function closeMenu(){menu.classList.remove('open');document.body.style.overflow='';$('#burger').setAttribute('aria-expanded','false')}
 menu.querySelectorAll('a').forEach(a=>a.onclick=closeMenu);
-addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();$('#tModal').classList.remove('open')}});
+addEventListener('click',e=>{
+  if(menu.classList.contains('open')&&!e.target.closest('#menu')&&!e.target.closest('#burger'))closeMenu()});
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeMega();$('#tModal').classList.remove('open')}});
 $('#toTop').onclick=()=>scrollTo({top:0,behavior:RM?'auto':'smooth'});
+
+/* ═══ NAV — PROJECTS MEGA PANEL ═══
+   Six addresses that cover both categories and all three statuses. Named
+   rather than sliced so reordering PROJECTS cannot silently change the menu. */
+const MEGA=['JCX President Park','ICON 100','JCX Grand Residences','JCX N71 Lake Condos','JCX Business Tower','JCX Lakewood Residences']
+  .map(n=>PROJECTS.find(p=>p.n===n)).filter(Boolean);
+const mega=$('#mega'),megaBtn=$('#megaBtn'),megaImg=$('#megaImg');
+let megaT=null,megaPin=false;
+$('#megaList').innerHTML=MEGA.map((p,i)=>`
+  <li><button class="mega-item${i?'':' on'}" type="button" data-i="${i}">
+    <span class="mega-thumb"><img src="${p.img}" alt=""></span>
+    <span class="mega-tx"><b>${p.n}</b><span>${p.c[0].toUpperCase()+p.c.slice(1)} &middot; ${p.l}</span></span>
+  </button></li>`).join('');
+$('#megaAll').innerHTML=`View all ${PROJECTS.length} projects <span aria-hidden="true">&rarr;</span>`;
+function megaPaint(i){
+  const p=MEGA[i];
+  $$('.mega-item').forEach((b,k)=>b.classList.toggle('on',k===i));
+  // Crossfade only when the source actually changes — swapping to the same
+  // src fires no load event and would strand the image at opacity 0.
+  if(megaImg.getAttribute('src')!==p.img){
+    megaImg.style.opacity='0';
+    megaImg.onload=megaImg.onerror=()=>{megaImg.style.opacity='1'};
+    megaImg.src=p.img;
+  }
+  megaImg.alt=p.n+' — '+p.l;
+  $('#megaTag').textContent=p.s;$('#megaName').textContent=p.n;$('#megaLoc').textContent=p.ad;
+}
+$$('.mega-item').forEach((b,i)=>{
+  b.onmouseenter=()=>megaPaint(i);b.onfocus=()=>megaPaint(i);
+  b.onclick=()=>{closeMega();resetF();
+    // One scroll, not two: focusPoster resolves the page position that parks the
+    // chosen address in the pinned track, so it lands there directly.
+    const k=PROJECTS.filter(ok).findIndex(x=>x.n===MEGA[i].n);
+    if(k>-1)requestAnimationFrame(()=>focusPoster(k));
+    else $('#projects').scrollIntoView({behavior:RM?'auto':'smooth'})};
+});
+megaPaint(0);
+/* The menu drawer is fixed to the viewport and starts below the bar, so it needs
+   the bar's live height — the util strip drops out under 900px. */
+function setNavH(){document.documentElement.style.setProperty('--navh',nav.getBoundingClientRect().height+'px')}
+setNavH();addEventListener('resize',setNavH,{passive:true});
+function openMega(){clearTimeout(megaT);closeMenu();mega.classList.add('open');nav.classList.add('mega-on');
+  mega.setAttribute('aria-hidden','false');megaBtn.setAttribute('aria-expanded','true')}
+function closeMega(){clearTimeout(megaT);megaPin=false;mega.classList.remove('open');nav.classList.remove('mega-on');
+  mega.setAttribute('aria-hidden','true');megaBtn.setAttribute('aria-expanded','false')}
+/* Pinning keeps hover and click from fighting: hover opens transiently, a
+   click pins it open (so the pointer arriving before the click cannot make
+   that click read as "close"), and a second click or an outside click drops
+   the pin. Keyboard Enter goes through the same click path. */
+function megaLater(){clearTimeout(megaT);if(!megaPin)megaT=setTimeout(closeMega,180)}
+megaBtn.addEventListener('mouseenter',openMega);
+megaBtn.addEventListener('mouseleave',megaLater);
+megaBtn.addEventListener('click',()=>{
+  if(mega.classList.contains('open')&&megaPin)closeMega();else{megaPin=true;openMega()}});
+addEventListener('click',e=>{if(megaPin&&!e.target.closest('#mega')&&!e.target.closest('#megaBtn'))closeMega()});
+mega.addEventListener('mouseenter',()=>clearTimeout(megaT));
+mega.addEventListener('mouseleave',megaLater);
+mega.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMega));
+
+/* ═══ GLASS SELECTS ═══
+   The native <select> keeps the state; this paints a styleable twin over it.
+   Anything that writes .value externally must call sel._paint() after. */
+function initSel(wrap){
+  const sel=wrap.querySelector('select'),btn=wrap.querySelector('.sel-btn'),
+        list=wrap.querySelector('.sel-list'),val=wrap.querySelector('.sel-val');
+  list.innerHTML=[...sel.options].map((o,i)=>`<li role="option" data-i="${i}" tabindex="-1" aria-selected="false">${o.textContent}</li>`).join('');
+  const items=[...list.children];
+  function paint(){const i=sel.selectedIndex;val.textContent=sel.options[i].textContent;
+    items.forEach((li,k)=>li.setAttribute('aria-selected',k===i))}
+  const fld=wrap.closest('.field'),clip=wrap.closest('.hero');
+  /* Decide the drop direction against the clipping box, not the viewport —
+     the hero is the thing doing the cutting. */
+  function place(){
+    const cb=clip?clip.getBoundingClientRect():{top:0,bottom:innerHeight},
+          lid=Math.max(cb.top,nav.getBoundingClientRect().height+8),
+          floor=Math.min(cb.bottom,innerHeight),
+          r=btn.getBoundingClientRect(),
+          below=floor-r.bottom-26,above=r.top-lid-26,
+          up=below<200&&above>below;
+    wrap.classList.toggle('up',up);
+    list.style.maxHeight=Math.max(132,Math.min(272,up?above:below))+'px';
+  }
+  function open(o){
+    if(o)place();
+    wrap.classList.toggle('open',!!o);btn.setAttribute('aria-expanded',!!o);
+    if(fld)fld.classList.toggle('lift',!!o);
+    // The reflow is load-bearing: without it the panel is still computing as
+    // visibility:hidden when focus() runs, focus() on a hidden node is a
+    // no-op, and the arrow keys keep talking to the button instead of the list.
+    if(o){$$('.sel.open').forEach(w=>{if(w!==wrap)w._close()});
+      void list.offsetHeight;items[sel.selectedIndex].focus()}}
+  wrap._place=()=>{if(wrap.classList.contains('open'))place()};
+  function pick(i){sel.selectedIndex=i;paint();open(false);btn.focus();
+    sel.dispatchEvent(new Event('change',{bubbles:true}))}
+  items.forEach((li,i)=>{li.onclick=()=>pick(i);
+    li.onkeydown=e=>{const k=e.key;
+      if(k==='Enter'||k===' '){e.preventDefault();pick(i)}
+      else if(k==='ArrowDown'){e.preventDefault();items[Math.min(i+1,items.length-1)].focus()}
+      else if(k==='ArrowUp'){e.preventDefault();items[Math.max(i-1,0)].focus()}
+      else if(k==='Escape'||k==='Tab'){open(false);if(k!=='Tab')btn.focus()}}});
+  btn.onclick=()=>open(!wrap.classList.contains('open'));
+  btn.onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();open(true)}};
+  wrap._close=()=>open(false);sel._paint=paint;paint();
+}
+$$('.sel').forEach(initSel);
+addEventListener('click',e=>{if(!e.target.closest('.sel'))$$('.sel.open').forEach(w=>w._close())});
+/* The hero edge moves under the field as the page scrolls or resizes. */
+addEventListener('scroll',()=>$$('.sel.open').forEach(w=>w._place()),{passive:true});
+addEventListener('resize',()=>$$('.sel.open').forEach(w=>w._place()),{passive:true});
+/* Single writer for the filter selects, so the twin never falls out of sync. */
+function setSel(id,v){const el=$(id);el.value=v;if(el._paint)el._paint()}
 
 /* ═══ S1 HERO ═══ */
 const tags=$$('.tag');
@@ -1188,7 +2209,7 @@ function paintAreaRow(){
   areaRow.querySelectorAll('button').forEach(b=>b.onclick=()=>{
     // Selecting the active area clears it, so the row is a toggle not a trap.
     F.loc=(F.loc===b.dataset.a)?'all':b.dataset.a;
-    $('#f-loc').value=F.loc==='all'?'all':F.loc;
+    setSel('#f-loc',F.loc);
     paintAreaRow();render();paintPins();
   });
 }
@@ -1197,6 +2218,90 @@ function paintAreaRow(){
 const ltrs=$$('.ltr');
 ltrs.forEach(l=>{l.onmouseenter=()=>{l.classList.add('on');ltrs.forEach(o=>o!==l&&o.classList.add('dim'))};
   l.onmouseleave=()=>{l.classList.remove('on');ltrs.forEach(o=>o.classList.remove('dim'))}});
+
+/* ═══ S3b STATS + SECTION KICKERS ═══ */
+/* Live figures come from the data the rest of the page uses, so a project added
+   to PROJECTS cannot leave the stat band showing a stale number. */
+const sProj=$('#statProjects'),sArea=$('#statAreas');
+if(sProj)sProj.dataset.count=PROJECTS.length;
+if(sArea)sArea.dataset.count=Object.keys(AREAS).length;
+
+/* One counter for every [data-count] on the page — stat cells and kickers. */
+function runCount(el){
+  const to=parseFloat(el.dataset.count)||0,suf=el.dataset.suffix||'',from=parseFloat(el.dataset.from)||0;
+  if(RM||!window.gsap){el.textContent=to+suf;return}
+  const o={v:from};
+  gsap.to(o,{v:to,duration:1.7,ease:'power2.out',onUpdate:()=>{el.textContent=Math.round(o.v)+suf}});
+}
+$$('[data-count]').forEach(el=>{
+  el.textContent=(el.dataset.from||0)+(el.dataset.suffix||'');
+  if(!RM&&window.ScrollTrigger)ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter:()=>runCount(el)});
+  else runCount(el);
+});
+
+/* The kicker word arrives letter by letter, then the rule draws under it. */
+const kickWord=$('#kickWord');
+if(kickWord){
+  kickWord.innerHTML=[...kickWord.textContent].map(c=>`<span>${c}</span>`).join('');
+  if(!RM&&window.gsap&&window.ScrollTrigger){
+    gsap.set('#kickWord span',{yPercent:115,opacity:0});
+    gsap.set('#projKick .k-rule',{scaleX:0});
+    gsap.timeline({scrollTrigger:{trigger:'#projKick',start:'top 88%',once:true}})
+      .to('#kickWord span',{yPercent:0,opacity:1,duration:.85,stagger:.05,ease:'power3.out'})
+      .to('#projKick .k-rule',{scaleX:1,duration:.5,ease:'power2.out'},'-=.55');
+  }
+}
+
+/* Two plates share one video file; offsetting the second stops them playing in
+   lockstep, which would read as one image duplicated. */
+const pv2=$('#plateVid2');
+if(pv2)pv2.addEventListener('loadedmetadata',()=>{pv2.currentTime=Math.min(4,(pv2.duration||8)/2)});
+/* Reduced motion: the posters stand in for the loops. */
+if(RM)$$('.plate video').forEach(v=>{v.removeAttribute('autoplay');v.pause()});
+
+if(!RM&&window.gsap&&window.ScrollTrigger){
+  /* The word builds instead of fading: scaffold lines draw left-to-right, the
+     letters rise up through them on a stagger, then the lines retract.
+     Replays on every entry, so returning to About always shows the build. Two
+     details make the replay work:
+       · fromTo, not set+to — fromTo re-applies its start values on each restart,
+         so the build does not need the initial gsap.set to survive.
+       · clearProps on completion is load-bearing: a leftover inset() would
+         permanently clip the hover captions that sit above each letter.
+     end:'bottom top' rather than a percentage, so the reset only happens once
+     the word is genuinely off-screen and never blinks out mid-view. */
+  const rigLines=$$('.rig i'),ltrEls=$$('.ltr');
+  const jcxTl=gsap.timeline({paused:true,onComplete:()=>gsap.set(ltrEls,{clearProps:'clipPath'})})
+    .fromTo(rigLines,{scaleX:0,opacity:.55},{scaleX:1,duration:.5,stagger:.07,ease:'power2.out'})
+    .fromTo(ltrEls,{clipPath:'inset(100% 0% 0% 0%)',y:30},
+      {clipPath:'inset(0% 0% 0% 0%)',y:0,duration:1.05,stagger:.17,ease:'power3.out'},'-=.22')
+    .to(rigLines,{scaleX:0,opacity:0,duration:.5,stagger:.05,ease:'power2.in'},'-=.5');
+  jcxTl.pause(0);
+  ScrollTrigger.create({trigger:'#jcx',start:'top 84%',end:'bottom top',
+    onEnter:()=>jcxTl.restart(),onEnterBack:()=>jcxTl.restart(),
+    onLeave:()=>jcxTl.pause(0),onLeaveBack:()=>jcxTl.pause(0)});
+
+  /* Collage drift — px rather than %, so tall and short plates travel the same
+     distance and the overlaps shear apart at a readable rate. */
+  [['.p1',26],['.p2',-40],['.p3',56],['.p4',74],['.p5',-48]].forEach(([sel,d])=>{
+    const el=$('#plates '+sel);if(!el)return;
+    gsap.fromTo(el,{y:d},{y:-d,ease:'none',
+      scrollTrigger:{trigger:'#plates',start:'top bottom',end:'bottom top',scrub:.6}});
+  });
+
+  /* Skyline rise — scrubbed, so the towers grow up out of the section floor as
+     the reader scrolls rather than playing a fixed animation on entry.
+     Triggered on the band itself, NOT on #stats: the section is far taller than
+     the band, so a section-relative end never completed while the skyline was
+     actually on screen. */
+  const tw=$('#tower');
+  if(tw){
+    gsap.fromTo(tw,{clipPath:'inset(100% 0% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',ease:'none',
+      scrollTrigger:{trigger:tw,start:'top 94%',end:'bottom 78%',scrub:.4}});
+    gsap.fromTo(tw.querySelector('img'),{y:40,scale:1.05},{y:0,scale:1,ease:'none',
+      scrollTrigger:{trigger:tw,start:'top 94%',end:'bottom 62%',scrub:.5}});
+  }
+}
 
 /* ═══ S2 + S4 FILTER & STRIP ═══ */
 let F={type:'all',status:'all',loc:'all'};
@@ -1226,8 +2331,44 @@ function render(){
     `<div class="empty"><p style="font:600 22px Inter,sans-serif">No projects match. Adjust your filters.</p>
       <button class="btn ghost" style="margin-top:18px" onclick="resetF()">Reset filters</button></div>`;
   if(!RM&&window.gsap)gsap.fromTo('.poster',{y:36,opacity:0},{y:0,opacity:1,duration:.45,stagger:.05,ease:'power3.out'});
+  sizeH();
 }
-function resetF(){F={type:'all',status:'all',loc:'all'};$('#f-type').value='all';$('#f-status').value='all';$('#f-loc').value='all';
+
+/* ═══ S4 · SCROLL-DRIVEN STRIP ═══
+   The section holds the viewport until every project has passed, then hands off
+   to the next section. .hscroll's extra height IS the strip's horizontal
+   overflow, so page scroll maps 1:1 onto strip.scrollLeft — the wheel is never
+   intercepted, the scrollbar stays truthful, and Escape/keyboard scroll still
+   work. Disabled below 1024px and under reduced-motion, where the strip goes
+   back to being an ordinary swipe rail. */
+const hscroll=$('#hscroll'),hstick=$('#hstick');
+const pinOn=()=>!RM&&matchMedia('(min-width:1024px)').matches;
+function hMax(){return Math.max(0,strip.scrollWidth-strip.clientWidth)}
+function sizeH(){
+  const m=pinOn()?hMax():0;
+  hscroll.style.height=m?(hstick.offsetHeight+m)+'px':'';
+}
+function driveH(){
+  if(!pinOn())return;
+  const m=hMax();if(!m)return;
+  const p=Math.min(1,Math.max(0,(nav.getBoundingClientRect().height-hscroll.getBoundingClientRect().top)/m));
+  strip.scrollLeft=p*m;
+}
+/* Jump the PAGE to the scroll position that parks a given project in the track —
+   scrolling the strip itself would be undone by the next scroll event. */
+function focusPoster(k){
+  const el=strip.children[k];if(!el)return;
+  const m=hMax(),target=Math.max(0,Math.min(m,el.offsetLeft-(strip.clientWidth-el.offsetWidth)/2));
+  if(pinOn()&&m){
+    scrollTo({top:hscroll.getBoundingClientRect().top+scrollY-nav.getBoundingClientRect().height+target,
+      behavior:RM?'auto':'smooth'});
+  }else{
+    el.scrollIntoView({behavior:RM?'auto':'smooth',block:'nearest',inline:'center'});
+  }
+}
+addEventListener('scroll',driveH,{passive:true});
+addEventListener('resize',()=>{sizeH();driveH()},{passive:true});
+function resetF(){F={type:'all',status:'all',loc:'all'};setSel('#f-type','all');setSel('#f-status','all');setSel('#f-loc','all');
   syncSeg('all');syncSt('all');syncSegbar('all');paintAreaRow();render();paintPins()}
 $('#f-type').onchange=e=>{F.type=e.target.value;syncSeg(F.type==='condominium'?'all':F.type);syncSegbar(F.type);render()};
 $('#f-status').onchange=e=>{F.status=e.target.value;syncSt(F.status);render()};
@@ -1238,16 +2379,16 @@ const segbar=$('#segbar'),segKnob=$('#segKnob');
 function syncSegbar(v){segbar.querySelectorAll('button').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-checked',on);
   if(on){segKnob.style.width=b.offsetWidth+'px';segKnob.style.transform=`translateX(${b.offsetLeft-4}px)`}})}
 segbar.querySelectorAll('button').forEach(b=>b.onclick=()=>{
-  F.type=b.dataset.v;$('#f-type').value=b.dataset.v;
+  F.type=b.dataset.v;setSel('#f-type',b.dataset.v);
   syncSegbar(b.dataset.v);syncSeg(b.dataset.v==='condominium'?'all':b.dataset.v);render()});
 goBtn.onclick=()=>$('#projects').scrollIntoView({behavior:RM?'auto':'smooth'});
 const seg=$('#seg'),segPill=$('#segPill');
 function syncSeg(v){seg.querySelectorAll('button').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-checked',on);
   if(on){segPill.style.width=b.offsetWidth+'px';segPill.style.transform=`translateX(${b.offsetLeft-4}px)`}})}
-seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{F.type=b.dataset.v;$('#f-type').value=b.dataset.v;syncSeg(b.dataset.v);render()});
+seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{F.type=b.dataset.v;setSel('#f-type',b.dataset.v);syncSegbar(b.dataset.v);syncSeg(b.dataset.v);render()});
 const strow=$('#strow');
 function syncSt(v){strow.querySelectorAll('button').forEach(b=>b.setAttribute('aria-checked',b.dataset.v===v))}
-strow.querySelectorAll('button').forEach(b=>b.onclick=()=>{F.status=b.dataset.v;$('#f-status').value=b.dataset.v;syncSt(b.dataset.v);render()});
+strow.querySelectorAll('button').forEach(b=>b.onclick=()=>{F.status=b.dataset.v;setSel('#f-status',b.dataset.v);syncSt(b.dataset.v);render()});
 paintAreaRow();render();
 requestAnimationFrame(()=>{syncSeg('all');syncSegbar('all')});
 addEventListener('resize',()=>{syncSeg(F.type==='condominium'?'all':F.type);syncSegbar(F.type);syncAud()},{passive:true});
@@ -1291,7 +2432,8 @@ function paintAct(){
   if(fPlaying&&!RM)fTimer=setTimeout(()=>{fa++;if(fa>=p.acts.length){fa=0;fp=(fp+1)%FEATURED.length;paintProject(true)}else paintAct()},5000);
 }
 function typeIn(el,txt){let i=0;el.textContent='';const t=setInterval(()=>{el.textContent=txt.slice(0,++i);if(i>=txt.length)clearInterval(t)},40)}
-$('#featPlay').onclick=function(){fPlaying=!fPlaying;this.textContent=fPlaying?'❚❚':'▶';
+/* Icon swap is CSS off the .paused class — the button holds both glyphs. */
+$('#featPlay').onclick=function(){fPlaying=!fPlaying;this.classList.toggle('paused',!fPlaying);
   this.setAttribute('aria-label',fPlaying?'Pause the featured sequence':'Play the featured sequence');paintAct()};
 $('#canvas').onclick=()=>{const p=FEATURED[fp];fa=(fa+1)%p.acts.length;paintAct()};
 paintProject(false);
@@ -1366,7 +2508,7 @@ audEl.querySelectorAll('button').forEach(b=>b.onclick=()=>{aud=b.dataset.v;ti=0;
 function paintT(){
   const L2=list();if(!L2.length)return;const t=L2[ti%L2.length];
   $('#testimonials').className='tst '+(t.aud);
-  $('#tImg').src=t.img;$('#tImg').alt=`Portrait of ${t.n}, ${t.role.toLowerCase()}`;
+  $('#tImg').src=t.img;$('#tImg').alt=`A JCX development — accompanying the words of ${t.n}, ${t.role.toLowerCase()}`;
   $('#tName').textContent=t.n;$('#tRole').textContent=t.role;
   const q=$('#tQuote');
   if(RM){q.textContent='“'+t.pq+'”'}
@@ -1380,23 +2522,65 @@ function paintT(){
   $('#tStats').textContent=`${TST.length} stories · 0 videos · 1 language`;
   clearTimeout(tTimer);if(tPlaying&&!RM&&L2.length>1)tTimer=setTimeout(()=>{ti=(ti+1)%L2.length;paintT()},8000);
 }
-$('#tPlay').onclick=function(){tPlaying=!tPlaying;this.textContent=tPlaying?'❚❚':'▶';
+$('#tPlay').onclick=function(){tPlaying=!tPlaying;this.classList.toggle('paused',!tPlaying);
   this.setAttribute('aria-label',tPlaying?'Pause testimonial autoplay':'Play testimonial autoplay');paintT()};
 $('#tMore').onclick=()=>{const t=list()[ti%list().length];
-  $('#mImg').src=t.img;$('#mImg').alt='Portrait of '+t.n;$('#mRole').textContent=t.role;
+  $('#mImg').src=t.img;$('#mImg').alt='A JCX development — accompanying the words of '+t.n;$('#mRole').textContent=t.role;
   $('#mQuote').textContent='“'+t.fq+'”';
   $('#mMeta').innerHTML=[['Name',t.n],['Relationship',t.role],['Project','To be confirmed'],['Year','To be confirmed']]
-    .map(([k,v])=>`<div style="display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(255,255,255,.12);padding:10px 0">
-      <dt style="font:400 9.5px Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45)">${k}</dt>
-      <dd style="font-size:14px;color:#fff">${v}</dd></div>`).join('');
+    .map(([k,v])=>`<div style="display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--glass-edge);padding:10px 0">
+      <dt style="font:400 9.5px Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--glass-mute)">${k}</dt>
+      <dd style="font-size:14px">${v}</dd></div>`).join('');
   $('#tModal').classList.add('open')};
 $('#mClose').onclick=()=>$('#tModal').classList.remove('open');
 $('#tModal').onclick=e=>{if(e.target.id==='tModal')$('#tModal').classList.remove('open')};
 syncAud();paintT();requestAnimationFrame(syncAud);
 
+/* ═══ S8b FILM ═══
+   Native controls take over once it is playing; the overlay only returns when
+   the clip ends, so it never fights the scrubber. */
+const filmCard=$('#filmCard'),filmVid=$('#filmVid');
+if(filmCard&&filmVid){
+  $('#filmPlay').onclick=()=>{filmCard.classList.add('playing');filmVid.controls=true;
+    const r=filmVid.play();if(r&&r.catch)r.catch(()=>{filmCard.classList.remove('playing')})};
+  filmVid.addEventListener('ended',()=>{filmCard.classList.remove('playing');filmVid.controls=false});
+}
+
+/* ═══ S9c NEWS / EVENTS / BLOGS ═══
+   Topics are drawn from facts already on the page (the Creed Group JV, President
+   Park's real specs, the real locations) so nothing here invents an event. Dates
+   are marked TBC rather than fabricated. */
+const NEWS=[
+ {cat:'News',  t:'JCX and Creed Group mark twenty years of collaboration', img:A+'images/projects/president-park/facade.jpg'},
+ {cat:'Events',t:'Site walkthrough — President Park, Block I',             img:A+'images/projects/president-park/approach.jpg'},
+ {cat:'Blogs', t:'Bashundhara R/A or Jalshiri Abashon: choosing an address',img:A+'images/projects/president-park/interior.jpg'}
+];
+$('#newsGrid').innerHTML=NEWS.map(n=>`
+  <article class="ncard">
+    <a class="ncard-media" href="#contact" tabindex="-1" aria-hidden="true">
+      <img src="${n.img}" alt="">
+      <span class="ncard-chip">${n.cat}</span>
+    </a>
+    <div class="ncard-body">
+      <h3 class="ncard-t"><a href="#contact">${n.t}</a></h3>
+      <div class="ncard-foot">
+        <span class="ncard-d">Date &mdash; TBC</span>
+        <a class="ncard-go" href="#contact" aria-label="Read: ${n.t}"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </article>`).join('');
+
+/* ═══ S9b GET IN TOUCH ═══ Prototype only — no endpoint is wired. */
+const touchForm=$('#touchForm');
+if(touchForm)touchForm.onsubmit=e=>{
+  e.preventDefault();
+  if(!touchForm.checkValidity()){touchForm.reportValidity();return}
+  $('#touchOk').classList.add('on');touchForm.reset();
+};
+
 /* ═══ S9 AWARDS ═══ */
 $('#awardsGrid').innerHTML=AWARDS.map(a=>`<figure class="award"><span class="shine"></span>
-  <img src="${a.img}" alt="${a.cap}"><figcaption>${a.cap}<span class="cite">${a.cite}</span></figcaption></figure>`).join('');
+  <span class="award-disc"><img src="${a.img}" alt="${a.cap}"></span><figcaption>${a.cap}<span class="cite">${a.cite}</span></figcaption></figure>`).join('');
 if(!RM&&window.gsap&&window.ScrollTrigger){
   ScrollTrigger.create({trigger:'#awards',start:'top 80%',once:true,onEnter:()=>
     gsap.to('.shine',{left:'110%',duration:1.1,stagger:.15,ease:'power2.inOut'})});
