@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JCX Developments — Variation C · Cinematic Noir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════
+   VARIATION C — "CINEMATIC NOIR"
+   Tests the PRD system reconciled with the logo: navy + gold +
+   red spark, dark-leaning in BOTH themes.
+   Signature: glow + deep cast · translucent border · 10px radii ·
+              700 display · neon status · nav always dark glass
+   ── EDIT TOKENS HERE ─────────────────────────────────────────── */
+:root{
+  --bg:#F4F2EE; --surface:#FFFFFF; --ink:#0C1017; --muted:#5C6673;
+  --brand:#003C8C; --brand-deep:#012A63; --accent:#C6A15B; --spark:#EC1C2D; --line:#E2DDD4;
+  --shadow:0 0 24px rgba(198,161,91,.22), 0 28px 60px -24px rgba(0,0,0,.45);
+  --radius:10px; --radius-sm:6px;
+  --display-weight:700; --ease:cubic-bezier(.22,1,.36,1);
+  --nav-solid:rgba(11,16,23,.86);
+}
+[data-theme="dark"]{
+  --bg:#0B1017; --surface:#131A24; --ink:#F1F3F6; --muted:#9AA3B2;
+  --brand:#3E7BD6; --brand-deep:#1E4F9C; --accent:#D8B978; --spark:#FF3B4E; --line:rgba(255,255,255,.10);
+  --shadow:0 0 28px rgba(216,185,120,.22), 0 28px 60px -24px rgba(0,0,0,.75);
+  --nav-solid:rgba(8,12,18,.9);
+}
+/* ══════════════════════════════════════════════════════════════ */
+/* ── Variation C signature overrides ───────────────────────── */
+/* Nav never goes light — dark glass in both themes. */
+.var-nav-bar.solid{background:var(--nav-solid);border-bottom-color:rgba(255,255,255,.10);backdrop-filter:blur(18px) saturate(1.2)}
+.var-nav-bar.solid .nav-links a,.var-nav-bar.solid .brand-tx b,.var-nav-bar.solid .brand-tx span{color:#fff}
+.var-nav-bar.solid .icon-btn{border-color:rgba(255,255,255,.28);color:#fff}
+.btn,.search-btn,.seg,.seg button,.seg .pill{border-radius:999px}
+.eyebrow::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--spark);margin-left:2px}
+.mark{border-color:var(--spark);box-shadow:0 0 26px rgba(236,28,45,.45),0 14px 40px rgba(0,0,0,.5)}
+.dot.ongoing{background:var(--spark);box-shadow:0 0 0 3px rgba(236,28,45,.22),0 0 14px var(--spark)}
+.dot.completed{background:var(--accent);box-shadow:0 0 10px rgba(198,161,91,.6)}
+.p-serial{color:var(--accent);text-shadow:0 0 14px rgba(198,161,91,.5)}
+.poster{border:1px solid var(--line)}
+.poster:hover{box-shadow:0 0 32px rgba(198,161,91,.28),0 30px 70px -26px rgba(0,0,0,.7)}
+.copy-card{border-left-color:var(--spark)}
+.search-btn{border-color:var(--accent)}
+.rail .fill{background:var(--accent);box-shadow:0 0 10px rgba(198,161,91,.6)}
+.stat-row button[aria-checked="true"]::after{background:var(--accent)}
+/* Film grain — PRD §6.6 unifier, previewed here. */
+body::after{content:"";position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.shell{width:100%;max-width:1280px;margin-inline:auto;padding-inline:24px}
+@media(min-width:768px){.shell{padding-inline:40px}}
+
+.display{font-family:'Cormorant Garamond',Georgia,serif;font-weight:var(--display-weight);line-height:1.04;letter-spacing:-.02em}
+.eyebrow{display:inline-flex;align-items:center;gap:14px;font:500 12px/1 Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--accent);opacity:.8}
+
+/* ── nav ───────────────────────────────────────────────────── */
+.var-nav-bar{position:fixed;inset:0 0 auto 0;z-index:60;transition:background .5s var(--ease),border-color .5s var(--ease),backdrop-filter .5s}
+.var-nav-bar{background:transparent;border-bottom:1px solid transparent}
+.var-nav-bar.solid{background:var(--nav-solid);border-bottom-color:var(--line);backdrop-filter:blur(14px)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid var(--line)}
+.brand-tx{display:flex;flex-direction:column;line-height:1}
+.brand-tx b{font:600 17px Inter,sans-serif;letter-spacing:.12em}
+.brand-tx span{margin-top:4px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;opacity:.65}
+.nav-links{display:none;gap:28px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+@media(min-width:1100px){.nav-links{display:flex}}
+.nav-links a{position:relative;padding-bottom:4px}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-act{display:flex;align-items:center;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px;border-radius:999px;border:0;background:var(--brand);color:#fff;font:500 13px Inter,sans-serif;letter-spacing:.06em;cursor:pointer;transition:.35s var(--ease)}
+.btn:hover{background:var(--brand-deep);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:inherit;border:1px solid var(--line)}
+.btn-ghost:hover{background:transparent;border-color:var(--accent);color:var(--accent)}
+.icon-btn{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer;transition:.3s var(--ease)}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+.on-hero .nav-links a,.on-hero .brand-tx b,.on-hero .brand-tx span{color:#fff}
+.on-hero .icon-btn{border-color:rgba(255,255,255,.35);color:#fff}
+
+/* ── hero ──────────────────────────────────────────────────── */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-media{position:absolute;inset:0;z-index:-2}
+.hero-media video,.hero-media img{width:100%;height:100%;object-fit:cover}
+.hero-scrim{position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(to top,rgba(8,10,14,.86) 0%,rgba(8,10,14,.55) 22%,rgba(8,10,14,.18) 45%,rgba(8,10,14,0) 72%),
+  linear-gradient(to right,rgba(8,10,14,.7) 0%,rgba(8,10,14,.35) 35%,rgba(8,10,14,0) 68%)}
+.hero-body{position:relative;padding-top:132px;color:#fff}
+.tag{min-height:290px}
+.tag-slide{display:none}
+.tag-slide.on{display:block}
+.tag-1{display:block;font:500 13px Inter,sans-serif;letter-spacing:.34em;text-transform:uppercase;color:var(--accent)}
+.tag-2{display:block;margin-top:14px;font-size:clamp(56px,9vw,92px);font-style:italic}
+.tag-3{display:block;margin-top:12px;font:400 clamp(17px,2.4vw,26px)/1.3 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.86)}
+.tag-rule{margin-top:26px;width:0;height:1px;background:var(--accent)}
+.dots{display:flex;gap:10px;margin-top:34px}
+.dots button{width:26px;height:2px;border:0;background:rgba(255,255,255,.35);cursor:pointer;padding:0;transition:.5s var(--ease)}
+.dots button[aria-selected="true"]{width:52px;background:var(--accent)}
+
+/* ── search (upper third per PRD) ──────────────────────────── */
+.search-wrap{position:relative;margin-top:44px;max-width:980px}
+.search{display:flex;align-items:stretch;gap:0;background:rgba(255,255,255,.80);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.5);border-radius:20px;box-shadow:0 30px 70px -28px rgba(0,0,0,.6);padding:10px 10px 10px 26px}
+[data-theme="dark"] .search{background:rgba(17,24,39,.72);border-color:rgba(255,255,255,.12)}
+.field{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;padding:12px 18px 12px 0;position:relative}
+.field+.field{padding-left:26px}
+.field+.field::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:60%;background:var(--accent);opacity:.45}
+.field label{font:500 10px Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.field .sel{position:relative}
+.field select{appearance:none;width:100%;background:transparent;border:0;font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--ink);cursor:pointer;padding-right:22px}
+.field .chev{position:absolute;right:0;top:50%;transform:translateY(-50%);pointer-events:none;transition:transform .3s var(--ease);color:var(--muted)}
+.search-btn{align-self:center;display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 30px;border-radius:16px;border:1px solid var(--accent);background:var(--brand);color:#fff;font:500 13px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.35s var(--ease);box-shadow:inset 0 0 0 1px rgba(198,161,91,.5)}
+.search-btn:hover{background:var(--brand-deep)}
+.search-btn.none{background:transparent;color:var(--muted);border-color:var(--line);box-shadow:none;cursor:default}
+@media(max-width:900px){.search{flex-direction:column;padding:18px;border-radius:18px}.field+.field{padding-left:0}.field+.field::before{display:none}.field{border-top:1px solid var(--line)}.search-btn{width:100%;justify-content:center;margin-top:12px}}
+
+.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.6);font-size:10px;letter-spacing:.24em;text-transform:uppercase}
+
+/* ── sections ──────────────────────────────────────────────── */
+section{padding:112px 0}
+@media(min-width:768px){section{padding:136px 0}}
+.h2{font-size:clamp(40px,4.6vw,58px);margin-top:22px}
+.h2 i{display:block;font-style:italic;color:var(--brand)}
+[data-theme="dark"] .h2 i{color:var(--accent)}
+.lede{margin-top:22px;max-width:52ch;color:var(--muted);font-size:17px}
+
+/* about — J C X windows */
+.about{position:relative;overflow:hidden}
+.about-bg{position:absolute;inset:0;z-index:-2}
+.about-bg img{width:100%;height:100%;object-fit:cover;opacity:.16}
+.jcx{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin:0 auto;max-width:1100px}
+.ltr{position:relative;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(120px,22vw,260px);line-height:.86;
+  background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  background-size:cover;background-position:center;transition:opacity .5s var(--ease),filter .5s var(--ease);cursor:default}
+.ltr.dim{opacity:.35;filter:grayscale(.5)}
+.ltr-cap{position:absolute;left:50%;top:-26px;transform:translateX(-50%) translateY(8px);opacity:0;white-space:nowrap;font:500 11px Inter,sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);transition:.45s var(--ease)}
+.ltr.on .ltr-cap{opacity:1;transform:translateX(-50%) translateY(0)}
+.mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(72px,11vw,136px);height:clamp(72px,11vw,136px);border-radius:50%;display:grid;place-items:center;background:var(--brand);border:2px solid var(--accent);box-shadow:0 14px 40px rgba(0,0,0,.4);z-index:3}
+.mark b{font:600 clamp(18px,2.4vw,30px) Inter,sans-serif;color:#fff;letter-spacing:.04em}
+.copy-card{margin:56px auto 0;max-width:560px;background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--accent);border-radius:var(--radius);box-shadow:var(--shadow);padding:34px}
+@media(min-width:768px){.copy-card{padding:42px}}
+.copy-card h3{font-family:'Cormorant Garamond',serif;font-weight:var(--display-weight);font-size:clamp(26px,3vw,36px);line-height:1.15;margin-top:16px}
+.copy-card p{margin-top:16px;color:var(--muted);font-size:16px}
+.link-a{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font:600 12px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;position:relative;padding-bottom:3px}
+.link-a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.link-a:hover::after{transform:scaleX(1)}
+
+/* projects */
+.cmd{display:flex;flex-direction:column;gap:30px}
+@media(min-width:1024px){.cmd{flex-direction:row;justify-content:space-between;align-items:flex-end}}
+.ctrl{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+@media(min-width:1024px){.ctrl{align-items:flex-end}}
+.seg{display:inline-flex;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.seg button{position:relative;border:0;background:transparent;padding:9px 20px;border-radius:999px;font:500 12px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .3s}
+.seg button[aria-checked="true"]{color:#fff}
+.seg .pill{position:absolute;inset:4px auto 4px 4px;border-radius:999px;background:var(--brand);z-index:-1;transition:transform .45s var(--ease),width .45s var(--ease)}
+.seg{position:relative;z-index:0}
+.stat-row{display:flex;gap:22px;font:500 12px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.stat-row button{border:0;background:transparent;color:var(--muted);cursor:pointer;padding:0 0 6px;position:relative}
+.stat-row button[aria-checked="true"]{color:var(--ink)}
+.stat-row button[aria-checked="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent)}
+.count{display:flex;align-items:baseline;gap:9px;color:var(--muted);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.count b{font-family:'Cormorant Garamond',serif;font-weight:var(--display-weight);font-size:clamp(32px,3.4vw,46px);color:var(--brand);line-height:1}
+[data-theme="dark"] .count b{color:var(--accent)}
+
+.strip{margin-top:52px;display:flex;gap:48px;overflow-x:auto;padding:8px 24px 26px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+@media(min-width:768px){.strip{padding-inline:40px}}
+.poster{position:relative;flex:0 0 auto;width:min(84vw,430px);height:540px;border-radius:var(--radius);overflow:hidden;background:#0b1220;scroll-snap-align:center;box-shadow:var(--shadow);transition:transform .5s var(--ease)}
+@media(min-width:1280px){.poster{width:500px;height:640px}.poster.wide{width:900px}}
+.poster:nth-child(even){margin-top:40px}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.poster:hover img{transform:scale(1.07)}
+.poster::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(6,8,12,.92) 0%,rgba(6,8,12,.35) 42%,rgba(6,8,12,0) 72%)}
+.p-serial{position:absolute;top:22px;left:22px;z-index:2;font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--accent)}
+.p-status{position:absolute;top:24px;right:22px;z-index:2;display:flex;align-items:center;gap:7px}
+.dot{width:6px;height:6px;border-radius:50%;display:block}
+.dot.ongoing{background:var(--accent);animation:pulse 2.4s var(--ease) infinite}
+.dot.completed{background:#7FB77E}
+.dot.upcoming{background:rgba(255,255,255,.45)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.5)}}
+.p-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:26px;color:#fff}
+.p-loc{font-size:12px;letter-spacing:.1em;color:rgba(255,255,255,.72)}
+.p-name{font-family:'Cormorant Garamond',serif;font-weight:var(--display-weight);font-size:clamp(28px,3vw,40px);line-height:1.06;margin-top:8px}
+.p-specs{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.66)}
+.p-specs span+span::before{content:"|";margin-right:10px;opacity:.4}
+.ph{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:3;font:500 9px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;background:rgba(0,0,0,.6);color:#fff;padding:4px 9px;border-radius:3px}
+.rail{margin-top:26px;display:flex;align-items:center;gap:26px}
+.rail .track{flex:1;height:1px;background:var(--line);position:relative}
+.rail .fill{position:absolute;inset:0 auto 0 0;background:var(--accent);width:12%}
+.empty{margin-top:52px;text-align:center;padding:70px 20px;border:1px dashed var(--line);border-radius:var(--radius)}
+
+.reveal{opacity:0;transform:translateY(24px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+
+.note{margin-top:44px;padding:16px 20px;border:1px dashed var(--line);border-radius:var(--radius-sm);font-size:12px;color:var(--muted)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<header class="var-nav-bar on-hero" id="nav">
+  <div class="shell nav-in">
+    <a class="brand" href="#hero">
+      <img src="../public/logo-jcx.jpg" alt="">
+      <span class="brand-tx"><b>JCX</b><span>Beyond Bonding</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about">About</a><a href="#projects">Projects</a>
+      <a href="#featured">Featured</a><a href="#landowners">Landowners</a>
+      <a href="#map">Locations</a><a href="#testimonials">Testimonials</a>
+    </nav>
+    <div class="nav-act">
+      <button class="icon-btn" id="theme" aria-label="Switch theme">☾</button>
+      <a class="btn" href="#contact">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- ══ S1 HERO + S2 SEARCH ══ -->
+<section class="hero" id="hero" aria-label="JCX Developments">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline poster="../public/images/hero/hero-poster.jpg" aria-hidden="true">
+      <source src="../public/videos/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-scrim"></div>
+
+  <div class="shell hero-body">
+    <h1 class="display tag" id="tag">
+      <span class="tag-slide on"><span class="tag-1">Discover</span><span class="tag-2">Perfection</span><span class="tag-3">In Every Detail</span></span>
+      <span class="tag-slide"><span class="tag-1">Iconic</span><span class="tag-2">Destination</span><span class="tag-3">for Business Excellence</span></span>
+      <span class="tag-slide"><span class="tag-1">Luxury</span><span class="tag-2">Elegance</span><span class="tag-3">You Deserve</span></span>
+      <span class="tag-slide"><span class="tag-1">Embrace the</span><span class="tag-2">Eco-Friendly</span><span class="tag-3">Abode</span></span>
+      <span class="tag-slide"><span class="tag-1">Modern</span><span class="tag-2">Architecture</span><span class="tag-3">Made Easy</span></span>
+      <span class="tag-rule" id="rule"></span>
+    </h1>
+    <div class="dots" id="dots" role="tablist" aria-label="Hero slides"></div>
+
+    <!-- S2 — upper third, per PRD -->
+    <div class="search-wrap">
+      <form class="search" id="search" aria-label="Find a JCX project" onsubmit="return false">
+        <div class="field">
+          <label for="f-type">Project Type</label>
+          <div class="sel"><select id="f-type"><option value="all">All</option><option value="residential">Residential</option><option value="commercial">Commercial</option><option value="condominium">Condominium</option></select><span class="chev">⌄</span></div>
+        </div>
+        <div class="field">
+          <label for="f-status">Status</label>
+          <div class="sel"><select id="f-status"><option value="all">All</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option><option value="upcoming">Upcoming</option></select><span class="chev">⌄</span></div>
+        </div>
+        <div class="field">
+          <label for="f-loc">Location</label>
+          <div class="sel"><select id="f-loc"><option value="all">All</option><option>Bashundhara R/A</option><option>Jalshiri Abashon</option><option>Niketan (Gulshan-1)</option><option>Narayanganj</option><option>Uttara</option></select><span class="chev">⌄</span></div>
+        </div>
+        <button class="search-btn" id="go" type="submit">Search <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#about" aria-label="Scroll to About"><span>Scroll</span><span aria-hidden="true">↓</span></a>
+</section>
+
+<!-- ══ S3 ABOUT ══ -->
+<section class="about" id="about" aria-labelledby="about-h">
+  <div class="about-bg"><img src="../public/images/about/about-backdrop.jpg" alt=""></div>
+  <div class="shell">
+    <div class="reveal" style="position:relative">
+      <div class="jcx" id="jcx">
+        <span class="ltr" data-cap="The Craft"   style="background-image:url('../public/images/about/letter-craft.svg')">J<span class="ltr-cap">The Craft</span></span>
+        <span class="ltr" data-cap="The Community" style="background-image:url('../public/images/about/letter-community.svg')">C<span class="ltr-cap">The Community</span>
+          <span class="mark"><b>JCX</b></span>
+        </span>
+        <span class="ltr" data-cap="The Skyline" style="background-image:url('../public/images/about/letter-skyline.svg')">X<span class="ltr-cap">The Skyline</span></span>
+      </div>
+    </div>
+
+    <div class="copy-card reveal">
+      <p class="eyebrow">Beyond Bonding</p>
+      <h3>Not every home carries 20 years of Japanese precision.</h3>
+      <p>Since 2004, JCX has partnered with Japan&rsquo;s Creed Group to build residences and towers that honor detail, sustainability, and trust — across Dhaka&rsquo;s most sought-after addresses.</p>
+      <a class="link-a" href="#projects">Discover JCX <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S4 PROJECTS ══ -->
+<section id="projects" aria-labelledby="proj-h" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="shell">
+    <div class="cmd">
+      <div class="reveal">
+        <p class="eyebrow">Our Portfolio — 60+ Projects</p>
+        <h2 class="display h2" id="proj-h">Addresses that hold<i>their value.</i></h2>
+        <p class="lede">Residential and commercial developments across Dhaka&rsquo;s most sought-after neighborhoods.</p>
+      </div>
+      <div class="ctrl reveal">
+        <div class="seg" id="seg" role="radiogroup" aria-label="Project category">
+          <span class="pill" id="pill"></span>
+          <button role="radio" aria-checked="true" data-v="all">All</button>
+          <button role="radio" aria-checked="false" data-v="residential">Residential</button>
+          <button role="radio" aria-checked="false" data-v="commercial">Commercial</button>
+        </div>
+        <div class="stat-row" id="strow" role="radiogroup" aria-label="Project status">
+          <button role="radio" aria-checked="true" data-v="all">All</button>
+          <button role="radio" aria-checked="false" data-v="ongoing">Ongoing</button>
+          <button role="radio" aria-checked="false" data-v="completed">Completed</button>
+          <button role="radio" aria-checked="false" data-v="upcoming">Upcoming</button>
+        </div>
+        <p class="count"><b id="odo">12</b> <span id="odolbl">projects</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip" id="strip" role="region" aria-label="JCX portfolio"></div>
+
+  <div class="shell">
+    <div class="rail"><div class="track"><div class="fill" id="fill"></div></div>
+      <a class="link-a" href="#">View all 60+ projects <span aria-hidden="true">→</span></a>
+    </div>
+    <p class="note"><strong>Variation C — Cinematic Noir.</strong> Representative slice: Hero · Search · About · Projects.
+      Real assets in use: hero film, JCX President Park renders, about backdrop, logo. Cards marked
+      <em>PLACEHOLDER</em> await client renders — see the PRD handoff checklist.</p>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+/* ── real PRD project data ────────────────────────────────── */
+const REAL='../public/images/projects/president-park/facade.jpg';
+const P=[
+ {n:'JCX President Park',c:'residential',s:'ongoing',l:'Bashundhara R/A',a:'4395 sq ft',u:'26 units',f:'B1+B2+G+13',img:REAL,real:1,w:1},
+ {n:'JCX Grand Residences',c:'residential',s:'ongoing',l:'Bashundhara R/A',a:'3242–8370 sq ft',u:'122+ units',f:'2B+G+M+19',img:'../public/images/projects/grand-residences.svg'},
+ {n:'JCX Olympus',c:'residential',s:'completed',l:'Bashundhara R/A',a:'1790–2210 sq ft',u:'30 units',f:'B+G+11',img:'../public/images/projects/olympus.svg'},
+ {n:'ICON 100',c:'commercial',s:'ongoing',l:'Bashundhara R/A',a:'6900–15300 sq ft',u:'—',f:'3B+G+24',img:'../public/images/projects/icon-100.svg'},
+ {n:'JCX Business Tower',c:'commercial',s:'completed',l:'Bashundhara R/A',a:'19,722 sq ft',u:'—',f:'3B+G+12',img:'../public/images/projects/business-tower.svg'},
+ {n:'JCX Lakewood Residences',c:'residential',s:'upcoming',l:'Jalshiri Abashon',a:'2850 sq ft',u:'8 units',f:'G+8',img:'../public/images/projects/lakewood.svg'},
+ {n:'JCX Atlantis',c:'residential',s:'ongoing',l:'Bashundhara R/A',a:'2257–3977 sq ft',u:'50 units',f:'B+G+M+13',img:'../public/images/projects/atlantis.svg'},
+ {n:'JCX N71 Lake Condos',c:'residential',s:'ongoing',l:'Bashundhara R/A',a:'3051–3204 sq ft',u:'70 units',f:'2B+G+M+18',img:'../public/images/projects/n71-lake-condos.svg'},
+ {n:'JCX Serenity',c:'residential',s:'completed',l:'Bashundhara R/A',a:'1715–2282 sq ft',u:'39 units',f:'B+G+13',img:'../public/images/projects/serenity.svg'},
+ {n:'JCX Signature',c:'residential',s:'upcoming',l:'Bashundhara R/A',a:'2900–3080 sq ft',u:'25 units',f:'B+G+13',img:'../public/images/projects/signature.svg'},
+ {n:'JCX Crystal Oasis',c:'residential',s:'upcoming',l:'Jalshiri Abashon',a:'2575 sq ft',u:'8 units',f:'G+8',img:'../public/images/projects/crystal-oasis.svg'},
+ {n:'JCX Cascade',c:'residential',s:'ongoing',l:'Niketan (Gulshan-1)',a:'3000 sq ft',u:'9 units',f:'G+9',img:'../public/images/projects/cascade.svg'}
+];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── theme ────────────────────────────────────────────────── */
+const root=document.documentElement,tBtn=document.getElementById('theme');
+const saved=localStorage.getItem('jcx-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+setTheme(saved);
+function setTheme(t){root.dataset.theme=t;tBtn.textContent=t==='dark'?'☀':'☾';localStorage.setItem('jcx-theme',t)}
+tBtn.onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
+
+/* ── nav solid on scroll ──────────────────────────────────── */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{const s=scrollY>40;nav.classList.toggle('solid',s);nav.classList.toggle('on-hero',!s)},{passive:true});
+
+/* ── hero taglines ────────────────────────────────────────── */
+const slides=[...document.querySelectorAll('.tag-slide')],dots=document.getElementById('dots'),rule=document.getElementById('rule');
+slides.forEach((_,i)=>{const b=document.createElement('button');b.role='tab';b.setAttribute('aria-selected',i===0);b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b)});
+let ti=0;
+function go(i){ti=i;slides.forEach((s,k)=>s.classList.toggle('on',k===i));[...dots.children].forEach((d,k)=>d.setAttribute('aria-selected',k===i));
+  if(!RM&&window.gsap){gsap.fromTo(rule,{width:0},{width:120,duration:.9,ease:'power3.out'});
+    gsap.fromTo(slides[i].children,{y:26,opacity:0},{y:0,opacity:1,duration:.7,stagger:.08,ease:'power3.out'})}}
+if(!RM)setInterval(()=>go((ti+1)%slides.length),5000);
+go(0);
+
+/* ── About letter hover ───────────────────────────────────── */
+const ltrs=[...document.querySelectorAll('.ltr')];
+ltrs.forEach(l=>{l.onmouseenter=()=>{l.classList.add('on');ltrs.forEach(o=>{if(o!==l)o.classList.add('dim')})};
+                 l.onmouseleave=()=>{l.classList.remove('on');ltrs.forEach(o=>o.classList.remove('dim'))}});
+
+/* ── filter + strip ───────────────────────────────────────── */
+let F={type:'all',status:'all',loc:'all'};
+const strip=document.getElementById('strip'),odo=document.getElementById('odo'),odolbl=document.getElementById('odolbl'),goBtn=document.getElementById('go');
+function match(p){return (F.type==='all'||p.c===(F.type==='condominium'?'residential':F.type))
+  &&(F.status==='all'||p.s===F.status)&&(F.loc==='all'||p.l===F.loc)}
+function render(){
+  const list=P.filter(match);
+  odo.textContent=list.length;odolbl.textContent=list.length===1?'project':'projects';
+  goBtn.classList.toggle('none',list.length===0);
+  goBtn.innerHTML=list.length===0?'No matches — Adjust filters':'Search <span aria-hidden="true">→</span>';
+  strip.innerHTML=list.length?list.map((p,i)=>`
+    <article class="poster${p.w?' wide':''}">
+      ${p.real?'':'<span class="ph">Placeholder render</span>'}
+      <img src="${p.img}" alt="${p.n} — ${p.l}">
+      <span class="p-serial">${String(i+1).padStart(2,'0')}.</span>
+      <span class="p-status"><span class="dot ${p.s}"></span></span>
+      <div class="p-body">
+        <p class="p-loc">${p.l}</p>
+        <h3 class="p-name">${p.n}</h3>
+        <p class="p-specs"><span>${p.a}</span><span>${p.u}</span><span>${p.f}</span></p>
+      </div>
+    </article>`).join(''):
+    `<div class="empty shell"><p class="display" style="font-size:26px">No projects match. Adjust your filters.</p>
+      <button class="btn btn-ghost" style="margin-top:18px" onclick="reset()">Reset filters</button></div>`;
+  if(!RM&&window.gsap)gsap.fromTo('.poster',{y:40,opacity:0},{y:0,opacity:1,duration:.55,stagger:.06,ease:'power3.out'});
+}
+function reset(){F={type:'all',status:'all',loc:'all'};
+  document.getElementById('f-type').value='all';document.getElementById('f-status').value='all';document.getElementById('f-loc').value='all';
+  syncSeg('all');syncStat('all');render()}
+document.getElementById('f-type').onchange=e=>{F.type=e.target.value;syncSeg(F.type==='condominium'?'all':F.type);render()};
+document.getElementById('f-status').onchange=e=>{F.status=e.target.value;syncStat(F.status);render()};
+document.getElementById('f-loc').onchange=e=>{F.loc=e.target.value;render()};
+goBtn.onclick=()=>document.getElementById('projects').scrollIntoView({behavior:RM?'auto':'smooth'});
+
+const seg=document.getElementById('seg'),pill=document.getElementById('pill');
+function movePill(btn){pill.style.width=btn.offsetWidth+'px';pill.style.transform=`translateX(${btn.offsetLeft-4}px)`}
+function syncSeg(v){[...seg.querySelectorAll('button')].forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-checked',on);if(on)movePill(b)})}
+seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{F.type=b.dataset.v;document.getElementById('f-type').value=b.dataset.v;syncSeg(b.dataset.v);render()});
+const strow=document.getElementById('strow');
+function syncStat(v){[...strow.querySelectorAll('button')].forEach(b=>b.setAttribute('aria-checked',b.dataset.v===v))}
+strow.querySelectorAll('button').forEach(b=>b.onclick=()=>{F.status=b.dataset.v;document.getElementById('f-status').value=b.dataset.v;syncStat(b.dataset.v);render()});
+
+render();requestAnimationFrame(()=>syncSeg('all'));
+strip.addEventListener('scroll',()=>{const m=strip.scrollWidth-strip.clientWidth;
+  document.getElementById('fill').style.width=(m>0?(strip.scrollLeft/m)*100:12)+'%'},{passive:true});
+
+/* ── reveals (GSAP, IntersectionObserver fallback) ────────── */
+if(!RM){
+  if(window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.reveal').forEach(el=>gsap.to(el,{opacity:1,y:0,duration:.6,ease:'power3.out',
+      scrollTrigger:{trigger:el,start:'top 85%'}}));
+  }else{const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{rootMargin:'-12% 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el))}
+}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+</script>
+</body>
+</html>

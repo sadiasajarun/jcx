@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 800" width="1640" height="800" role="img">
+  <defs>
+    <linearGradient id="comm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#24589E"/>
+      <stop offset="60%" stop-color="#101E38"/>
+      <stop offset="100%" stop-color="#04070C"/>
+    </linearGradient>
+    <radialGradient id="warm">
+      <stop offset="0%" stop-color="#FFF3E2" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFF3E2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1640" height="800" fill="url(#comm)"/>
+  <circle cx="300" cy="470" r="120" fill="url(#warm)"/><circle cx="780" cy="430" r="150" fill="url(#warm)"/><circle cx="1230" cy="500" r="130" fill="url(#warm)"/>
+  <path d="M -40 300 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 q 60 -90 120 0 L 1680 800 L -40 800 Z" fill="#2050A0" opacity="0.3"/>
+  <path d="M -40 430 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 q 60 -66 120 0 L 1680 800 L -40 800 Z" fill="#0D1B33" opacity="0.42"/>
+  <path d="M -40 560 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 q 60 -48 120 0 L 1680 800 L -40 800 Z" fill="#050A14" opacity="0.6"/>
+  <rect x="0" y="0" width="1640" height="800" fill="#9AA2DB" opacity="0.06"/>
+</svg>
