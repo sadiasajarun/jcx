@@ -9,7 +9,7 @@ phase_complete: true
 roles: [app]
 prd_hash_at_generation: "cd139479977d8d72abdaa59556ca88c7299c18226b0e5d459488755dfc58b293"
 prd_version: "v2"
-html_bundle_hash: "f277af8295d648aa2c6159f3be21c3b22a1c4b45eda0cab5e2460d7166c96e5b"
+html_bundle_hash: "58237671549e641aece9301ef3e9057003fa169b261b8524c22e8c1b565d2411"
 generated_at: "2026-07-27T00:00:00Z"
 ---
 
