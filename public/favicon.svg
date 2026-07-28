@@ -1,5 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="14" fill="#FFFFFF"/>
-  <circle cx="32" cy="32" r="29" fill="none" stroke="#2050A0" stroke-width="4"/>
-  <text x="32" y="41" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="800" fill="#2050A0">JC<tspan fill="#EC1C2D">X</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="JCX">
+  <rect width="512" height="512" rx="104" fill="#0B1830"/>
+  <g transform="translate(56.00,112.67) scale(0.666667)">
+    <path d="M12.5 18.1Q0 0 22 0L275 0Q297 0 284.5 18.1L157.02 202.66Q148.5 215 139.98 202.66Z" fill="#FFFFFF"/>
+    <path d="M139.98 227.34Q148.5 215 157.02 227.34L284.5 411.9Q297 430 275 430L22 430Q0 430 12.5 411.9Z" fill="#EC1C2D"/>
+    <path d="M315.5 18.1Q303 0 325 0L472.54 0Q600 0 527.56 104.88L460.02 202.66Q451.5 215 442.98 202.66Z" fill="#EC1C2D"/>
+    <path d="M442.98 227.34Q451.5 215 460.02 227.34L587.5 411.9Q600 430 578 430L325 430Q303 430 315.5 411.9Z" fill="#FFFFFF"/>
+  </g>
 </svg>
