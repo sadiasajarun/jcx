@@ -377,13 +377,21 @@ section{padding:112px 0}
    while preserveAspectRatio="none" stretches the geometry with the stage. */
 .bevel{position:absolute;inset:0;z-index:4;width:100%;height:100%;pointer-events:none;overflow:visible}
 .bevel g{fill:none;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
-.bevel .bv-glow path{stroke:rgba(120,170,255,.32);stroke-width:13;filter:blur(7px)}
-.bevel .bv-in path{stroke:rgba(0,0,0,.44);stroke-width:8}
-.bevel .bv-body path{stroke:rgba(255,255,255,.94);stroke-width:4.5}
-.bevel .bv-spec path{stroke:rgba(255,255,255,.5);stroke-width:1.4}
-/* The logo's own band colours, in the logo's own order. */
-.bevel .bv-body path:nth-child(2){stroke:rgba(154,162,219,.96)}
-.bevel .bv-body path:nth-child(3){stroke:var(--accent-strong)}
+/* Four stacked strokes build one rounded edge rather than a drawn outline:
+     bloom   — wide, blurred, brand blue; the light the glass throws
+     shade   — dark chamfer face UNDER the body, giving the edge depth
+     body    — the tube itself, gradient-shaded top-to-bottom so it reads round
+     crown   — a thin catch-light riding the upper lip
+   The stroke gradient is what sells the curvature: bright crown, shaded belly,
+   second highlight along the lower lip, exactly how a rounded bevel catches a
+   single light source. */
+.bevel .bv-glow path{stroke:rgba(120,170,255,.34);stroke-width:15;filter:blur(8px)}
+.bevel .bv-in path{stroke:rgba(4,10,22,.5);stroke-width:9.5;filter:blur(1.4px);transform:translateY(.6px)}
+.bevel .bv-body path{stroke:url(#bvTube);stroke-width:5.4}
+.bevel .bv-crown path{stroke:rgba(255,255,255,.72);stroke-width:1.5;transform:translateY(-1.1px);filter:blur(.3px)}
+/* Band two carries the logo's periwinkle. Band three is left neutral — the red
+   outline fought the film behind it and read as a warning rather than a frame. */
+.bevel .bv-body path:nth-child(2){stroke:url(#bvTube2)}
 /* ONE video plane spanning the whole stage, with all four triangles cut out of
    it as a single clip. Previously each half carried its own <video>, each
    cover-fitted to its own box — which showed the film twice, side by side.
@@ -411,34 +419,33 @@ section{padding:112px 0}
 /* Headline lies across the waist of the lens and may run wider than the X. */
 /* Wide box, but the inner edges are governed by the centre track below — so
    widening this only pushes the OUTER ends out, never the inner ones. */
-.tagbox{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;
-  width:min(96vw,1720px);display:grid;place-items:center;pointer-events:none}
-.tag{display:none;width:100%}
+/* The box IS the stage, so every percentage below maps straight onto the clip
+   geometry rather than onto some outer wrapper. */
+.tagbox{position:absolute;inset:0;z-index:5;pointer-events:none}
+.tag{display:none;position:absolute;inset:0}
 .tag.on{display:block}
-/* Three columns, not space-between. The middle track is `auto` and the flanks
-   are equal `1fr`, so the second word is centred on the X's waist no matter
-   how long the other two are — space-between would drift it off centre.
-   Word 1 sits far left, word 3 far right.
-   The size cap keeps the longest line — DISCOVER · PERFECTION · IN EVERY
-   DETAIL, 33 characters — inside the row. */
-/* The centre track is exactly the X's inner span — waist point to waist point,
-   which is half the stage width. Word 1 right-aligns against it and word 3
-   left-aligns against it, so both sit hard against the X's corners instead of
-   drifting to the outer edges of the box. */
-.tag .row{display:grid;grid-template-columns:1fr calc(var(--stage-w) * .5) 1fr;align-items:center;
-  gap:clamp(8px,1.1vw,24px);width:100%;
-  font:400 clamp(15px,2.9vw,48px)/1 Inter,sans-serif;letter-spacing:.01em;text-transform:uppercase;
-  text-shadow:0 4px 30px rgba(0,0,0,.7)}
-.tag .row span{white-space:nowrap;min-width:0}
-.tag .row span:first-child{text-align:right}
-.tag .row span:last-child{text-align:left}
-/* Centre word steps down so it clears the bevel on both diagonals rather than
-   touching them — the track is only half the stage wide. */
-.tag .row .mid{text-align:center;color:#fff;font-size:.82em}
-@media(max-width:760px){
-  .tag .row{grid-template-columns:1fr;gap:6px;font-size:clamp(24px,7.4vw,40px)}
-  .tag .row span,.tag .row .mid{text-align:center}
-}
+/* One word per chevron slab. The band centres are fixed by the clip paths:
+   0-0.2865, 0.3567-0.6433 and 0.7135-1 of the stage height, so their midpoints
+   are 14.33%, 50% and 85.67%. left:46% centres each word on the FLAT body of
+   its slab — between the notch tip (x .217) and the point where the right edge
+   starts tapering (x .685). Dead-centre of the stage would push the longer
+   words out into the taper and across the bevel. */
+/* Centred by BOX, never by transform: the headline tween owns `transform` on
+   these words and folds away any translate set here, which left them hanging
+   off their bands. Each word instead fills its slab's exact box — top and
+   height taken straight from the clip paths — and centres inside it.
+   padding-right:8% pulls the optical centre from 50% to 46%, onto the flat
+   body, without touching transform. */
+.tag .w{position:absolute;left:0;right:0;height:28.65%;display:grid;place-items:center;
+  padding-right:8%;white-space:nowrap;
+  font:400 clamp(12px,2vw,32px)/1 Inter,sans-serif;letter-spacing:.03em;text-transform:uppercase;
+  color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.78)}
+.tag .w1{top:0}
+.tag .w2{top:35.67%}
+.tag .w3{top:71.35%}
+/* The size cap is set by the longest line in rotation — BUSINESS EXCELLENCE,
+   19 characters — which has to stay inside the flat body at full stage width. */
+@media(max-width:760px){.tag .w{font-size:clamp(10px,3vw,20px);letter-spacing:.02em}}
 
 /* Positioning line sits in the foot band, immediately right of the scroll cue.
    margin-right:auto keeps it hugging that left group and pushes the area row
@@ -1367,6 +1374,22 @@ html.booting,html.booting body{overflow:hidden}
     </div>
 
     <svg class="bevel" viewBox="0 0 600 570" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="bvTube" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".98"/>
+          <stop offset=".34" stop-color="#e8f0ff" stop-opacity=".92"/>
+          <stop offset=".62" stop-color="#93a8c9" stop-opacity=".72"/>
+          <stop offset=".86" stop-color="#dce7f8" stop-opacity=".9"/>
+          <stop offset="1" stop-color="#ffffff" stop-opacity=".96"/>
+        </linearGradient>
+        <linearGradient id="bvTube2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".96"/>
+          <stop offset=".34" stop-color="#d9dffa" stop-opacity=".92"/>
+          <stop offset=".62" stop-color="#8d95cf" stop-opacity=".76"/>
+          <stop offset=".86" stop-color="#c9d0f2" stop-opacity=".9"/>
+          <stop offset="1" stop-color="#ffffff" stop-opacity=".94"/>
+        </linearGradient>
+      </defs>
       <g class="bv-glow">
         <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
         <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
@@ -1382,7 +1405,7 @@ html.booting,html.booting body{overflow:hidden}
         <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
         <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
       </g>
-      <g class="bv-spec">
+      <g class="bv-crown">
         <path d="M16.58 9.28Q0 0 19 0L411 0Q428 0 443.36 7.29L581.93 73.09Q600 81.67 581.93 90.24L443.36 156.04Q428 163.33 411 163.33L19 163.33Q0 163.33 16.58 154.06L130.29 90.45Q146 81.67 130.29 72.88Z"/>
         <path d="M16.58 212.61Q0 203.33 19 203.33L411 203.33Q428 203.33 443.36 210.62L581.93 276.42Q600 285 581.93 293.58L443.36 359.38Q428 366.67 411 366.67L19 366.67Q0 366.67 16.58 357.39L130.29 293.79Q146 285 130.29 276.21Z"/>
         <path d="M16.58 415.94Q0 406.67 19 406.67L411 406.67Q428 406.67 443.36 413.96L581.93 479.76Q600 488.33 581.93 496.91L443.36 562.71Q428 570 411 570L19 570Q0 570 16.58 560.72L130.29 497.12Q146 488.33 130.29 479.55Z"/>
@@ -1391,11 +1414,11 @@ html.booting,html.booting body{overflow:hidden}
 
       <!-- Headline, in three parts. -->
       <h1 class="tagbox" id="tagbox">
-        <span class="tag on"><span class="row"><span>Discover</span><span class="mid">Perfection</span><span>In Every Detail</span></span></span>
-        <span class="tag"><span class="row"><span>Iconic</span><span class="mid">Destination</span><span>Business Excellence</span></span></span>
-        <span class="tag"><span class="row"><span>Luxury</span><span class="mid">Elegance</span><span>You Deserve</span></span></span>
-        <span class="tag"><span class="row"><span>Embrace the</span><span class="mid">Eco-Friendly</span><span>Abode</span></span></span>
-        <span class="tag"><span class="row"><span>Modern</span><span class="mid">Architecture</span><span>Made Easy</span></span></span>
+        <span class="tag on"><span class="w w1">Discover</span><span class="w w2">Perfection</span><span class="w w3">In Every Detail</span></span>
+        <span class="tag"><span class="w w1">Iconic</span><span class="w w2">Destination</span><span class="w w3">Business Excellence</span></span>
+        <span class="tag"><span class="w w1">Luxury</span><span class="w w2">Elegance</span><span class="w w3">You Deserve</span></span>
+        <span class="tag"><span class="w w1">Embrace the</span><span class="w w2">Eco-Friendly</span><span class="w w3">Abode</span></span>
+        <span class="tag"><span class="w w1">Modern</span><span class="w w2">Architecture</span><span class="w w3">Made Easy</span></span>
       </h1>
     </div>
 
@@ -2116,7 +2139,7 @@ function heroGo(i){
   if(!RM&&window.gsap){
     // The three parts land outward-in: flanks first, centre last, so the eye
     // settles on the waist of the lens where the mid word sits.
-    const parts=tags[i].querySelectorAll('.row span');
+    const parts=tags[i].querySelectorAll('.w');
     gsap.fromTo(parts,{y:18,opacity:0,filter:'blur(6px)'},
       {y:0,opacity:1,filter:'blur(0px)',duration:.7,stagger:.09,ease:'power3.out'});
   }
@@ -2196,10 +2219,15 @@ if(!RM&&window.gsap&&window.ScrollTrigger){
      actually on screen. */
   const tw=$('#tower');
   if(tw){
+    /* Ends on the tower's TOP edge, not its bottom. The tower runs to the section
+       floor, so its bottom sits ~110% down the viewport at the moment the figures
+       are centred — keying the finish to 'bottom' left the building half-built
+       while the numbers were being read. Its top is at ~49% then, so the reveal
+       is keyed to complete just before that. */
     gsap.fromTo(tw,{clipPath:'inset(100% 0% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',ease:'none',
-      scrollTrigger:{trigger:tw,start:'top 94%',end:'bottom 78%',scrub:.4}});
+      scrollTrigger:{trigger:tw,start:'top bottom',end:'top 55%',scrub:.4}});
     gsap.fromTo(tw.querySelector('img'),{y:40,scale:1.05},{y:0,scale:1,ease:'none',
-      scrollTrigger:{trigger:tw,start:'top 94%',end:'bottom 62%',scrub:.5}});
+      scrollTrigger:{trigger:tw,start:'top bottom',end:'top 45%',scrub:.5}});
   }
 }
 
