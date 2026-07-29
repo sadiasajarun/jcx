@@ -2110,12 +2110,17 @@ if(!RM&&window.gsap&&window.ScrollTrigger){
      Triggered on the band itself, NOT on #stats: the section is far taller than
      the band, so a section-relative end never completed while the skyline was
      actually on screen. */
+  /* Ends on the tower's TOP edge, not its bottom. The tower runs to the section
+     floor, so its bottom sits ~110% down the viewport at the moment the figures
+     are centred — keying the finish to 'bottom' left the building half-built
+     while the numbers were being read. Its top is at ~49% then, so the reveal
+     is keyed to complete just before that. */
   const tw=$('#tower');
   if(tw){
     gsap.fromTo(tw,{clipPath:'inset(100% 0% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',ease:'none',
-      scrollTrigger:{trigger:tw,start:'top 94%',end:'bottom 78%',scrub:.4}});
+      scrollTrigger:{trigger:tw,start:'top bottom',end:'top 55%',scrub:.4}});
     gsap.fromTo(tw.querySelector('img'),{y:40,scale:1.05},{y:0,scale:1,ease:'none',
-      scrollTrigger:{trigger:tw,start:'top 94%',end:'bottom 62%',scrub:.5}});
+      scrollTrigger:{trigger:tw,start:'top bottom',end:'top 45%',scrub:.5}});
   }
 }
 
